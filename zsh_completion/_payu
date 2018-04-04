@@ -1,0 +1,288 @@
+#compdef payu
+
+# ------------------------------------------------------------------------------
+# Copyright (c) 2010-2018
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the zsh-users nor the
+#       names of its contributors may be used to endorse or promote products
+#       derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL ZSH-USERS BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# ------------------------------------------------------------------------------
+# Description
+# payu
+
+__payu_remote_branch_names_noprefix () {
+  local expl
+  declare -a heads
+
+  branch_names=(${${${(f)"$(_call_program remote-branch-refs-noprefix git --git-dir=/home/dev/git/pagosonlinepps/.git for-each-ref --format='"%(refname)"' refs/remotes 2>/dev/null)"}##*/}:#HEAD})
+  __payu_command_successful $pipestatus || return 1
+
+  _wanted remote-branch-names-noprefix expl 'remote branch name' compadd -M 'r:|/=**' "$@" -a - branch_names
+}
+
+__payu_command_successful () {
+  if (( ${#*:#0} > 0 )); then
+    _message 'not a git repository'
+    return 1
+  fi
+  return 0
+}
+
+__payu_db () {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+  case $state in
+    (command)
+      commands=(
+        status:'Muestra la cantidad de change sets que no se han ejecutado'
+        update:'Actualiza la base de datos a la versión más reciente'
+        updateCount:'Aplica los siguientes <n> change sets'
+        rollback:'Revierte la BD al estado que estaba cuando se creó el <tag>'
+        rollbackCount:'Revierte los últimos <n> change sets'
+        releaseLocks:'Libera todos los bloqueos en el change log de la BD'
+      )
+      _describe -t commands 'db command' commands && ret=0
+    ;;
+    (options)
+      case $words[1] in
+        status)
+          _arguments -C \
+            '--verbose[Muestra también los nombres del changeset]' && ret=0
+          ;;
+        updateCount|rollbackCount)
+          _alternative '::(1 2 3 4 5)'
+      esac
+  esac
+}
+
+__payu_core () {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+  case $state in
+    (command)
+      commands=(
+        init:'Inicia las PUs: dataspace, workflow, account-space, bridge y utils'
+        deploy:'Inicia la PU indicada'
+        ssh:'Se conecta por ssh al nodo core. Opcionalmente ejecuta el comando que se pasa como argumento'
+        status:'Imprime resumen de estado del nodo core'
+        undeploy:'Detiene la PU indicada'
+        tail:'Hace seguimiento al log indicado'
+        redeploy:'Reinicia la PU indicada'
+        hot-deploy:'Detiene, construye e inicia la PU indicada'
+      )
+      _describe -t commands 'db command' commands && ret=0
+    ;;
+    (options)
+      local -a args
+      case $words[1] in
+        deploy|undeploy|tail|redeploy|hot-deploy)
+          args=("::__payu_pu")
+          ;;
+      esac
+      _alternative $args && ret=0
+  esac
+}
+
+__payu_pu () {
+  _values 'pus' account account-space ar-nps bridge cl-transbank-debit co-lending mx-amex pe-procesos-mc ppn br-bankslip-itau br-intermeio co-cod co-pse pa-fac pe-procesos-mc-ecom pps ar-amex br-braspag br-rede co-credibanco co-redeban pa-metropago pe-procesos-mc-enc utils ar-firstdata br-cielo cl-transbank co-falabella dataspace pe-pago-efectivo pe-visanet workflow && return 0
+}
+
+__payu_web() {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+  case $state in
+    (command)
+      commands=(
+        build:'Construye el proyecto'
+        deploy:'Construye el proyecto y luego lo despliega'
+        ssh:'Se conecta por ssh al nodo web. Opcionalmente ejecuta el comando que se pasa como argumento'
+        start:'Inicia el servidor tomcat indicado'
+        start-jrebel:'Inicia el servidor tomcat indicado usando JRebel'
+        status:'Resumen de estado del nodo web'
+        stop:'Detiene la app web indicada'
+        check-health:'Realiza una verificación del estado de la(s) app web'
+        open:'Reinicia la PU indicada'
+        tail:'Detiene, construye e inicia la PU indicada'
+      )
+      _describe -t commands 'db command' commands && ret=0
+    ;;
+    (options)
+      local -a args
+      case $words[1] in
+        build|deploy)
+          args=("::__payu_tomcat")
+          ;;
+        start|start-jrebel|stop|open|tail)
+          args=("::__payu_webapp")
+          ;;
+        check-health)
+          _arguments -C \
+            "(- :)--start[Inicia el tomcat si no está arriba y lo detiene después de realizar el chequeo]" \
+            ": :__payu_webapp"&& ret=0
+          ;;
+
+      esac
+      _alternative $args && ret=0
+  esac
+}
+
+__payu_tomcat() {
+  compadd admin apibank bcash-notificator checkout dm-api gateway merchants-api payments-api secure admin-api bcash-api bridge crons dm-ipn-api gateway-wspol migration-api reports-api
+}
+
+__payu_webapp () {
+  compadd secure bridge admin crons gateway payments-api reports-api admin-api apibank checkout AVAILABLE migration-api gateway-wspol dm-ipn-api dm-api merchants-api bcash-api bcash-notificator
+}
+
+__payu_mgmt() {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+  case $state in
+    (command)
+      commands=(
+        status:'Muestra el estado actual de la instalación de auto-deploy.'
+        upgrade:'Auto-deployment se auto-actualiza'
+        build:'Construye la imagen, todas si no recibe argumento'
+      )
+      _describe -t commands 'db command' commands && ret=0
+    ;;
+    (options)
+      local -a args
+      case $words[1] in
+        build)
+          compadd web-node core-node db-node db-node-full logdb-node
+          ;;
+      esac
+  esac
+}
+
+__payu_ci() {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+  case $state in
+    (command)
+      commands=(
+        build:'Schedules a build on the ci server using the provided branch,
+                              notifies updates on the build progress by email, if no branch
+                              is provided, the current branch is used.'
+        help:'Auto-deployment se auto-actualiza'
+        review:'Schedules a SonarQube analysis on the ci server using the 
+                              provided branch, comments are posted on any open PR in which
+                              the branch is the source, if no branch is provided, the current
+                              one is used.'
+      )
+      _describe -t commands 'db command' commands && ret=0
+    ;;
+    (options)
+      local -a args
+      case $words[1] in
+        build|review)
+          args=('remote-branches::__payu_remote_branch_names_noprefix')
+          ;;
+      esac
+      _alternative $args && ret=0
+  esac
+}
+
+_payu() {
+  local curcontext="$curcontext" state line expl ret=1
+  local -a commands
+  integer ret=1
+
+  _arguments -C \
+    ':command:->command' \
+    '*::options:->options' && ret=0
+
+  case $state in
+    (command)
+      commands=(
+        help:'Muestra el mensaje de ayuda'
+        status:'Imprime el resumen del estado del ambiente desplegado'
+        undeploy:'Destruye el ambiente desplegado, si hay uno'
+        build:'Construye todo el proyecto pagosonlinepps'
+        sync-branch:'Equivale a la secuencia git-fetch, git-checkout <branch>, git-pull. Si no recibe <branch> usa la rama actual'
+        dirty-deploy:'Despliega un nuevo ambiente con los binarios disponibles, sin sincronizar git ni construir el proyecto'
+        deploy:'Sincroniza, construye y despliega un nuevo ambiente usando la rama <branch>'
+        mgmt:'Managment'
+        db:'Operaciones con la base de datos'
+        core:'Operaciones con modulos core'
+        web:'Operaciones con modulos web'
+        ci:'Allows you to interact with the CI server.'
+      )
+      _describe -t commands 'payu command' commands && ret=0
+      ;;
+    (options)
+      local -a args
+      case $words[1] in
+        db)
+          args=('::__payu_db')
+          ;;
+        core)
+          args=('::__payu_core')
+          ;;
+        web)
+          args=('::__payu_web')
+          ;;
+        mgmt)
+          args=('::__payu_mgmt')
+          ;;
+        ci)
+          args=('::__payu_ci')
+          ;;
+        sync-branch)
+          args=('remote-branches::__payu_remote_branch_names_noprefix')
+          ;;
+        deploy)
+          args=('remote-branches::__payu_remote_branch_names_noprefix')
+          ;;
+      esac
+      _alternative $args && ret=0
+  esac
+}
+
+_payu "$@"
