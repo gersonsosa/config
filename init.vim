@@ -7,14 +7,18 @@ Plug 'junegunn/seoul256.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-signify'
 Plug 'mattn/gist-vim'
-Plug 'gabesoft/vim-ags'
 Plug 'fatih/vim-go'
 Plug 'jodosha/vim-godebug'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'mhartington/oceanic-next'
 
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
   " and you don't have to run install script if you use fzf only in Vim.
+Plug 'junegunn/fzf.vim'
 
 
 " List ends here. Plugins become visible to Vim after this call.
@@ -24,6 +28,9 @@ call plug#end()
 set number
 set relativenumber
 set hidden
+set shiftwidth=0
+set tabstop=2
+set expandtab
 
 " Copy to clipboard
 vnoremap  <leader>y  "*y
@@ -36,3 +43,17 @@ nnoremap <leader>p "*p
 nnoremap <leader>P "*P
 vnoremap <leader>p "*p
 vnoremap <leader>P "*P
+
+" Terminal mode mappings
+tnoremap <Esc> <C-\><C-n>
+
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" Theme
+syntax enable
+colorscheme OceanicNext
+
+" additional plugins settings
+let g:deoplete#enable_at_startup = 1
