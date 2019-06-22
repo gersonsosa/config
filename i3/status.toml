@@ -1,5 +1,15 @@
-theme = "solarized-dark"
-icons = "awesome"
+theme = "slick"
+[icons]
+icons = "material"
+[icons.overrides]
+bat = "  "
+bat_full = "  "
+bat_charging = "  "
+bat_discharging = "  "
+volume_muted = "ﱝ"
+music_play = ""
+music_pause = "懶"
+music_next = "怜"
 
 [[block]]
 block = "disk_space"
@@ -29,8 +39,8 @@ format = "{1m}"
 [[block]]
 block = "temperature"
 collapsed = false
-interval = 10
-format = "{min}° min, {max}° max, {average}° avg"
+interval = 20
+format = " {min}°/{max}°  {average}°"
 
 [[block]]
 block = "sound"
@@ -41,17 +51,12 @@ player = "spotify"
 buttons = ["play", "next"]
 
 [[block]]
-block = "net"
-device = "wlp2s0"
-ip = false
-speed_up = false
-speed_down = false
-interval = 5
+block = "backlight"
+device = "intel_backlight"
 
 [[block]]
 block = "battery"
-interval = 10
-format = "{percentage}% {time}"
+format = "{percentage}% {time} {power}"
 
 [[block]]
 block = "time"
