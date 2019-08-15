@@ -1,2 +1,7 @@
-# config
-bunch of config files linux
+# Config
+
+Some of config files linux/mac
+
+- neovim
+- tmux
+-
