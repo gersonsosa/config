@@ -3,16 +3,13 @@ call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
 Plug 'tpope/vim-sensible'
-Plug 'junegunn/seoul256.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-signify'
 Plug 'mattn/gist-vim'
 Plug 'fatih/vim-go'
 Plug 'jodosha/vim-godebug'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'mhartington/oceanic-next'
+Plug 'sheerun/vim-polyglot'
+Plug 'NLKNguyen/papercolor-theme'
 
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -45,15 +42,14 @@ vnoremap <leader>p "*p
 vnoremap <leader>P "*P
 
 " Terminal mode mappings
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 
 if (has("termguicolors"))
  set termguicolors
 endif
 
 " Theme
+set t_Co=256
+set background=dark
 syntax enable
-colorscheme OceanicNext
-
-" additional plugins settings
-let g:deoplete#enable_at_startup = 1
+colorscheme PaperColor
