@@ -42,7 +42,7 @@ vnoremap <leader>p "*p
 vnoremap <leader>P "*P
 
 " Terminal mode mappings
-" tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 if (has("termguicolors"))
  set termguicolors
