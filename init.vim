@@ -7,6 +7,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
 
 Plug 'mhinz/vim-signify'
 Plug 'mattn/gist-vim'
@@ -14,14 +15,15 @@ Plug 'mattn/gist-vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'fatih/vim-go'
 Plug 'jodosha/vim-godebug'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Plug 'justinmk/vim-dirvish'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neomake/neomake'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/lightline.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -60,10 +62,17 @@ syntax enable
 filetype on
 colorscheme nord
 
+" netrw defaults
+let g:netrw_winsize = 35
+let g:netrw_liststyle = 3
+
 let g:lightline = {
-      \ 'tabline': {
-      \   'left': [ ['tabs'] ],
-      \   'right': [ [] ]
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ 'colorscheme': 'nord',
       \ }
@@ -119,4 +128,21 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+EOF
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "go" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust", "go" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 EOF
