@@ -23,7 +23,7 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/lightline.vim'
 Plug 'arcticicestudio/nord-vim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -53,7 +53,7 @@ vnoremap <leader>p "*p
 vnoremap <leader>P "*P
 
 " Terminal mode mappings
-tnoremap <Esc> <C-\><C-n>
+:tnoremap <Esc> <C-\><C-n>
 
 " Disable EX mode
 :nnoremap Q <Nop>
@@ -66,22 +66,47 @@ colorscheme nord
 let g:netrw_winsize = 35
 let g:netrw_liststyle = 3
 
+let g:WebDevIconsOS = 'Darwin'
+
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'deviconfiletype', 'filename', 'modified' ] ],
+		  \   'right': [ [ 'lineinfo' ],
+		  \            [ 'percent' ],
+		  \            [ 'deviconfileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'tab_component_function': {
+      \   'tabnum': 'LightlineTabWebDevIcon',
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'deviconfileformat': 'DevIconFileformat',
+      \   'deviconfiletype': 'DevIconFiletype'
       \ },
       \ 'colorscheme': 'nord',
       \ }
 
-lua << EOF
-require'lspconfig'.tsserver.setup{}
-EOF
+function! LightlineTabWebDevIcon(n)
+  let l:bufnr = tabpagebuflist(a:n)[tabpagewinnr(a:n) - 1]
+  return WebDevIconsGetFileTypeSymbol(bufname(l:bufnr))
+endfunction
+
+function! DevIconFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! DevIconFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
 lua << EOF
+-- init.lua
+-- denols
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
+}
+
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
@@ -117,9 +142,26 @@ local on_attach = function(client, bufnr)
 
 end
 
+-- call 'setup' for servers with specific configuration
+nvim_lsp.denols.setup {
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+  init_options = {
+    lint = true,
+  },
+}
+
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+  init_options = {
+    lint = true,
+  },
+}
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+local servers = { }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
