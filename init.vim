@@ -9,12 +9,11 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 
-Plug 'mhinz/vim-signify'
+Plug 'airblade/vim-gitgutter'
 Plug 'mattn/gist-vim'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'fatih/vim-go'
-Plug 'jodosha/vim-godebug'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'nathanaelkane/vim-indent-guides'
