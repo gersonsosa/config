@@ -1,5 +1,5 @@
 -- lsp config
--- denols
+-- denols since it also uses ts files
 vim.g.markdown_fenced_languages = {
   "ts=typescript"
 }
@@ -58,7 +58,7 @@ nvim_lsp.tsserver.setup {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { }
+local servers = { "yamlls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
