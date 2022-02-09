@@ -36,6 +36,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
 
 end
 
@@ -58,7 +59,7 @@ nvim_lsp.tsserver.setup {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "yamlls" }
+local servers = { "yamlls", "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
