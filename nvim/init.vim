@@ -77,6 +77,7 @@ let g:lightline = {
       \             [ 'gitbranch', 'readonly', 'deviconfiletype', 'filename', 'modified' ] ],
 		  \   'right': [ [ 'lineinfo' ],
 		  \            [ 'percent' ],
+		  \            [ 'session' ],
 		  \            [ 'deviconfileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'tab_component_function': {
@@ -85,9 +86,10 @@ let g:lightline = {
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead',
       \   'deviconfileformat': 'DevIconFileformat',
-      \   'deviconfiletype': 'DevIconFiletype'
+      \   'deviconfiletype': 'DevIconFiletype',
+      \   'session': 'CustomObsession'
       \ },
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'PaperColor',
       \ }
 
 function! LightlineTabWebDevIcon(n)
@@ -101,5 +103,9 @@ endfunction
 
 function! DevIconFileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+function! CustomObsession()
+  return ObsessionStatus('Obsession ', 'Obsession ')
 endfunction
 
