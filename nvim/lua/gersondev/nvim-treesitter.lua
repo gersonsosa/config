@@ -1,5 +1,6 @@
 require'nvim-treesitter.configs'.setup {
-ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml" },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "go" }, -- List of parsers to ignore installing
   highlight = {
@@ -10,5 +11,17 @@ ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml" }, -- 
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+  indent = {
+    enable = true
   },
 }
