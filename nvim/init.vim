@@ -8,6 +8,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-unimpaired'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'mattn/gist-vim'
@@ -65,7 +66,7 @@ filetype on
 colorscheme nord
 
 " netrw defaults
-let g:netrw_winsize = 35
+let g:netrw_winsize = 25
 let g:netrw_liststyle = 3
 
 let g:WebDevIconsOS = 'Darwin'
