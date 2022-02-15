@@ -1,2 +1,6 @@
+require('gersondev.plugins')
 require('gersondev.nvim-treesitter')
 require('gersondev.nvim-lsp')
+require('gersondev.nvim-telescope')
+require('gersondev.nvim-tree')
+require('gersondev.lualine')
