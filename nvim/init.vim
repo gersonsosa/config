@@ -30,5 +30,5 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 
 syntax enable
 filetype on
-colorscheme nord
+colorscheme dracula
 
