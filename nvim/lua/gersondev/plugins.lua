@@ -45,5 +45,6 @@ return require('packer').startup(function()
   }
 
   use 'arcticicestudio/nord-vim'
+  use {'dracula/vim', as = 'dracula'}
 
 end)
