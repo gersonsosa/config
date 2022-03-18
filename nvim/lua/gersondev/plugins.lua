@@ -27,6 +27,11 @@ return require('packer').startup(function()
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
 
+  use {
+    'romgrk/barbar.nvim',
+    requires = {'kyazdani42/nvim-web-devicons'}
+  }
+
   -- tpope plugins
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
@@ -44,7 +49,6 @@ return require('packer').startup(function()
     run = ':GoUpdateBinaries'
   }
 
-  use 'arcticicestudio/nord-vim'
   use {'dracula/vim', as = 'dracula'}
 
 end)
