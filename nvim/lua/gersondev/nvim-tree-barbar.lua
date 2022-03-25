@@ -8,12 +8,12 @@ function toogle_nvim_tree()
     nvim_tree.toggle()
   else
     nvim_tree.toggle(true)
-    set_bar_offset(nvim_tree_view.View.width, 'NvimTree ')
+    set_bar_offset(nvim_tree_view.View.width + 2, 'פּ - ')
   end
 end
 
 vim.cmd ("command OffsetNvimTree :lua toogle_nvim_tree()")
 
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<C-n>', ':lua toogle_nvim_tree()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<C-n>', ':OffsetNvimTree<CR>', opts)
 
