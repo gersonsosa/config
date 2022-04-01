@@ -32,7 +32,7 @@ return require('packer').startup(function()
     requires = {'kyazdani42/nvim-web-devicons'}
   }
 
-  -- tpope plugins
+  -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
   use 'tpope/vim-vinegar'
@@ -44,10 +44,7 @@ return require('packer').startup(function()
   use 'mattn/gist-vim'
   use 'nathanaelkane/vim-indent-guides'
 
-  use {
-    'fatih/vim-go',
-    run = ':GoUpdateBinaries'
-  }
+  use 'fatih/vim-go'
 
   use {'dracula/vim', as = 'dracula'}
 
