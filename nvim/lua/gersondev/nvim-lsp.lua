@@ -38,15 +38,14 @@ vim.g.markdown_fenced_languages = {
 
 -- call 'setup' for servers with specific configuration
 nvim_lsp.denols.setup {
+  autostart = false,
   on_attach = on_attach,
-  root_dir = nvim_lsp.util.root_pattern("deps.ts", "deno.json"),
   init_options = {
     lint = true,
   },
 }
 
 nvim_lsp.tsserver.setup {
-  autostart = false,
   on_attach = on_attach,
   root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json"),
   init_options = {
