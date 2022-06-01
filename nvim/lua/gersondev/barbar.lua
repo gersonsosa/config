@@ -12,13 +12,10 @@ vim.g.bufferline = {
   clickable = false,
 
   -- Configure icons on the bufferline.
-  icon_separator_active = '',
+  icon_separator_active = '⏽',
   icon_separator_inactive = '',
   icon_close_tab_modified = '●',
   icon_pinned = '車',
-
-  -- Sets the maximum padding width with which to surround each tab
-  maximum_padding = 1,
 
   -- If set, the letters for each buffer in buffer-pick mode will be
   -- assigned based on their name. Otherwise or in case all letters are
@@ -30,10 +27,6 @@ vim.g.bufferline = {
   -- optimal for the qwerty keyboard layout but might need adjustement
   -- for other layouts.
   letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
-
-  -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
-  -- where X is the buffer number. But only a static string is accepted here.
-  no_name_title = nil,
 }
 
 local map = vim.api.nvim_set_keymap

@@ -4,7 +4,9 @@ return require('packer').startup(function()
 
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = {
+      {'nvim-lua/plenary.nvim'}
+    }
   }
 
   use 'neovim/nvim-lspconfig'
@@ -18,8 +20,7 @@ return require('packer').startup(function()
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+    }
   }
 
   use {
