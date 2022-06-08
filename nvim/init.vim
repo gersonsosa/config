@@ -29,5 +29,4 @@ nmap <leader>gs :G<CR>
 
 syntax enable
 filetype on
-colorscheme dracula
 

@@ -1,4 +1,5 @@
 require('gersondev.plugins')
+require('gersondev.theme')
 require('gersondev.nvim-treesitter')
 require('gersondev.nvim-lsp')
 require('gersondev.nvim-telescope')

@@ -49,4 +49,6 @@ return require('packer').startup(function()
 
   use {'dracula/vim', as = 'dracula'}
 
+  use 'folke/tokyonight.nvim'
+
 end)
