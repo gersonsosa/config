@@ -5,11 +5,14 @@ return require('packer').startup(function()
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
-      {'nvim-lua/plenary.nvim'}
+      { 'nvim-lua/plenary.nvim' }
     }
   }
 
   use 'neovim/nvim-lspconfig'
+
+  use 'mfussenegger/nvim-dap'
+  use "Pocco81/DAPInstall.nvim"
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -30,7 +33,7 @@ return require('packer').startup(function()
 
   use {
     'romgrk/barbar.nvim',
-    requires = {'kyazdani42/nvim-web-devicons'}
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
 
   -- tpope plugins because this deserves a special section
@@ -46,8 +49,9 @@ return require('packer').startup(function()
   use 'nathanaelkane/vim-indent-guides'
 
   use 'fatih/vim-go'
+  use 'mfussenegger/nvim-jdtls'
 
-  use {'dracula/vim', as = 'dracula'}
+  use { 'dracula/vim', as = 'dracula' }
 
   use 'folke/tokyonight.nvim'
 
