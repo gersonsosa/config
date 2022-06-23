@@ -3,7 +3,7 @@ lua require('gersondev')
 
 " Enable sane defaults
 set number relativenumber
-set clipboard=unnamed
+set clipboard+=unnamedplus
 set colorcolumn=80
 set tabstop=2
 set expandtab shiftwidth=2
