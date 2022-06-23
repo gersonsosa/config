@@ -1,2 +1,2 @@
-vim.g.tokyonight_style = "day"
-vim.cmd[[colorscheme dracula]]
+vim.g.tokyonight_style = "storm"
+vim.cmd[[colorscheme tokyonight]]

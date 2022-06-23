@@ -48,6 +48,8 @@ return require('packer').startup(function()
   use 'mattn/gist-vim'
   use 'nathanaelkane/vim-indent-guides'
 
+  use 'rizzatti/dash.vim'
+
   use 'fatih/vim-go'
   use 'mfussenegger/nvim-jdtls'
 
