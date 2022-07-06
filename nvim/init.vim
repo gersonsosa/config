@@ -10,6 +10,7 @@ set expandtab shiftwidth=2
 set smarttab
 set list listchars=tab:▸▸,trail:·
 set noshowmode
+set dictionary+=/usr/share/dict/words
 
 " neovim teminal mode mappings
 :tnoremap <Esc> <C-\><C-n>
@@ -18,6 +19,7 @@ set noshowmode
 :nnoremap Q <Nop>
 
 " telescope mappings
+nnoremap <leader>t  <cmd>Telescope builtin<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
