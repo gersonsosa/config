@@ -2,7 +2,7 @@ local jdtls = require('jdtls')
 
 local jdtls_home = '/usr/share/java/jdtls'
 
-local root_markers = { 'gradlew', '.git' }
+local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
 local root_dir = require('jdtls.setup').find_root(root_markers)
 
 local jar_path = vim.fn.expand(jdtls_home .. '/plugins/org.eclipse.equinox.launcher_*.jar')
@@ -39,15 +39,10 @@ local config = {
 
     -- 💀
     '-jar', jar_path,
-    -- Must point to the                                                     Change this to
-    -- eclipse.jdt.ls installation                                           the actual version
 
 
     -- 💀
     '-configuration', config_dir:expand(),
-    -- Must point to the                      Change to one of `linux`, `win` or `mac`
-    -- eclipse.jdt.ls installation            Depending on your system.
-
 
     -- 💀
     -- See `data directory configuration` section in the README
@@ -57,14 +52,48 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = require('jdtls.setup').find_root({ '.git', 'mvnw', 'gradlew' }),
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   -- for a list of options
   settings = {
     java = {
-    }
+      implementationsCodeLens = {
+        enabled = true,
+      },
+      referencesCodeLens = {
+        enabled = true,
+      },
+      references = {
+        includeDecompiledSources = true,
+      },
+      inlayHints = {
+        parameterNames = {
+          enabled = "all", -- literals, all, none
+        },
+      },
+      saveActions = {
+        organizeImports = true,
+      },
+      contentProvider = { preferred = "fernflower" },
+      sources = {
+        organizeImports = {
+          starThreshold = 9999,
+          staticStarThreshold = 9999,
+        },
+      },
+      codeGeneration = {
+        toString = {
+          template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+        },
+        useBlocks = true,
+      },
+    },
+  },
+
+  flags = {
+    allow_incremental_sync = true
   },
 
   -- Language server `initializationOptions`
@@ -75,19 +104,12 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {}
+    bundles = {},
   },
 
-  on_attach = function(_, bufnr)
+  on_attach = function()
     jdtls.setup_dap({ hotcodereplace = 'auto' })
     jdtls.setup.add_commands()
-    local opts = { silent = true, buffer = bufnr }
-    vim.keymap.set('n', "<A-o>", jdtls.organize_imports, opts)
-    vim.keymap.set('n', "<leader>df", jdtls.test_class, opts)
-    vim.keymap.set('n', "<leader>dn", jdtls.test_nearest_method, opts)
-    vim.keymap.set('n', "crv", jdtls.extract_variable, opts)
-    vim.keymap.set('v', 'crm', [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]], opts)
-    vim.keymap.set('n', "crc", jdtls.extract_constant, opts)
   end
 }
 
@@ -95,6 +117,50 @@ local config = {
 vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 2 -- more space in the neovim command line for displaying messages
+
+local which_key = require "which-key"
+
+local opts = {
+  mode = "n", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+}
+
+local vopts = {
+  mode = "v", -- VISUAL mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+}
+
+local mappings = {
+  L = {
+    name = "Java",
+    o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
+    v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
+    c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
+    t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", "Test Method" },
+    T = { "<Cmd>lua require'jdtls'.test_class()<CR>", "Test Class" },
+    u = { "<Cmd>JdtUpdateConfig<CR>", "Update Config" },
+  },
+}
+
+local vmappings = {
+  L = {
+    name = "Java",
+    v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
+    c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
+    m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
+  },
+}
+
+which_key.register(mappings, opts)
+which_key.register(vmappings, vopts)
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
