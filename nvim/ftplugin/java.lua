@@ -120,13 +120,13 @@ vim.opt_local.cmdheight = 2 -- more space in the neovim command line for display
 
 local which_key = require "which-key"
 
-local opts = {
+local leader_opts = {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
 }
 
 local vopts = {
@@ -135,11 +135,11 @@ local vopts = {
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
 }
 
 local mappings = {
-  L = {
+  J = {
     name = "Java",
     o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
     v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
@@ -148,6 +148,14 @@ local mappings = {
     T = { "<Cmd>lua require'jdtls'.test_class()<CR>", "Test Class" },
     u = { "<Cmd>JdtUpdateConfig<CR>", "Update Config" },
   },
+  g = {
+    D = { '<cmd>lua vim.lsp.buf.declaration()<CR>' },
+    d = { '<cmd>lua vim.lsp.buf.definition()<CR>' },
+    i = { '<cmd>lua vim.lsp.buf.implementation()<CR>' },
+    r = { '<cmd>lua vim.lsp.buf.references()<CR>' },
+  },
+  K = { '<cmd>lua vim.lsp.buf.hover()<CR>' },
+  ['<c-K>'] = { '<cmd>lua vim.lsp.buf.signature_help()<CR>' },
 }
 
 local vmappings = {
@@ -159,8 +167,19 @@ local vmappings = {
   },
 }
 
-which_key.register(mappings, opts)
+which_key.register(mappings, leader_opts)
 which_key.register(vmappings, vopts)
+which_key.register({
+  name = "LSP",
+  ['<space>'] = {
+    wa = { '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>' },
+    wr = { '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>' },
+    wl = { '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>' },
+    D = { '<cmd>lua vim.lsp.buf.type_definition()<CR>' },
+    rn = { '<cmd>lua vim.lsp.buf.rename()<CR>' },
+    ca = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
+  },
+})
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.

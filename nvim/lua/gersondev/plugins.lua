@@ -40,23 +40,40 @@ packer.init {
 }
 
 return packer.startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim' -- install packer
+  use 'nvim-lua/plenary.nvim' -- required by many
 
-  -- Keybindings
-  use "folke/which-key.nvim"
+  -- key bindings helper
+  use { "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        plugins = {
+          registers = true
+        }
+      }
+    end
+  }
 
   -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
-    requires = {
-      { 'nvim-lua/plenary.nvim' }
-    }
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
-
   use { 'nvim-telescope/telescope-ui-select.nvim' }
 
+  -- LSP
   use 'neovim/nvim-lspconfig'
+  use { "jose-elias-alvarez/null-ls.nvim" }
+
+  -- auto completion
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/vim-vsnip" },
+    },
+  })
 
   use 'mfussenegger/nvim-dap'
   use "Pocco81/DAPInstall.nvim"
@@ -83,9 +100,18 @@ return packer.startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons' }
   }
 
+  -- greeter
+  use {
+    "goolord/alpha-nvim",
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+    end
+  }
+
   use { "akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
     require("toggleterm").setup()
   end }
+
   -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
@@ -96,7 +122,8 @@ return packer.startup(function(use)
 
   use 'airblade/vim-gitgutter'
   use 'mattn/gist-vim'
-  use 'nathanaelkane/vim-indent-guides'
+  use 'lukas-reineke/indent-blankline.nvim'
+
   use {
     'numToStr/Comment.nvim',
     config = function()
@@ -106,8 +133,17 @@ return packer.startup(function(use)
 
   use 'rizzatti/dash.vim'
 
+  use { 'ojroques/nvim-osc52',
+    config = function()
+      vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, { expr = true })
+      vim.keymap.set('n', '<leader>yy', '<leader>Y', { remap = true })
+      vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
+    end
+  }
+
   use 'fatih/vim-go'
   use 'mfussenegger/nvim-jdtls'
+  use { 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } }
 
   -- Coloschemes
   use { 'dracula/vim', as = 'dracula' }
