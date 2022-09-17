@@ -72,6 +72,7 @@ return packer.startup(function(use)
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
+      { "hrsh7th/cmp-path" },
     },
   })
 
@@ -108,21 +109,29 @@ return packer.startup(function(use)
     end
   }
 
-  use { "akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
-    require("toggleterm").setup()
+  use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup {
+      open_mapping = [[<c-\>]],
+    }
   end }
 
   -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
-  use 'tpope/vim-vinegar'
+  --use 'tpope/vim-vinegar'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-obsession'
-  use 'tpope/vim-unimpaired'
+  --use 'tpope/vim-unimpaired'
 
   use 'airblade/vim-gitgutter'
   use 'mattn/gist-vim'
-  use 'lukas-reineke/indent-blankline.nvim'
+  use { 'lukas-reineke/indent-blankline.nvim', config = function()
+    require("indent_blankline").setup {
+      -- for example, context is off by default, use this to turn it on
+      show_current_context = true,
+      show_current_context_start = true,
+    }
+  end }
 
   use {
     'numToStr/Comment.nvim',
@@ -149,4 +158,9 @@ return packer.startup(function(use)
   use { 'dracula/vim', as = 'dracula' }
   use 'folke/tokyonight.nvim'
 
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if PACKER_BOOTSTRAP then
+    require("packer").sync()
+  end
 end)
