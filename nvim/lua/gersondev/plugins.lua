@@ -118,10 +118,8 @@ return packer.startup(function(use)
   -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
-  --use 'tpope/vim-vinegar'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-obsession'
-  --use 'tpope/vim-unimpaired'
   use 'tpope/vim-rhubarb'
 
   use 'airblade/vim-gitgutter'
