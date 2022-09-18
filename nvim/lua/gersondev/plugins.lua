@@ -122,6 +122,7 @@ return packer.startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-obsession'
   --use 'tpope/vim-unimpaired'
+  use 'tpope/vim-rhubarb'
 
   use 'airblade/vim-gitgutter'
   use 'mattn/gist-vim'
