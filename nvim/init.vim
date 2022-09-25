@@ -10,6 +10,7 @@ set expandtab shiftwidth=2
 set smarttab
 set list listchars=tab:▸▸,trail:·
 set noshowmode
+set timeoutlen=1500
 set dictionary+=/usr/share/dict/words
 
 " neovim teminal mode mappings

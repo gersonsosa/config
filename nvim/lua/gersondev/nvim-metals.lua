@@ -27,7 +27,7 @@ local function map(mode, lhs, rhs, opts)
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
-  api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 ----------------------------------
@@ -81,24 +81,31 @@ which_key.register(leader_mappings, leader_opts)
 which_key.register(space_mappings, space_opts)
 
 -- LSP mappings
-map("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>")
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-map("n", "gds", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-map("n", "gws", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
-map("n", "[c", "<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>")
-map("n", "]c", "<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>")
+map("n", "gD", function() vim.lsp.buf.definition() end, { desc = "Go to definition" })
+map("n", "K", function() vim.lsp.buf.hover() end, { desc = "Hover" })
+map("n", "gi", function() vim.lsp.buf.implementation() end, { desc = "Go to implementation" })
+map("n", "gr", function() vim.lsp.buf.references() end, { desc = "Show references" })
+map("n", "gds", function() vim.lsp.buf.document_symbol() end, { desc = "List symbols" })
+map("n", "gws", function() vim.lsp.buf.workspace_symbol() end, { desc = "List workspace symbols" })
+map("n", "[c", function() vim.diagnostic.goto_prev { wrap = false } end, { desc = "Go to prev diag" })
+map("n", "]c", function() vim.diagnostic.goto_next { wrap = false } end, { desc = "Go to next diag" })
 
--- Example mappings for usage with nvim-dap. If you don't use that, you can
--- skip these
-map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]])
-map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]])
-map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]])
-map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
-map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]])
-map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]])
-map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]])
+-- DAP mappings
+local leader_dap_mappings = {
+  d = {
+    c = { [[<cmd>lua require"dap".continue()<CR>]], 'Debug - Continue' },
+    r = { [[<cmd>lua require"dap".repl.toggle()<CR>]], 'DAP - Toogle REPL' },
+    K = { [[<cmd>lua require"dap.ui.widgets".hover()<CR>]], 'Debug - Hover' },
+    t = { [[<cmd>lua require"dap".toggle_breakpoint()<CR>]], 'Toogle Breakpoint' },
+    s = {
+      o = { [[<cmd>lua require"dap".step_over()<CR>]], 'Debug - Step Over' },
+      i = { [[<cmd>lua require"dap".step_into()<CR>]], 'Debug - Step into' }
+    },
+    l = { [[<cmd>lua require"dap".run_last()<CR>]], 'Debug - Run last' }
+  },
+}
+
+which_key.register(leader_dap_mappings, leader_opts)
 
 -- completion related settings
 -- This is similiar to what I use
