@@ -97,6 +97,8 @@ return packer.startup(function(use)
     run = ':TSUpdate'
   }
 
+  use 'nvim-treesitter/nvim-treesitter-context'
+
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
