@@ -59,18 +59,51 @@ local space_opts = {
 
 local leader_mappings = {
   c = {
-    l = { '<cmd>lua vim.lsp.codelens.run()<CR>', 'Run code lens' },
-    a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', 'Execute code action' }
+    l = {
+      '<cmd>lua vim.lsp.codelens.run()<CR>',
+      'Run code lens'
+    },
+    a = {
+      '<cmd>lua vim.lsp.buf.code_action()<CR>',
+      'Execute code action'
+    }
   },
-  s = { h = { '<cmd>lua vim.lsp.buf.signature_help()<CR>', "Pop signature help" } },
-  r = { n = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename object" } },
-  w = { s = { '<cmd>lua require"metals".hover_worksheet()<CR>', "Hover workspace" } },
+  s = {
+    h = {
+      '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+      "Pop signature help"
+    }
+  },
+  r = {
+    n = {
+      '<cmd>lua vim.lsp.buf.rename()<CR>',
+      "Rename object"
+    }
+  },
+  w = {
+    s = {
+      '<cmd>lua require"metals".hover_worksheet()<CR>',
+      "Hover workspace"
+    }
+  },
   a = {
-    a = { '<cmd>lua vim.diagnostic.setqflist()<CR>', "workspace diagnostics" }, -- all workspace diagnostics
-    e = { '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>', "Workspace errors" }, -- all workspace errors
-    w = { '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>', "Workspace warnings" }, -- all workspace warnings
+    a = {
+      '<cmd>lua vim.diagnostic.setqflist()<CR>',
+      "workspace diagnostics"
+    }, -- all workspace diagnostics
+    e = {
+      '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
+      "Workspace errors"
+    }, -- all workspace errors
+    w = {
+      '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
+      "Workspace warnings"
+    }, -- all workspace warnings
   },
-  d = { '<cmd>lua vim.diagnostic.setloclist()<CR>', "Current buffer diagnostics" } -- buffer diagnostics only
+  d = {
+    '<cmd>lua vim.diagnostic.setloclist()<CR>',
+    "Current buffer diagnostics"
+  } -- buffer diagnostics only
 }
 
 local space_mappings = {
@@ -108,8 +141,7 @@ local leader_dap_mappings = {
 which_key.register(leader_dap_mappings, leader_opts)
 
 -- completion related settings
--- This is similiar to what I use
-local cmp = require("cmp")
+local cmp = require "cmp"
 cmp.setup({
   sources = {
     { name = "nvim_lsp" },
@@ -156,14 +188,10 @@ metals_config.settings = {
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
 }
 
--- *READ THIS*
--- I *highly* recommend setting statusBarProvider to true, however if you do,
--- you *have* to have a setting to display this in your statusline or else
--- you'll not see any messages from metals. There is more info in the help
--- docs about this
+-- hide messages and display only trough vim.g['metals_status']
 metals_config.init_options.statusBarProvider = "on"
 
--- Example if you are using cmp how to make sure the correct capabilities for snippets are set
+-- make sure the correct capabilities for snippets are set
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 metals_config.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
