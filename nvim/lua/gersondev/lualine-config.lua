@@ -2,10 +2,6 @@ local function obsession_status()
   return vim.fn.ObsessionStatus('Session ', 'Session ')
 end
 
-local function metals_status()
-  return vim.g['metals_status'] or ''
-end
-
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -21,19 +17,19 @@ require('lualine').setup {
     },
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
-    lualine_x = { metals_status },
+    lualine_x = { 'g:metals_status' },
     lualine_y = { obsession_status, 'filetype', 'progress' },
     lualine_z = {
       { 'location', separator = { right = '' }, left_padding = 2 },
     },
   },
   inactive_sections = {
-    lualine_a = { 'filename' },
+    lualine_a = {},
     lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
     lualine_y = {},
-    lualine_z = { 'location' }
+    lualine_z = {}
   },
   tabline = {},
   extensions = {}
