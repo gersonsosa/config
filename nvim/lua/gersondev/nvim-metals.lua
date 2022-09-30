@@ -27,7 +27,7 @@ local function map(mode, lhs, rhs, opts)
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
-  vim.keymap.set(mode, lhs, rhs, opts)
+  vim.keymap.set(mode, lhs, rhs, options)
 end
 
 ----------------------------------
@@ -93,11 +93,11 @@ local leader_mappings = {
     }, -- all workspace diagnostics
     e = {
       '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
-      "Workspace errors"
+      "workspace errors"
     }, -- all workspace errors
     w = {
       '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
-      "Workspace warnings"
+      "workspace warnings"
     }, -- all workspace warnings
   },
   d = {
@@ -122,6 +122,21 @@ map("n", "gds", function() vim.lsp.buf.document_symbol() end, { desc = "List sym
 map("n", "gws", function() vim.lsp.buf.workspace_symbol() end, { desc = "List workspace symbols" })
 map("n", "[c", function() vim.diagnostic.goto_prev { wrap = false } end, { desc = "Go to prev diag" })
 map("n", "]c", function() vim.diagnostic.goto_next { wrap = false } end, { desc = "Go to next diag" })
+
+-- Telescope mappings
+local telescope = require "telescope"
+local telescope_builtin = require "telescope.builtin"
+
+local function metals_commands()
+  telescope.extensions.metals.commands()
+end
+
+local function telescope_lsp_doc_symbols()
+  telescope_builtin.lsp_document_symbols()
+end
+
+map("n", "<leader>mc", metals_commands, { desc = 'Show metals commands' })
+map("n", "<leader>ds", telescope_lsp_doc_symbols, { desc = 'List document symbols' })
 
 -- DAP mappings
 local leader_dap_mappings = {
