@@ -1,5 +1,7 @@
 -- Set barbar's options
-vim.g.bufferline = {
+require('bufferline').setup {
+  animation = true,
+  tabpages = true,
   -- Enable/disable auto-hiding the tab bar when there is a single buffer
   auto_hide = false,
 
@@ -28,16 +30,19 @@ vim.g.bufferline = {
   -- optimal for the qwerty keyboard layout but might need adjustement
   -- for other layouts.
   letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+  no_name_title = nil,
 }
 
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- Move to previous/next
-map('n', '<space>,', ':BufferPrevious<CR>', opts)
-map('n', '<space>.', ':BufferNext<CR>', opts)
+map('n', '<space>,', ':BufferPrevious<CR>',
+  { desc = "Go to previous buffer", noremap = true, silent = true })
+map('n', '<space>.', ':BufferNext<CR>',
+  { desc = "Go to next buffer", noremap = true, silent = true })
 -- Goto buffer in position...
-map('n', '<leader>1', ':BufferGoto 1<CR>', opts)
+map('n', '<leader>1', [[:BufferGoto 1<CR>]], opts)
 map('n', '<leader>2', ':BufferGoto 2<CR>', opts)
 map('n', '<leader>3', ':BufferGoto 3<CR>', opts)
 map('n', '<leader>4', ':BufferGoto 4<CR>', opts)
@@ -48,6 +53,6 @@ map('n', '<leader>8', ':BufferGoto 8<CR>', opts)
 map('n', '<leader>9', ':BufferGoto 9<CR>', opts)
 map('n', '<leader>0', ':BufferLast<CR>', opts)
 -- Close buffer
-map('n', '<leader>q', ':BufferClose<CR>', opts)
+map('n', '<leader>q', ':BufferDelete<CR>', opts)
 -- Magic buffer-picking mode
-map('n', '<C-p>', ':BufferPick<CR>', opts)
+map('n', '<leader>p', ':BufferPick<CR>', opts)
