@@ -35,7 +35,6 @@ end
 ----------------------------------
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
-vim.opt_global.shortmess:remove("F"):append("c")
 
 local which_key = require "which-key"
 
@@ -57,60 +56,20 @@ local space_opts = {
   nowait = false, -- use `nowait` when creating keymaps
 }
 
-local leader_mappings = {
-  c = {
-    l = {
-      '<cmd>lua vim.lsp.codelens.run()<CR>',
-      'Run code lens'
-    },
-    a = {
-      '<cmd>lua vim.lsp.buf.code_action()<CR>',
-      'Execute code action'
-    }
-  },
-  s = {
-    h = {
-      '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-      "Pop signature help"
-    }
-  },
-  r = {
-    n = {
-      '<cmd>lua vim.lsp.buf.rename()<CR>',
-      "Rename object"
-    }
-  },
-  w = {
-    s = {
-      '<cmd>lua require"metals".hover_worksheet()<CR>',
-      "Hover workspace"
-    }
-  },
-  a = {
-    a = {
-      '<cmd>lua vim.diagnostic.setqflist()<CR>',
-      "workspace diagnostics"
-    }, -- all workspace diagnostics
-    e = {
-      '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
-      "workspace errors"
-    }, -- all workspace errors
-    w = {
-      '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
-      "workspace warnings"
-    }, -- all workspace warnings
-  },
-  d = {
-    '<cmd>lua vim.diagnostic.setloclist()<CR>',
-    "Current buffer diagnostics"
-  } -- buffer diagnostics only
-}
+map('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', { desc = 'Run code lens' })
+map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'Execute code action' })
+map('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = 'Pop signature help' })
+map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = 'Rename object' })
+map('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>', { desc = 'Hover workspace' })
+map('n', '<leader>aa', '<cmd>lua vim.diagnostic.setqflist()<CR>', { desc = 'workspace diagnostics' }) -- all workspace diagnostics
+map('n', '<leader>ae', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>', { desc = 'workspace errors' }) -- all workspace errors
+map('n', '<leader>aw', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>', { desc = 'workspace warnings' }) -- all workspace warnings
+map('n', '<leader>d', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = 'Current buffer diagnostics' }) -- buffer diagnostics only
 
 local space_mappings = {
   f = { '<cmd>lua vim.lsp.buf.formatting()<CR>', "Format" },
 }
 
-which_key.register(leader_mappings, leader_opts)
 which_key.register(space_mappings, space_opts)
 
 -- LSP mappings
