@@ -21,14 +21,8 @@
 -- - https://github.com/mfussenegger/nvim-dap (for debugging)
 -------------------------------------------------------------------------------
 local api = vim.api
-
-local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.keymap.set(mode, lhs, rhs, options)
-end
+local f = require "gersondev.functions"
+local map = f.map
 
 ----------------------------------
 -- OPTIONS -----------------------
@@ -37,24 +31,6 @@ end
 vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
 
 local which_key = require "which-key"
-
-local leader_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
-
-local space_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<space>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
 
 map('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>', { desc = 'Run code lens' })
 map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'Execute code action' })
@@ -66,11 +42,7 @@ map('n', '<leader>ae', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>'
 map('n', '<leader>aw', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>', { desc = 'workspace warnings' }) -- all workspace warnings
 map('n', '<leader>d', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = 'Current buffer diagnostics' }) -- buffer diagnostics only
 
-local space_mappings = {
-  f = { '<cmd>lua vim.lsp.buf.formatting()<CR>', "Format" },
-}
-
-which_key.register(space_mappings, space_opts)
+map('n', 'f', function() vim.lsp.buf.format { async = true } end, { desc = "Format" })
 
 -- LSP mappings
 map("n", "gD", function() vim.lsp.buf.definition() end, { desc = "Go to definition" })
@@ -110,6 +82,15 @@ local leader_dap_mappings = {
     },
     l = { [[<cmd>lua require"dap".run_last()<CR>]], 'Debug - Run last' }
   },
+}
+
+local leader_opts = {
+  mode = "n", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
 }
 
 which_key.register(leader_dap_mappings, leader_opts)

@@ -1,17 +1,17 @@
+local f = require "gersondev.functions"
+local map = f.map
+
 -- Mappings.lsp
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+map('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic" })
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "go to prev diagnostic" })
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "go to next diagnostic" })
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
+local opts = { noremap = true, silent = true }
+local on_attach = function(_, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format {async = true}<CR>', opts)
 end
 
 local nvim_lsp = require('lspconfig')
@@ -77,6 +77,42 @@ nvim_lsp.sumneko_lua.setup {
     },
   },
 }
+
+local cmp = require("cmp")
+cmp.setup({
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "vsnip" },
+  },
+  snippet = {
+    expand = function(args)
+      -- Comes from vsnip
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    -- None of this made sense to me when first looking into this since there
+    -- is no vim docs, but you can't have select = true here _unless_ you are
+    -- also using the snippet stuff. So keep in mind that if you remove
+    -- snippets you need to remove this select
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    -- I use tabs... some say you should stick to ins-completion but this is just here as an example
+    ["<Tab>"] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
+    ["<S-Tab>"] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
+  }),
+})
 
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
