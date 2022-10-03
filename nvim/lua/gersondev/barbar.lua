@@ -54,5 +54,6 @@ map('n', '<leader>9', ':BufferGoto 9<CR>', opts)
 map('n', '<leader>0', ':BufferLast<CR>', opts)
 -- Close buffer
 map('n', '<leader>q', ':BufferDelete<CR>', opts)
+map('n', '<leader>k', ':BufferWipeout!<CR>', opts)
 -- Magic buffer-picking mode
 map('n', '<leader>p', ':BufferPick<CR>', opts)
