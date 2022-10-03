@@ -1,7 +1,12 @@
-require'nvim-tree'.setup {}
+local f = require "gersondev.functions"
+local map = f.map
 
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', opts)
-vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>r', ':NvimTreeRefresh<CR>', opts)
+require 'nvim-tree'.setup {
+  view = {
+    adaptive_size = true
+  }
+}
 
+map('n', '<leader>n', ':NvimTreeFindFile<CR>', { desc = "Find file in tree" })
+map('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = "Toggle tree" })
+map('n', '<leader>r', ':NvimTreeRefresh<CR>', { desc = "Refresh tree" })
