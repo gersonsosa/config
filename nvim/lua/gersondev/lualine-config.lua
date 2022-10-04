@@ -7,7 +7,7 @@ require('lualine').setup {
     icons_enabled = true,
     theme = 'auto',
     component_separators = '',
-    section_separators = { left = ' ', right = ' ' },
+    section_separators = { left = ' ', right = ' ' },
     disabled_filetypes = { 'qf' },
     always_divide_middle = true,
   },
@@ -20,7 +20,7 @@ require('lualine').setup {
     lualine_x = { 'g:metals_status' },
     lualine_y = { obsession_status, 'filetype', 'progress' },
     lualine_z = {
-      { 'location', separator = { left = ' ', right = '█' }, left_padding = 2 },
+      { 'location', separator = { left = ' ', right = '█' }, left_padding = 2 },
     },
   },
   inactive_sections = {
