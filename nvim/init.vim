@@ -19,13 +19,6 @@ set dictionary+=/usr/share/dict/words
 " Disable EX mode
 :nnoremap Q <Nop>
 
-" telescope mappings
-nnoremap <leader>t  <cmd>Telescope builtin<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>

@@ -72,6 +72,7 @@ return packer.startup(function(use)
     'nvim-telescope/telescope.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use { 'nvim-telescope/telescope-ui-select.nvim' }
 
   -- LSP
@@ -171,7 +172,6 @@ return packer.startup(function(use)
   use { 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } }
 
   -- Coloschemes
-  use { 'dracula/vim', as = 'dracula' }
   use 'folke/tokyonight.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
