@@ -33,27 +33,25 @@ require('bufferline').setup {
   no_name_title = nil,
 }
 
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
+local f = require "gersondev.functions"
+local map = f.map
 
 -- Move to previous/next
-map('n', '<space>,', ':BufferPrevious<CR>',
-  { desc = "Go to previous buffer", noremap = true, silent = true })
-map('n', '<space>.', ':BufferNext<CR>',
-  { desc = "Go to next buffer", noremap = true, silent = true })
+map('n', '<space>,', ':BufferPrevious<CR>', { desc = "Go to previous buffer" })
+map('n', '<space>.', ':BufferNext<CR>', { desc = "Go to next buffer" })
 -- Goto buffer in position...
-map('n', '<leader>1', [[:BufferGoto 1<CR>]], opts)
-map('n', '<leader>2', ':BufferGoto 2<CR>', opts)
-map('n', '<leader>3', ':BufferGoto 3<CR>', opts)
-map('n', '<leader>4', ':BufferGoto 4<CR>', opts)
-map('n', '<leader>5', ':BufferGoto 5<CR>', opts)
-map('n', '<leader>6', ':BufferGoto 6<CR>', opts)
-map('n', '<leader>7', ':BufferGoto 7<CR>', opts)
-map('n', '<leader>8', ':BufferGoto 8<CR>', opts)
-map('n', '<leader>9', ':BufferGoto 9<CR>', opts)
-map('n', '<leader>0', ':BufferLast<CR>', opts)
+map('n', '<leader>1', [[:BufferGoto 1<CR>]], { desc = "Go to buffer 1" })
+map('n', '<leader>2', ':BufferGoto 2<CR>', { desc = "Go to buffer 2" })
+map('n', '<leader>3', ':BufferGoto 3<CR>', { desc = "Go to buffer 3" })
+map('n', '<leader>4', ':BufferGoto 4<CR>', { desc = "Go to buffer 4" })
+map('n', '<leader>5', ':BufferGoto 5<CR>', { desc = "Go to buffer 5" })
+map('n', '<leader>6', ':BufferGoto 6<CR>', { desc = "Go to buffer 6" })
+map('n', '<leader>7', ':BufferGoto 7<CR>', { desc = "Go to buffer 7" })
+map('n', '<leader>8', ':BufferGoto 8<CR>', { desc = "Go to buffer 8" })
+map('n', '<leader>9', ':BufferGoto 9<CR>', { desc = "Go to buffer 9" })
+map('n', '<leader>0', ':BufferLast<CR>', { desc = "Go to buffer 0" })
 -- Close buffer
-map('n', '<leader>q', ':BufferDelete<CR>', opts)
-map('n', '<leader>k', ':BufferWipeout!<CR>', opts)
+map('n', '<leader>q', ':BufferDelete<CR>', { desc = "Close buffer" })
+map('n', '<leader>k', ':BufferWipeout!<CR>', { desc = "Wipeot buffer" })
 -- Magic buffer-picking mode
-map('n', '<leader>p', ':BufferPick<CR>', opts)
+map('n', '<leader>p', ':BufferPick<CR>', { desc = "Pick buffer" })
