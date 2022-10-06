@@ -78,8 +78,15 @@ return packer.startup(function(use)
 
   -- LSP
   use 'neovim/nvim-lspconfig'
-  -- use { "jose-elias-alvarez/null-ls.nvim" }
+  use "jose-elias-alvarez/null-ls.nvim"
   use 'lewis6991/impatient.nvim'
+  use {
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {}
+    end
+  }
 
   -- auto completion
   use({
@@ -107,7 +114,7 @@ return packer.startup(function(use)
 
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' }
+    requires = { 'nvim-tree/nvim-web-devicons' }
   }
 
   -- greeter
