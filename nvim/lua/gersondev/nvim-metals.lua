@@ -40,9 +40,9 @@ map('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>', { desc 
 map('n', '<leader>aa', '<cmd>lua vim.diagnostic.setqflist()<CR>', { desc = 'workspace diagnostics' }) -- all workspace diagnostics
 map('n', '<leader>ae', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>', { desc = 'workspace errors' }) -- all workspace errors
 map('n', '<leader>aw', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>', { desc = 'workspace warnings' }) -- all workspace warnings
-map('n', '<leader>d', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = 'Current buffer diagnostics' }) -- buffer diagnostics only
+map('n', '<leader>dd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = 'Current buffer diagnostics' }) -- buffer diagnostics only
 
-map('n', 'f', function() vim.lsp.buf.format { async = true } end, { desc = "Format" })
+map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, { desc = "Format" })
 
 -- LSP mappings
 map("n", "gD", function() vim.lsp.buf.definition() end, { desc = "Go to definition" })
@@ -51,8 +51,6 @@ map("n", "gi", function() vim.lsp.buf.implementation() end, { desc = "Go to impl
 map("n", "gr", function() vim.lsp.buf.references() end, { desc = "Show references" })
 map("n", "gds", function() vim.lsp.buf.document_symbol() end, { desc = "List symbols" })
 map("n", "gws", function() vim.lsp.buf.workspace_symbol() end, { desc = "List workspace symbols" })
-map("n", "[c", function() vim.diagnostic.goto_prev { wrap = false } end, { desc = "Go to prev diag" })
-map("n", "]c", function() vim.diagnostic.goto_next { wrap = false } end, { desc = "Go to next diag" })
 
 -- Telescope mappings
 local telescope = require "telescope"

@@ -3,7 +3,7 @@ local map = f.map
 
 -- Mappings.lsp
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-map('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic" })
+map('n', '<leader>dd', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic" })
 map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "go to prev diagnostic" })
 map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "go to next diagnostic" })
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })

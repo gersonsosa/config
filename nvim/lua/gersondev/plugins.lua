@@ -139,7 +139,20 @@ return packer.startup(function(use)
   use 'tpope/vim-obsession'
   use 'tpope/vim-rhubarb'
 
-  use 'airblade/vim-gitgutter'
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup({
+        current_line_blame = false,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol',
+          delay = 1500,
+          ignore_whitespace = false,
+        },
+      })
+    end
+  }
   use 'mattn/gist-vim'
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
     require("indent_blankline").setup {
@@ -163,7 +176,6 @@ return packer.startup(function(use)
   use { 'ojroques/nvim-osc52',
     config = function()
       vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, { expr = true })
-      vim.keymap.set('n', '<leader>yy', '<leader>Y', { remap = true })
       vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
     end
   }
