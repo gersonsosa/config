@@ -30,8 +30,8 @@ window:
   # must be at least `2`, while using a value of `0` for columns and lines will
   # fall back to the window manager's recommended size.
   dimensions:
-    columns: 120
-    lines: 40
+    columns: 160
+    lines: 50
 
   # Window position (changes require restart)
   #
@@ -50,7 +50,7 @@ window:
   #  y: 0
 
   # Spread additional padding evenly around the terminal content.
-  #dynamic_padding: false
+  dynamic_padding: true
 
   # Window decorations
   #
@@ -117,10 +117,10 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: JetBrainsMono Nerd Font
+    family: FiraCode Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    style: Retina
 
   # Bold font face
   #bold:
@@ -172,18 +172,12 @@ font:
   #  x: 0
   #  y: 0
 
-  # Thin stroke font rendering (macOS only)
-  #
-  # Thin strokes are suitable for retina displays, but for non-retina screens
-  # it is recommended to set `use_thin_strokes` to `false`.
-  #use_thin_strokes: true
-
   # Use built-in font for box drawing characters.
   #
   # If `true`, Alacritty will use a custom built-in font for box drawing
   # characters (Unicode points 2500 - 259f).
   #
-  #builtin_box_drawing: true
+  builtin_box_drawing: true
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
@@ -320,7 +314,7 @@ schemes:
       - { index: 16, color: '0xff966c' }
       - { index: 17, color: '0xc53b53' }
 # Colors (Tomorrow Night)
-colors: *tokyo-night-storm
+colors: *tokyo-night
   # Default colors
   #primary:
   #  background: '#1d1f21'
@@ -482,14 +476,14 @@ bell:
   #   - EaseOutExpo
   #   - EaseOutCirc
   #   - Linear
-  animation: EaseOut
+  animation: EaseOutExpo
 
   # Duration of the visual bell flash in milliseconds. A `duration` of `0` will
   # disable the visual bell animation.
-  duration: 250
+  duration: 300
 
   # Visual bell animation color.
-  color: '0xe0af68'
+  color: '0xf7768e'
 
   # Bell Command
   #
