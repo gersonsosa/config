@@ -19,7 +19,7 @@ require('bufferline').setup {
   icon_close_tab_modified = '●',
   icon_pinned = '車',
 
-  exclude_ft = { 'qf' },
+  exclude_ft = { 'qf', 'dap-repl' },
   -- If set, the letters for each buffer in buffer-pick mode will be
   -- assigned based on their name. Otherwise or in case all letters are
   -- already assigned, the behavior is to assign letters in order of
