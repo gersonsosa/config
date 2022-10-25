@@ -92,25 +92,21 @@ return packer.startup(function(use)
   })
 
   use 'mfussenegger/nvim-dap'
-  use "Pocco81/DAPInstall.nvim"
 
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
-
   use 'nvim-treesitter/nvim-treesitter-context'
 
   use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    }
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' }
   }
 
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
 
   use {
@@ -138,6 +134,7 @@ return packer.startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-obsession'
   use 'tpope/vim-rhubarb'
+  use 'rbong/vim-flog'
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -147,7 +144,7 @@ return packer.startup(function(use)
         current_line_blame_opts = {
           virt_text = true,
           virt_text_pos = 'eol',
-          delay = 1500,
+          delay = 1000,
           ignore_whitespace = false,
         },
       })
