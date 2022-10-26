@@ -74,6 +74,7 @@ return packer.startup(function(use)
   }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use { 'nvim-telescope/telescope-ui-select.nvim' }
+  use { 'nvim-telescope/telescope-frecency.nvim', requires = { "kkharji/sqlite.lua" } }
 
   -- LSP
   use 'neovim/nvim-lspconfig'
@@ -131,20 +132,7 @@ return packer.startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'rbong/vim-flog'
 
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup({
-        current_line_blame = false,
-        current_line_blame_opts = {
-          virt_text = true,
-          virt_text_pos = 'eol',
-          delay = 1000,
-          ignore_whitespace = false,
-        },
-      })
-    end
-  }
+  use 'lewis6991/gitsigns.nvim'
   use 'mattn/gist-vim'
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
     require("indent_blankline").setup {
@@ -178,6 +166,7 @@ return packer.startup(function(use)
 
   -- Coloschemes
   use 'folke/tokyonight.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
