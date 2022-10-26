@@ -31,6 +31,8 @@ local on_attach = function(_, bufnr)
 end
 
 local nvim_lsp = require('lspconfig')
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- fence ts files for denols since it also uses ts files
 vim.g.markdown_fenced_languages = {
@@ -76,21 +78,23 @@ nvim_lsp.sumneko_lua.setup {
       },
     },
   },
+  capabilities = capabilities,
 }
 
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+nvim_lsp.pyright.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = function (client)
+    client.config.settings.python.venvPath = vim.fn.expand('~/.virtualenvs')
+  end
+}
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "yamlls", "eslint", "pyright" }
+local servers = { "yamlls", "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
     capabilities = capabilities,
   }
 end
