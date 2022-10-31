@@ -2,7 +2,6 @@ local f = require "gersondev.functions"
 local map = f.map
 
 local t = require('telescope')
-local actions = require("telescope.actions")
 t.setup {
   defaults = {
     path_display = { "smart" },
@@ -16,14 +15,16 @@ t.setup {
   },
   prompt_prefix = "❯",
   mappings = {
-    n = {
-      ["f"] = actions.send_to_qflist,
-    },
+    ["<M-q>"] = false
   },
   pickers = {
-    find_files = {
-      theme = "ivy",
-    }
+    find_files = { theme = "ivy" },
+    git_files = { theme = "ivy" },
+    buffers = { theme = "ivy" },
+    oldfiles = { theme = "ivy" },
+    frecency = { theme = "ivy" },
+    live_grep = { theme = "dropdown" },
+    grep_string = { theme = "dropdown" }
   },
   extensions = {
     fzf = {
@@ -63,9 +64,9 @@ map("n", "<leader>fr", [[<cmd>Telescope frecency workspace=CWD<cr>]], { desc = "
 map("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
 map("n", "<leader>fg", [[<cmd>Telescope live_grep<cr>]], { desc = "Live grep" })
 map("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
-map("n", "<leader>fh", [[<cmd>Telescope oldfiles<cr>]], { desc = "Recently opened files" })
+map("n", "<leader>fh", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
 map("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
 map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
 map("x", "<leader>wg", function()
-  t_built_in.grep_string({ default_text = get_visual_selection() })
+  t_built_in.grep_string({ search = get_visual_selection() })
 end, { desc = "Grep selected string" })
