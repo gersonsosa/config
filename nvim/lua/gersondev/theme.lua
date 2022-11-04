@@ -1,5 +1,5 @@
 vim.o.termguicolors = true
-vim.cmd [[colorscheme catppuccin-macchiato]]
+vim.cmd [[colorscheme catppuccin]]
 
 require("catppuccin").setup {
   flavour = "macchiato", -- mocha, macchiato, frappe, latte
