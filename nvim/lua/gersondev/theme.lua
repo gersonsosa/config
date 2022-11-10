@@ -3,11 +3,16 @@ vim.cmd [[colorscheme catppuccin]]
 
 require("catppuccin").setup {
   flavour = "macchiato", -- mocha, macchiato, frappe, latte
-  telescope = true,
-  treesitter = true,
-  treesitter_context = true,
   integrations = {
+    telescope = true,
+    neogit = true,
+    gitsigns = true,
+    treesitter = true,
+    treesitter_context = true,
     which_key = true,
+    markdown = true,
+    nvimtree = true,
+    lsp_trouble = true,
     dap = {
       enabled = true,
       enable_ui = false,
@@ -15,7 +20,7 @@ require("catppuccin").setup {
     native_lsp = {
       enabled = true,
       virtual_text = {
-        errors = { "italic" },
+        errors = { "bold" },
         hints = { "italic" },
         warnings = { "italic" },
         information = { "italic" },

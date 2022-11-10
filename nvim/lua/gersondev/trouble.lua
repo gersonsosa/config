@@ -1,5 +1,5 @@
 require("trouble").setup {
-  position = "right",
+  position = "bottom",
   mode = "document_diagnostics",
   auto_preview = false,
 }

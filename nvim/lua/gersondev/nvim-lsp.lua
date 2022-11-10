@@ -3,36 +3,50 @@ local map = f.map
 
 -- Mappings.lsp
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-map('n', '<leader>dd', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic" })
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "go to prev diagnostic" })
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "go to next diagnostic" })
+map('n', '<leader>di', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic in a window" })
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "Go to prev diagnostic" })
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "Go to next diagnostic" })
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local opts = { noremap = true, silent = true }
 local on_attach = function(_, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl',
-    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format {async = true}<CR>', opts)
+  map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { buffer = bufnr })
+  map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { buffer = bufnr })
+  map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { buffer = bufnr })
+  map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { buffer = bufnr })
+  map('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { buffer = bufnr })
+  map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { buffer = bufnr })
+  map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { buffer = bufnr })
+  map('n', '<space>wl',
+    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', { buffer = bufnr })
+  map('n', '<space>k', '<cmd>lua vim.lsp.buf.type_definition()<CR>', { buffer = bufnr })
+  map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { buffer = bufnr })
+  map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { buffer = bufnr })
+  map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { buffer = bufnr })
+  map('n', '<space>f', '<cmd>lua vim.lsp.buf.format {async = true}<CR>', { buffer = bufnr })
+
+  -- Telescope mappings
+  local function telescope_lsp_doc_symbols()
+    require "telescope.builtin".lsp_document_symbols()
+  end
+
+  map("n", "<leader>ds", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
 end
 
 local nvim_lsp = require('lspconfig')
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- Language specific configurations, move to a specific file?
 
 -- fence ts files for denols since it also uses ts files
 vim.g.markdown_fenced_languages = {
@@ -84,7 +98,7 @@ nvim_lsp.sumneko_lua.setup {
 nvim_lsp.pyright.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  on_init = function (client)
+  on_init = function(client)
     client.config.settings.python.venvPath = vim.fn.expand('~/.virtualenvs')
   end
 }

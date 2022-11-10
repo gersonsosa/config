@@ -1,10 +1,20 @@
-local cmp = require("cmp")
+-- completion related settings
+
+local cmp = require "cmp"
+if cmp == nil then
+  return
+end
 
 cmp.setup {
-  sources = {
+  completion = {
+    autocomplete = false
+  },
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "vsnip" },
-  },
+  }, {
+    { name = "buffer", keyword_length = 99 },
+  }),
   snippet = {
     expand = function(args)
       -- Comes from vsnip
@@ -13,35 +23,20 @@ cmp.setup {
   },
   mapping = cmp.mapping.preset.insert({
     ["<C-k>"] = cmp.mapping.select_prev_item(),
+    ["<C-h>"] = cmp.mapping.select_prev_item({ count = 5 }),
     ["<C-j>"] = cmp.mapping.select_next_item(),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ["<C-l>"] = cmp.mapping.select_next_item({ count = 5 }),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-8),
+    ['<C-f>'] = cmp.mapping.scroll_docs(8),
     ['<C-Space>'] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    -- Accept currently selected item. If none selected, `select` first item.
-    -- Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    -- I use tabs... some say you should stick to ins-completion but this is just here as an example
-    ["<Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ["<S-Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
+    ["<CR>"] = cmp.mapping.confirm({ select = true })
   }),
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
-  },
+  }
 }

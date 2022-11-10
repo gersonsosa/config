@@ -4,7 +4,7 @@ local map = f.map
 local t = require('telescope')
 t.setup {
   defaults = {
-    path_display = { "smart" },
+    path_display = { "shorten" },
     preview = {
       filesize_hook = function(filepath, bufnr, opts)
         local max_bytes = 10000
@@ -26,20 +26,9 @@ t.setup {
     live_grep = { theme = "dropdown" },
     grep_string = { theme = "dropdown" }
   },
-  extensions = {
-    fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-    },
-    frecency = {
-      sorter = t.extensions.fzf.native_fzf_sorter()
-    }
-  }
 }
 
-t.load_extension('fzf')
+t.load_extension('zf-native')
 t.load_extension('ui-select')
 t.load_extension('frecency')
 
@@ -67,6 +56,7 @@ map("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
 map("n", "<leader>fh", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
 map("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
 map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
-map("x", "<leader>wg", function()
-  t_built_in.grep_string({ search = get_visual_selection() })
-end, { desc = "Grep selected string" })
+map("x", "<leader>wg", function() t_built_in.grep_string({ search = get_visual_selection() }) end,
+  { desc = "Grep selected string" })
+map("n", "<leader>tr", function() t_built_in.resume() end,
+  { desc = "Resume last telescope prompt" })

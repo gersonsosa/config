@@ -1,6 +1,6 @@
 require 'nvim-treesitter.configs'.setup {
   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml", "scala", "rust", "java" },
+  ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml", "scala", "rust", "java", "python" },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "go" }, -- List of parsers to ignore installing
   highlight = {
@@ -25,3 +25,8 @@ require 'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
+
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = "expr"
+vim.o.foldlevel = 20
+vim.o.foldenable = true

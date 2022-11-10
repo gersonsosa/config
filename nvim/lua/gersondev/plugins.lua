@@ -70,9 +70,10 @@ return packer.startup(function(use)
   -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    requires = 'nvim-lua/plenary.nvim'
   }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use 'natecraddock/telescope-zf-native.nvim'
   use { 'nvim-telescope/telescope-ui-select.nvim' }
   use { 'nvim-telescope/telescope-frecency.nvim', requires = { "kkharji/sqlite.lua" } }
 
@@ -90,10 +91,12 @@ return packer.startup(function(use)
       { "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
       { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-buffer" },
     },
   })
 
   use 'mfussenegger/nvim-dap'
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -120,21 +123,23 @@ return packer.startup(function(use)
   }
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
-    require("toggleterm").setup {
-      open_mapping = [[<c-\>]],
-    }
+    require("toggleterm").setup { open_mapping = [[<c-\>]] }
   end }
 
   -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
+  use { 'tpope/vim-fugitive', disable = true }
+  use { 'tpope/vim-rhubarb', disable = true }
   use 'tpope/vim-obsession'
-  use 'tpope/vim-rhubarb'
-  use 'rbong/vim-flog'
 
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'lewis6991/gitsigns.nvim'
-  use 'mattn/gist-vim'
+  use {
+    'ruifm/gitlinker.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+  }
+
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
     require("indent_blankline").setup {
       -- for example, context is off by default, use this to turn it on
@@ -142,28 +147,15 @@ return packer.startup(function(use)
       show_current_context_start = false,
     }
   end }
-
   use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
-  }
-
+  use 'numToStr/Comment.nvim'
   use 'rizzatti/dash.vim'
-
-  use { 'ojroques/nvim-osc52',
-    config = function()
-      vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, { expr = true })
-      vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
-    end
-  }
+  use 'ojroques/nvim-osc52'
 
   use 'fatih/vim-go'
   use 'mfussenegger/nvim-jdtls'
-  use { 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } }
+  use { 'scalameta/nvim-metals', requires = "nvim-lua/plenary.nvim" }
 
   -- Coloschemes
   use 'folke/tokyonight.nvim'
