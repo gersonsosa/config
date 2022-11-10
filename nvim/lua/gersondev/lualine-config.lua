@@ -1,7 +1,3 @@
-local function obsession_status()
-  return vim.fn.ObsessionStatus('Session ', 'Session ')
-end
-
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -18,7 +14,7 @@ require('lualine').setup {
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
     lualine_x = { 'g:metals_status' },
-    lualine_y = { obsession_status, 'filetype', 'progress' },
+    lualine_y = { { require('auto-session-library').current_session_name }, 'filetype', 'progress' },
     lualine_z = {
       { 'location', separator = { left = ' ', right = '█' }, left_padding = 2 },
     },

@@ -126,18 +126,22 @@ return packer.startup(function(use)
     require("toggleterm").setup { open_mapping = [[<c-\>]] }
   end }
 
-  -- tpope plugins because this deserves a special section
   use 'tpope/vim-eunuch'
-  use 'tpope/vim-surround'
-  use { 'tpope/vim-fugitive', disable = true }
-  use { 'tpope/vim-rhubarb', disable = true }
-  use 'tpope/vim-obsession'
 
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'lewis6991/gitsigns.nvim'
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+  use { 'ruifm/gitlinker.nvim', requires = 'nvim-lua/plenary.nvim' }
   use {
-    'ruifm/gitlinker.nvim',
-    requires = 'nvim-lua/plenary.nvim',
+    'pwntester/octo.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require "octo".setup()
+    end
   }
 
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
@@ -149,9 +153,27 @@ return packer.startup(function(use)
   end }
   use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
+  use({
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
   use 'numToStr/Comment.nvim'
   use 'rizzatti/dash.vim'
   use 'ojroques/nvim-osc52'
+
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      }
+    end
+  }
 
   use 'fatih/vim-go'
   use 'mfussenegger/nvim-jdtls'

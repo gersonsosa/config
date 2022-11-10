@@ -1,5 +1,9 @@
 local neogit = require("neogit")
-neogit.setup {}
+neogit.setup {
+  integrations = {
+    diffview = true
+  }
+}
 
 local f = require("gersondev.functions")
 local map = f.map
