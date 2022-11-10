@@ -2,7 +2,6 @@
 vim.opt.guicursor = ""
 vim.opt.relativenumber = true
 vim.opt.number = true
--- vim.o.clipboard:append("unnamedplus")
 
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert" }

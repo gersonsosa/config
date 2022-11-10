@@ -313,6 +313,7 @@ schemes:
     indexed_colors:
       - { index: 16, color: '0xff966c' }
       - { index: 17, color: '0xc53b53' }
+
   catppuccin-mocha: &catppuccin-mocha
     primary:
         background: "#1E1E2E" # base
@@ -550,6 +551,7 @@ schemes:
     indexed_colors:
         - { index: 16, color: "#EF9F76" }
         - { index: 17, color: "#F2D5CF" }
+
   catppuccin-latte: &catppuccin-latte
     # Default colors
     primary:
@@ -630,7 +632,7 @@ schemes:
         - { index: 16, color: "#FE640B" }
         - { index: 17, color: "#DC8A78" }
 # Colors a theme from above
-colors: *catppuccin-frappe
+colors: *catppuccin-mocha
   # Default colors
   #primary:
   #  background: '#1d1f21'
