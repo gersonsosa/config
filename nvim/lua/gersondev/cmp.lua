@@ -5,13 +5,12 @@ if cmp == nil then
   return
 end
 
+local types = require "cmp.types"
+
 cmp.setup {
-  completion = {
-    autocomplete = false
-  },
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "vsnip" },
+    { name = "nvim_lsp", keyword_length = 2 },
+    { name = "vsnip", keyword_length = 2 },
   }, {
     { name = "buffer", keyword_length = 99 },
   }),
@@ -40,3 +39,17 @@ cmp.setup {
     documentation = cmp.config.window.bordered(),
   }
 }
+
+cmp.setup.filetype({ 'scala' }, {
+  completion = {
+    autocomplete = {
+      types.cmp.TriggerEvent.TextChanged,
+    },
+  }
+})
+
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'buffer' },
+  })
+})
