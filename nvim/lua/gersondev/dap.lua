@@ -1,10 +1,12 @@
 local dap, dapui = require("dap"), require("dapui")
+
+dapui.setup()
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open({})
 end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close({})
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close({})
-end
+
+local f = require "gersondev.functions"
+local map = f.map
+
+map("n", "<leader>du", function () dapui.toggle() end)
