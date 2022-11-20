@@ -28,20 +28,13 @@ if not status_ok then
   return
 end
 
--- Have packer use a popup window
 packer.init {
-  max_jobs = 50,
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-    prompt_border = "rounded", -- Border style of prompt popups.
-  },
+  max_jobs = 50
 }
 
 return packer.startup(function(use)
   use 'wbthomason/packer.nvim' -- install packer
-  use 'nvim-lua/plenary.nvim' -- required by many
+  use 'lewis6991/impatient.nvim'
 
   -- key bindings helper
   use { "folke/which-key.nvim",
@@ -69,68 +62,131 @@ return packer.startup(function(use)
 
   -- Telescope
   use {
-    'nvim-telescope/telescope.nvim',
-    requires = 'nvim-lua/plenary.nvim'
+    {
+      'nvim-telescope/telescope.nvim',
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "natecraddock/telescope-zf-native.nvim",
+        "nvim-telescope/telescope-ui-select.nvim",
+      },
+      config = function() require("gersondev.nvim-telescope") end,
+    },
+    {
+      "nvim-telescope/telescope-frecency.nvim",
+      requires = "kkharji/sqlite.lua",
+      after = "telescope.nvim",
+      config = function()
+        require("telescope").load_extension("frecency")
+        vim.keymap.set(
+          "n",
+          "<leader>fr",
+          "<Cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
+          { silent = true, noremap = true, desc = "Find files - frecency" })
+      end
+    }
   }
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'natecraddock/telescope-zf-native.nvim'
-  use { 'nvim-telescope/telescope-ui-select.nvim' }
-  use { 'nvim-telescope/telescope-frecency.nvim', requires = { "kkharji/sqlite.lua" } }
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
-  use "jose-elias-alvarez/null-ls.nvim"
-  use 'lewis6991/impatient.nvim'
-  use { "folke/trouble.nvim", requires = "nvim-tree/nvim-web-devicons" }
+  use {
+    {
+      'neovim/nvim-lspconfig',
+      config = function() require('gersondev.nvim-lsp') end
+    },
+    {
+      "jose-elias-alvarez/null-ls.nvim",
+      config = function() require('gersondev.null-ls') end
+    },
+    {
+      "folke/trouble.nvim",
+      requires = "nvim-tree/nvim-web-devicons",
+      config = function() require('gersondev.trouble') end
+    }
+  }
 
   -- auto completion
-  use({
+  use {
     "hrsh7th/nvim-cmp",
     requires = {
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-vsnip" },
-      { "hrsh7th/vim-vsnip" },
-      { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-buffer" },
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/vim-vsnip",
+      { "hrsh7th/cmp-path", after = "nvim-cmp" },
+      { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
     },
-  })
+    config = function() require('gersondev.cmp') end
+  }
 
-  use 'mfussenegger/nvim-dap'
-  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+  use {
+    { "mfussenegger/nvim-dap" },
+    {
+      "rcarriga/nvim-dap-ui",
+      requires = "nvim-dap",
+      after = "nvim-dap",
+      config = function() require("gersondev.dap") end
+    }
+  }
 
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/nvim-treesitter-context'
+  use {
+    {
+      'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+      config = function() require('gersondev.nvim-treesitter') end
+    },
+    { 'nvim-treesitter/nvim-treesitter-context' }
+  }
 
   use {
     'nvim-tree/nvim-tree.lua',
-    requires = { 'nvim-tree/nvim-web-devicons' }
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function() require('gersondev.nvim-tree') end
   }
 
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons' }
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function() require('gersondev.lualine-config') end
   }
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup { open_mapping = [[<c-\>]] }
   end }
 
-  use 'tpope/vim-eunuch'
+  use { 'tpope/vim-eunuch', opt = true }
 
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use 'lewis6991/gitsigns.nvim'
-  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use { 'ruifm/gitlinker.nvim', requires = 'nvim-lua/plenary.nvim' }
   use {
-    'pwntester/octo.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
+    {
+      'TimUntersberger/neogit',
+      requires = 'nvim-lua/plenary.nvim',
+      keys = "<leader>gs",
+      cmd = 'Neogit',
+      config = function() require("gersondev.neogit") end
     },
-    config = function()
-      require "octo".setup()
-    end
+    {
+      'lewis6991/gitsigns.nvim',
+      config = function() require('gersondev.gitsigns') end
+    },
+    { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' },
+    {
+      'ruifm/gitlinker.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+      config = function() require("gitlinker").setup() end
+    },
+    {
+      'pwntester/octo.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope.nvim',
+        'nvim-tree/nvim-web-devicons',
+      },
+      after = {
+        'plenary.nvim',
+        'telescope.nvim',
+        'nvim-web-devicons',
+      },
+      config = function()
+        require "octo".setup()
+      end,
+      cmd = 'Octo'
+    }
   }
 
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
@@ -140,18 +196,18 @@ return packer.startup(function(use)
       show_current_context_start = false,
     }
   end }
+
   use { 'kevinhwang91/nvim-bqf', ft = 'qf' }
 
   use({
     "kylechui/nvim-surround",
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
+      require("nvim-surround").setup({})
     end
   })
-  use 'numToStr/Comment.nvim'
-  use 'rizzatti/dash.vim'
+
+  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
+  use { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } }
   use 'ojroques/nvim-osc52'
 
   use {
@@ -164,9 +220,14 @@ return packer.startup(function(use)
     end
   }
 
-  use 'fatih/vim-go'
-  use 'mfussenegger/nvim-jdtls'
-  use { 'scalameta/nvim-metals', requires = "nvim-lua/plenary.nvim" }
+  use { "fatih/vim-go", ft = "go" }
+  use { "mfussenegger/nvim-jdtls", ft = "java" }
+  use {
+    "scalameta/nvim-metals",
+    requires = "nvim-lua/plenary.nvim",
+    ft = { "scala", "sbt" },
+    config = function() require("gersondev.nvim-metals") end
+  }
 
   -- Coloschemes
   use 'folke/tokyonight.nvim'

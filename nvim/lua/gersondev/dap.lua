@@ -1,4 +1,9 @@
-local dap, dapui = require("dap"), require("dapui")
+local dap = require("dap")
+
+local status_ok, dapui = pcall(require, "dapui")
+if not status_ok then
+  return
+end
 
 dapui.setup({
   controls = {
