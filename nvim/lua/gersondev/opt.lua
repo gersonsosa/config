@@ -5,6 +5,8 @@ vim.opt.number = true
 
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert" }
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 vim.opt.undofile = true
 

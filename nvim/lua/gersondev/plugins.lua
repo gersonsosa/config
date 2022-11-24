@@ -77,11 +77,6 @@ return packer.startup(function(use)
       after = "telescope.nvim",
       config = function()
         require("telescope").load_extension("frecency")
-        vim.keymap.set(
-          "n",
-          "<leader>fr",
-          "<Cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
-          { silent = true, noremap = true, desc = "Find files - frecency" })
       end
     }
   }
@@ -94,12 +89,14 @@ return packer.startup(function(use)
     },
     {
       "jose-elias-alvarez/null-ls.nvim",
-      config = function() require('gersondev.null-ls') end
+      config = function() require('gersondev.null-ls') end,
+      after = "nvim-lspconfig"
     },
     {
       "folke/trouble.nvim",
       requires = "nvim-tree/nvim-web-devicons",
-      config = function() require('gersondev.trouble') end
+      config = function() require('gersondev.trouble') end,
+      cmd = "Trouble"
     }
   }
 
@@ -112,6 +109,8 @@ return packer.startup(function(use)
       "hrsh7th/vim-vsnip",
       { "hrsh7th/cmp-path", after = "nvim-cmp" },
       { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+      { "rcarriga/cmp-dap", after = "nvim-cmp" },
+      { "uga-rosa/cmp-dictionary" },
     },
     config = function() require('gersondev.cmp') end
   }
@@ -156,15 +155,18 @@ return packer.startup(function(use)
     {
       'TimUntersberger/neogit',
       requires = 'nvim-lua/plenary.nvim',
-      keys = "<leader>gs",
-      cmd = 'Neogit',
-      config = function() require("gersondev.neogit") end
+      config = function() require("gersondev.neogit") end,
+      cmd = 'Neogit'
     },
     {
       'lewis6991/gitsigns.nvim',
-      config = function() require('gersondev.gitsigns') end
+      config = function() require('gersondev.gitsigns') end,
+      cmd = { 'GitSigns', 'Gitsigns' }
     },
-    { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' },
+    {
+      'sindrets/diffview.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+    },
     {
       'ruifm/gitlinker.nvim',
       requires = 'nvim-lua/plenary.nvim',
@@ -182,9 +184,7 @@ return packer.startup(function(use)
         'telescope.nvim',
         'nvim-web-devicons',
       },
-      config = function()
-        require "octo".setup()
-      end,
+      config = function() require "octo".setup() end,
       cmd = 'Octo'
     }
   }

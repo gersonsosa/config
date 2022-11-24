@@ -1,5 +1,4 @@
 vim.o.termguicolors = true
-vim.cmd [[colorscheme catppuccin]]
 
 require("catppuccin").setup {
   flavour = "macchiato", -- mocha, macchiato, frappe, latte
@@ -15,7 +14,7 @@ require("catppuccin").setup {
     lsp_trouble = true,
     dap = {
       enabled = true,
-      enable_ui = false,
+      enable_ui = true,
     },
     native_lsp = {
       enabled = true,
@@ -34,7 +33,9 @@ require("catppuccin").setup {
     },
     indent_blankline = {
       enabled = true,
-      colored_indent_levels = false,
+      colored_indent_levels = true,
     },
   }
 }
+
+vim.cmd [[colorscheme catppuccin]]

@@ -12,7 +12,9 @@ cmp.setup {
     { name = "nvim_lsp", keyword_length = 2 },
     { name = "vsnip", keyword_length = 2 },
   }, {
+    { name = "path", keyword_length = 2 },
     { name = "buffer", keyword_length = 99 },
+    { name = "dictionary", keyword_length = 99 },
   }),
   snippet = {
     expand = function(args)
@@ -40,6 +42,10 @@ cmp.setup {
   }
 }
 
+require("cmp_dictionary").setup({
+  dic = { ["*"] = { "/usr/share/dict/words" } }
+})
+
 cmp.setup.filetype({ 'scala' }, {
   completion = {
     autocomplete = {
@@ -48,8 +54,10 @@ cmp.setup.filetype({ 'scala' }, {
   }
 })
 
-cmp.setup.filetype('gitcommit', {
+cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
-    { name = 'buffer' },
+    { name = "buffer", keyword_length = 99 },
+    { name = "path", keyword_length = 2 },
+    { name = "dictionary", keyword_length = 2 },
   })
 })
