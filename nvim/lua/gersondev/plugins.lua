@@ -69,7 +69,7 @@ return packer.startup(function(use)
         "natecraddock/telescope-zf-native.nvim",
         "nvim-telescope/telescope-ui-select.nvim",
       },
-      config = function() require("gersondev.nvim-telescope") end,
+      config = function() require("gersondev.nvim-telescope") end
     },
     {
       "nvim-telescope/telescope-frecency.nvim",
@@ -116,7 +116,10 @@ return packer.startup(function(use)
   }
 
   use {
-    { "mfussenegger/nvim-dap" },
+    {
+      "mfussenegger/nvim-dap",
+      module = "dap"
+    },
     {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
@@ -136,7 +139,8 @@ return packer.startup(function(use)
   use {
     'nvim-tree/nvim-tree.lua',
     requires = 'nvim-tree/nvim-web-devicons',
-    config = function() require('gersondev.nvim-tree') end
+    config = function() require('gersondev.nvim-tree') end,
+    cmd = "NvimTree*"
   }
 
   use {
@@ -145,9 +149,14 @@ return packer.startup(function(use)
     config = function() require('gersondev.lualine-config') end
   }
 
-  use { "akinsho/toggleterm.nvim", tag = '*', config = function()
-    require("toggleterm").setup { open_mapping = [[<c-\>]] }
-  end }
+  use {
+    "akinsho/toggleterm.nvim", tag = '*',
+    config = function()
+      require("toggleterm").setup { open_mapping = [[<c-\>]] }
+    end,
+    cmd = "ToggleTerm*",
+    keys = { [[<c-\>]] }
+  }
 
   use { 'tpope/vim-eunuch', opt = true }
 
@@ -166,11 +175,14 @@ return packer.startup(function(use)
     {
       'sindrets/diffview.nvim',
       requires = 'nvim-lua/plenary.nvim',
+      module = "diffview",
+      cmd = "Diffview*"
     },
     {
       'ruifm/gitlinker.nvim',
       requires = 'nvim-lua/plenary.nvim',
-      config = function() require("gitlinker").setup() end
+      config = function() require("gitlinker").setup() end,
+      keys = { [[<leader>gy]] }
     },
     {
       'pwntester/octo.nvim',
