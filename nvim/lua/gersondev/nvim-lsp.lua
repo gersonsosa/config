@@ -53,6 +53,7 @@ nvim_lsp.denols.setup {
   init_options = {
     lint = true,
   },
+  capabilities = capabilities,
 }
 
 nvim_lsp.tsserver.setup {
@@ -61,6 +62,7 @@ nvim_lsp.tsserver.setup {
   init_options = {
     lint = true,
   },
+  capabilities = capabilities,
 }
 
 nvim_lsp.sumneko_lua.setup {

@@ -23,7 +23,6 @@ vim.opt.listchars:append({ lead = "·" })
 vim.opt.list = true
 
 vim.opt.timeoutlen = 800
-vim.opt.dictionary:append("/usr/share/dict/words")
 
 vim.opt.mouse = "i"
 vim.opt.showmode = false

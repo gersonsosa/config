@@ -1,5 +1,4 @@
 -- completion related settings
-
 local cmp = require "cmp"
 if cmp == nil then
   return
@@ -12,9 +11,9 @@ cmp.setup {
     { name = "nvim_lsp", keyword_length = 2 },
     { name = "vsnip", keyword_length = 2 },
   }, {
-    { name = "path", keyword_length = 2 },
+    { name = "path", keyword_length = 3 },
+    { name = "dictionary", keyword_length = 4 },
     { name = "buffer", keyword_length = 99 },
-    { name = "dictionary", keyword_length = 99 },
   }),
   snippet = {
     expand = function(args)
@@ -56,8 +55,8 @@ cmp.setup.filetype({ 'scala' }, {
 
 cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
+    { name = "path", keyword_length = 3 },
+    { name = "dictionary", keyword_length = 3 },
     { name = "buffer", keyword_length = 99 },
-    { name = "path", keyword_length = 2 },
-    { name = "dictionary", keyword_length = 2 },
   })
 })

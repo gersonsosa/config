@@ -69,15 +69,15 @@ return packer.startup(function(use)
         "natecraddock/telescope-zf-native.nvim",
         "nvim-telescope/telescope-ui-select.nvim",
       },
-      config = function() require("gersondev.nvim-telescope") end
+      config = function() require("gersondev.nvim-telescope") end,
+      cmd = "Telescope"
     },
     {
       "nvim-telescope/telescope-frecency.nvim",
       requires = "kkharji/sqlite.lua",
       after = "telescope.nvim",
-      config = function()
-        require("telescope").load_extension("frecency")
-      end
+      config = function() require("telescope").load_extension("frecency") end,
+      module = "telescope._extensions.frecency"
     }
   }
 
@@ -104,26 +104,29 @@ return packer.startup(function(use)
   use {
     "hrsh7th/nvim-cmp",
     requires = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-vsnip",
-      "hrsh7th/vim-vsnip",
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
+      { "hrsh7th/vim-vsnip", after = "nvim-cmp" },
       { "hrsh7th/cmp-path", after = "nvim-cmp" },
       { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
       { "rcarriga/cmp-dap", after = "nvim-cmp" },
-      { "uga-rosa/cmp-dictionary" },
+      { "uga-rosa/cmp-dictionary", after = "nvim-cmp" },
     },
-    config = function() require('gersondev.cmp') end
+    config = function() require('gersondev.cmp') end,
+    event = 'InsertEnter'
   }
 
   use {
     {
       "mfussenegger/nvim-dap",
+      cmd = "Dap*",
       module = "dap"
     },
     {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
       after = "nvim-dap",
+      module = "dapui",
       config = function() require("gersondev.dap") end
     }
   }
