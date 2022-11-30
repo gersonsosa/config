@@ -1,14 +1,10 @@
 local f = require("gersondev.functions")
 local map = f.map
 
-require("gersondev.lsp-mappings")
-
 -- neovim teminal mode mappings
 map("t", "<esc>", "<C-\\><C-n>")
 
-map('n', '<leader>n', ':NvimTreeFindFile<CR>', { desc = "Find file in tree" })
-map('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = "Toggle tree" })
-
+-- copy to system cliboard, also on blink
 map('n', '<leader>y', require('osc52').copy_operator, { expr = true })
 map('x', '<leader>y', require('osc52').copy_visual)
 
@@ -16,7 +12,18 @@ map('x', '<leader>y', require('osc52').copy_visual)
 map("n", "<C-j>", [[<cmd>m .+1<cr>]], { desc = "Move line down" })
 map("n", "<C-k>", [[<cmd>m .-2<cr>]], { desc = "Move line up" })
 
+-- Mappings.lsp
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+map('n', '<leader>di', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic in a window" })
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "Go to prev diagnostic" })
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "Go to next diagnostic" })
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
+
 -- plugin mappings
+-- nvim tree
+map('n', '<leader>n', ':NvimTreeFindFile<CR>', { desc = "Find file in tree" })
+map('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = "Toggle tree" })
+
 -- neogit
 map("n", "<leader>gs", [[<cmd>Neogit<cr>]], { desc = "Open neogit" })
 map("n", "<leader>gj", "<cmd>diffget //3<CR>")
@@ -38,10 +45,6 @@ map("n", "<leader>df", [[<cmd>lua require("dapui").float_element()<cr>]], { desc
 map("n", "<leader>dx", [[<cmd>Trouble<cr>]], { desc = "Show current buffer trouble" })
 map("n", "<leader>xx", [[<cmd>Trouble workspace_diagnostics<cr>]], { desc = "Show current workspace trouble" })
 
-map("n", "<leader>fr", [[<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<cr>]],
-  { desc = "Find files - frecency" })
-
-
 map("n", "<leader>t", [[<cmd>Telescope<cr>]], { desc = "Show all telescope builtin" })
 map("n", "<leader>ff", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
 map("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
@@ -53,7 +56,9 @@ map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep select
 map("x", "<leader>wg", [[<cmd>lua require("telescope.builtin").grep_string({ search = require("gersondev.functions").get_visual_selection() })<cr>]],
   { desc = "Grep selected string" })
 map("n", "<leader>tr", [[<cmd>Telescope resume<cr>]], { desc = "Resume last telescope prompt" })
+map("n", "<leader>fr", [[<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<cr>]],
+  { desc = "Find files - frecency" })
 
--- discard this hunk
-map("n", "<leader>eo", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
+-- disregard the next this is a test 
+map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
   { desc = "Get elastic cloud pr" })

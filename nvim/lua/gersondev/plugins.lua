@@ -173,7 +173,7 @@ return packer.startup(function(use)
     {
       'lewis6991/gitsigns.nvim',
       config = function() require('gersondev.gitsigns') end,
-      cmd = { 'GitSigns', 'Gitsigns' }
+      cmd = { 'Gitsigns' }
     },
     {
       'sindrets/diffview.nvim',
