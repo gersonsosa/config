@@ -147,9 +147,8 @@ return packer.startup(function(use)
   }
 
   use {
-    'nvim-lualine/lualine.nvim',
-    requires = 'nvim-tree/nvim-web-devicons',
-    config = function() require('gersondev.lualine-config') end
+    "rebelot/heirline.nvim",
+    config = function() require "gersondev.heirline"  end
   }
 
   use {
@@ -213,11 +212,11 @@ return packer.startup(function(use)
     },
   }
 
-  use { 'lukas-reineke/indent-blankline.nvim', config = function()
+  use { 'lukas-reineke/indent-blankline.nvim', event = "CursorMoved", config = function()
     require("indent_blankline").setup {
-      -- for example, context is off by default, use this to turn it on
+      space_char_blankline = " ",
       show_current_context = true,
-      show_current_context_start = false,
+      show_current_context_start = true,
     }
   end }
 

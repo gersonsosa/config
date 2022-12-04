@@ -23,3 +23,4 @@ vim.opt.listchars:append({ lead = "·" })
 vim.opt.list = true
 
 vim.opt.showmode = false
+vim.opt.cursorline = true
