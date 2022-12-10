@@ -44,14 +44,14 @@ return packer.startup(function(use)
           registers = true,
           presets = {
             -- adds help for operators like d, y, ... and registers them for motion / text object completion
-            operators = true,
+            operators = false,
             -- adds help for motions
-            motions = true,
+            motions = false,
             -- help for text objects triggered after entering an operator
-            text_objects = true,
+            text_objects = false,
             -- default bindings on <c-w>
-            windows = true,
-            nav = true, -- misc bindings to work with windows
+            windows = false,
+            nav = false, -- misc bindings to work with windows
             z = true, -- bindings for folds, spelling and others prefixed with z
             g = false, -- bindings for prefixed with g
           },
@@ -161,9 +161,20 @@ return packer.startup(function(use)
     keys = { [[<c-\>]] }
   }
 
+  use {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {}
+    end,
+    cmd = "ZenMode",
+  }
+
+  use "mbbill/undotree"
+
   use { 'tpope/vim-eunuch', opt = true }
 
   use {
+    { "tpope/vim-fugitive" },
     {
       'TimUntersberger/neogit',
       requires = 'nvim-lua/plenary.nvim',
@@ -178,8 +189,6 @@ return packer.startup(function(use)
     {
       'sindrets/diffview.nvim',
       requires = 'nvim-lua/plenary.nvim',
-      module = "diffview",
-      cmd = "Diffview*"
     },
     {
       'ruifm/gitlinker.nvim',
@@ -245,7 +254,7 @@ return packer.startup(function(use)
   }
 
   -- Coloschemes
-  use 'folke/tokyonight.nvim'
+  use { "folke/tokyonight.nvim", module = "tokyonight" }
   use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Automatically set up your configuration after cloning packer.nvim

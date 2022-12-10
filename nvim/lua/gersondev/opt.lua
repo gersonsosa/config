@@ -22,7 +22,5 @@ vim.opt.listchars:append({ trail = "·" })
 vim.opt.listchars:append({ lead = "·" })
 vim.opt.list = true
 
-vim.opt.timeoutlen = 800
-
 vim.opt.mouse = "i"
 vim.opt.showmode = false

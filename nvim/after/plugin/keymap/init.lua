@@ -21,11 +21,11 @@ map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open 
 
 -- plugin mappings
 -- nvim tree
-map('n', '<leader>n', ':NvimTreeFindFile<CR>', { desc = "Find file in tree" })
-map('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = "Toggle tree" })
+map('n', '<leader>n', vim.cmd.NvimTreeFindFile, { desc = "Find file in tree" })
+map('n', '<C-n>', vim.cmd.NvimTreeToggle, { desc = "Toggle tree" })
 
 -- neogit
-map("n", "<leader>gs", [[<cmd>Neogit<cr>]], { desc = "Open neogit" })
+map("n", "<leader>gs", vim.cmd.Neogit, { desc = "Open neogit" })
 map("n", "<leader>gj", "<cmd>diffget //3<CR>")
 map("n", "<leader>gf", "<cmd>diffget //2<CR>")
 map("n", "<leader>ga", "<cmd>!git fetch --all<CR>")
@@ -42,10 +42,10 @@ map("n", "<leader>de", [[<cmd>lua require("dapui").eval()<cr>]], { desc = "Evalu
 map("n", "<leader>df", [[<cmd>lua require("dapui").float_element()<cr>]], { desc = "Evaluate expression" })
 
 -- trouble
-map("n", "<leader>dx", [[<cmd>Trouble<cr>]], { desc = "Show current buffer trouble" })
+map("n", "<leader>dx", vim.cmd.Trouble, { desc = "Show current buffer trouble" })
 map("n", "<leader>xx", [[<cmd>Trouble workspace_diagnostics<cr>]], { desc = "Show current workspace trouble" })
 
-map("n", "<leader>t", [[<cmd>Telescope<cr>]], { desc = "Show all telescope builtin" })
+map("n", "<leader>t", vim.cmd.Telescope, { desc = "Show all telescope builtin" })
 map("n", "<leader>ff", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
 map("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
 map("n", "<leader>fg", [[<cmd>Telescope live_grep<cr>]], { desc = "Live grep" })
@@ -53,12 +53,14 @@ map("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
 map("n", "<leader>fh", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
 map("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
 map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
-map("x", "<leader>wg", [[<cmd>lua require("telescope.builtin").grep_string({ search = require("gersondev.functions").get_visual_selection() })<cr>]],
-  { desc = "Grep selected string" })
+map("x", "<leader>wg", [[
+  <cmd>lua require("telescope.builtin")
+            .grep_string({ search = require("gersondev.functions").get_visual_selection() })
+  <cr>]], { desc = "Grep selected string" })
 map("n", "<leader>tr", [[<cmd>Telescope resume<cr>]], { desc = "Resume last telescope prompt" })
 map("n", "<leader>fr", [[<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<cr>]],
   { desc = "Find files - frecency" })
 
--- disregard the next this is a test 
+-- disregard the next this is a test
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
   { desc = "Get elastic cloud pr" })
