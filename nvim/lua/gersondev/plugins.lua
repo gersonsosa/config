@@ -193,7 +193,7 @@ return packer.startup(function(use)
     {
       'ruifm/gitlinker.nvim',
       requires = 'nvim-lua/plenary.nvim',
-      config = function() require("gitlinker").setup() end,
+      config = function() require("gitlinker").setup { opts = { remote = nil } } end,
       keys = { [[<leader>gy]] }
     },
     {
@@ -210,7 +210,7 @@ return packer.startup(function(use)
       },
       config = function() require "octo".setup() end,
       cmd = 'Octo'
-    }
+    },
   }
 
   use { 'lukas-reineke/indent-blankline.nvim', config = function()
@@ -255,7 +255,12 @@ return packer.startup(function(use)
 
   -- Coloschemes
   use { "folke/tokyonight.nvim", module = "tokyonight" }
-  use { "catppuccin/nvim", as = "catppuccin" }
+  use { "catppuccin/nvim", as = "catppuccin",
+    config = function()
+      require("gersondev.catpppuccin")
+    end
+  }
+  use { 'rose-pine/neovim', as = 'rose-pine', module = "rose-pine" }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -41,21 +41,6 @@ end
 
 -- Language specific configurations, move to a specific file?
 
--- fence ts files for denols since it also uses ts files
-vim.g.markdown_fenced_languages = {
-  "ts=typescript"
-}
-
--- call 'setup' for servers with specific configuration
-nvim_lsp.denols.setup {
-  autostart = false,
-  on_attach = on_attach,
-  init_options = {
-    lint = true,
-  },
-  capabilities = capabilities,
-}
-
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json"),
@@ -98,9 +83,19 @@ nvim_lsp.pyright.setup {
   end
 }
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "yamlls", "eslint" }
+nvim_lsp.yamlls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    yaml = { format = true },
+    redhat = { telemetry = { enabled = false } }
+  }
+}
+
+-- Use a loop to conveniently call 'setup' on multiple servers
+-- with common configurations map buffer local keybindings when
+-- the language server attaches
+local servers = { "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,

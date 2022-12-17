@@ -3,5 +3,3 @@ require('gersondev.opt')
 require('gersondev.plugins')
 
 require('impatient')
-
-require('gersondev.theme')
