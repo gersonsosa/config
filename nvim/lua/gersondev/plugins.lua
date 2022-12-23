@@ -147,9 +147,8 @@ return packer.startup(function(use)
   }
 
   use {
-    'nvim-lualine/lualine.nvim',
-    requires = 'nvim-tree/nvim-web-devicons',
-    config = function() require('gersondev.lualine-config') end
+    'windwp/windline.nvim',
+    config = function() require("gersondev.windline") end
   }
 
   use {
