@@ -51,10 +51,10 @@ local mode = {
   static = {
     mode_names = {
       n = "●",
-      no = "O-P",
-      nov = "O-P",
-      noV = "O-P",
-      ["no\22"] = "O-P",
+      no = "OP",
+      nov = "OP",
+      noV = "OP",
+      ["no\22"] = "OP",
       niI = "●-i",
       niR = "●-r",
       niV = "●-v",
@@ -83,7 +83,7 @@ local mode = {
       rm = "M",
       ["r?"] = "?",
       ["!"] = "!",
-      t = "",
+      t = " ",
     },
     mode_colors = {
       n = "red",
@@ -202,7 +202,7 @@ fileNameBlock = utils.insert(
   { provider = '%<' }-- this means that the statusline is cut here when there's not enough space
 )
 
-local FileType = {
+local fileType = {
   provider = function()
     return string.upper(vim.bo.filetype)
   end,
@@ -210,7 +210,7 @@ local FileType = {
 }
 
 -- We're getting minimalists here!
-local Ruler = {
+local ruler = {
   -- %l = current line number
   -- %L = number of lines in the buffer
   -- %c = column number
@@ -219,11 +219,9 @@ local Ruler = {
 }
 
 -- I take no credits for this! :lion:
-local ScrollBar = {
+local scrollBar = {
   static = {
     sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
-    -- Another variant, because the more choice the better.
-    -- sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
   },
   provider = function(self)
     local curr_line = vim.api.nvim_win_get_cursor(0)[1]
@@ -234,14 +232,10 @@ local ScrollBar = {
   hl = { fg = "blue", bg = "bright_bg" },
 }
 
-local LSPActive = {
+local lspActive = {
   condition = conditions.lsp_attached,
   update = { 'LspAttach', 'LspDetach' },
 
-  -- You can keep it simple,
-  -- provider = " [LSP]",
-
-  -- Or complicate things a bit and get the servers names
   provider = function()
     local names = {}
     for _, server in pairs(vim.lsp.buf_get_clients(0)) do
@@ -252,7 +246,7 @@ local LSPActive = {
   hl       = { fg = "green", bold = true },
 }
 
-local HelpFileName = {
+local helpFileName = {
   condition = function()
     return vim.bo.filetype == "help"
   end,
@@ -263,22 +257,33 @@ local HelpFileName = {
   hl = { fg = setup_colors().blue },
 }
 
+local metalsStatus = {
+  condition = function()
+    return (vim.bo.filetype == 'scala'
+        or vim.bo.filetype == 'sbt')
+        and vim.g['metals_status'] ~= nil
+        and vim.g['metals_status'] ~= ''
+  end,
+  provider = function() return ' ' .. vim.g['metals_status'] end,
+  hl = { fg = setup_colors().blue },
+}
+
 -- Put it all together
 
-local Align = { provider = "%=" }
-local Space = { provider = " " }
+local align = { provider = "%=" }
+local space = { provider = " " }
 
-local DefaultStatusline = {
-  mode, Space, fileNameBlock, Space, Align,
-  LSPActive, Space, FileType, Space, Ruler, Space, ScrollBar
+local defaultStatusline = {
+  mode, space, fileNameBlock, space, align,
+  metalsStatus, space, lspActive, space, fileType, space, ruler, space, scrollBar
 }
 
-local InactiveStatusline = {
+local inactiveStatusline = {
   condition = conditions.is_not_active,
-  FileType, Space, fileNameBlock, Align,
+  fileType, space, fileNameBlock, align,
 }
 
-local SpecialStatusline = {
+local specialStatusline = {
   condition = function()
     return conditions.buffer_matches({
       buftype = { "nofile", "prompt", "help", "quickfix" },
@@ -286,10 +291,10 @@ local SpecialStatusline = {
     })
   end,
 
-  FileType, Space, HelpFileName, Align
+  fileType, space, helpFileName, align
 }
 
-local StatusLines = {
+local statusLines = {
 
   hl = function()
     if conditions.is_active() then
@@ -303,7 +308,7 @@ local StatusLines = {
   -- think of it as a switch case with breaks to stop fallthrough.
   fallthrough = false,
 
-  SpecialStatusline, InactiveStatusline, DefaultStatusline,
+  specialStatusline, inactiveStatusline, defaultStatusline,
 }
 
-require 'heirline'.setup(StatusLines)
+require 'heirline'.setup(statusLines)
