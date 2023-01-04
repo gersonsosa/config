@@ -81,41 +81,41 @@ local mode = {
     mode_names = {
       n = "NORMAL", -- normal
       no = "OP",
-      nov = "OP",
-      noV = "OP",
+      nov = "OP-V",
+      noV = "OP-C-V",
       ["no\22"] = "OP",
-      niI = "●-i",
-      niR = "●-r",
-      niV = "●-v",
-      nt = "●-t",
+      niI = "INSERT[N]",
+      niR = "REPLACE[N]",
+      niV = "VIRTUAL[N]",
+      nt = "TERM[N]",
       v = "VISUAL",
-      vs = "Vs",
-      V = "VISUAL LINES",
-      Vs = "Vs",
+      vs = "VISUAL SEL",
+      V = "VISUAL LINE",
+      Vs = "SELECT[V-L]",
       ["\22"] = "^V",
       ["\22s"] = "^V",
-      s = "S",
-      S = "S_",
+      s = "SEL",
+      S = "SEL LINE",
       ["\19"] = "^S",
       i = "INSERT",
-      ic = "Ic",
-      ix = "Ix",
-      R = "R",
+      ic = "INSERT CMP",
+      ix = "INSERT[C-X]",
+      R = "REPLACE",
       Rc = "Rc",
       Rx = "Rx",
       Rv = "Rv",
       Rvc = "Rv",
       Rvx = "Rv",
       c = "COMMAND",
-      cv = "Ex",
+      cv = "EX",
       r = "...",
-      rm = "M",
+      rm = "MORE",
       ["r?"] = "?",
       ["!"] = "!",
-      t = " ",
+      t = "",
     },
     mode_colors = {
-      n = "blue",
+      n = "orange",
       i = "green",
       v = "cyan",
       V = "cyan",
@@ -137,23 +137,27 @@ local active_mode = {
   provider = function(self)
     return self.mode_names[self.mode]
   end,
-  hl = function(self)
-    local currentMode = self.mode:sub(1, 1)
+  hl = function()
     return { fg = "bright_bg", bold = true, }
   end,
-  condition = function(self) return self.mode ~= 'n' and vim.bo.buftype == '' end,
+  condition = function(self)
+    return self.mode ~= 'n' and vim.bo.buftype == ''
+  end,
 }
 
 local active_mode_surrounded = utils.surround(
   { resources.icons.powerline.left_rounded, resources.icons.powerline.right_rounded },
   function(self)
-    return self.mode_colors[self.mode]
+    local mode_first_letter = self.mode:sub(1, 1) -- get only the first mode character
+    return self.mode_colors[mode_first_letter]
   end, active_mode)
 
 local normal_mode = {
-  provider = resources.icons.dot_circle_o,
+  provider = "%2(" .. resources.icons.circle .. "%)",
   hl = { fg = "orange", bold = true },
-  condition = function(self) return self.mode == 'n' and vim.bo.buftype == '' end,
+  condition = function(self)
+    return self.mode == 'n' and vim.bo.buftype == ''
+  end,
 }
 
 mode = utils.insert(
