@@ -32,6 +32,38 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   group = "Heirline",
 })
 
+local resources = {}
+
+resources.icons = {
+  powerline    = {
+    -- 
+    vertical_bar_thin = '│',
+    vertical_bar = '┃',
+    block = '█',
+    ----------------------------------------------
+    left = '', left_filled = '',
+    right = '', right_filled = '',
+    ----------------------------------------------
+    slant_left = '', slant_left_thin = '',
+    slant_right = '', slant_right_thin = '',
+    ----------------------------------------------
+    slant_left_2 = '', slant_left_2_thin = '',
+    slant_right_2 = '', slant_right_2_thin = '',
+    ----------------------------------------------
+    left_rounded = '', left_rounded_thin = '',
+    right_rounded = '', right_rounded_thin = '',
+    ----------------------------------------------
+    trapezoid_left = '', trapezoid_right = '',
+    ----------------------------------------------
+    line_number = '', column_number = '',
+  },
+  padlock      = '',
+  circle_small = '●', -- ●
+  circle       = '', -- 
+  circle_plus  = '', -- 
+  dot_circle_o = '', -- 
+  circle_o     = '⭘', -- ⭘
+}
 
 local mode = {
   init = function(self)
@@ -45,12 +77,9 @@ local mode = {
       self.once = true
     end
   end,
-  -- Now we define some dictionaries to map the output of mode() to the
-  -- corresponding string and color. We can put these into `static` to compute
-  -- them at initialisation time.
   static = {
     mode_names = {
-      n = "●",
+      n = "NORMAL", -- normal
       no = "OP",
       nov = "OP",
       noV = "OP",
@@ -59,16 +88,16 @@ local mode = {
       niR = "●-r",
       niV = "●-v",
       nt = "●-t",
-      v = "V",
+      v = "VISUAL",
       vs = "Vs",
-      V = "V_",
+      V = "VISUAL LINES",
       Vs = "Vs",
       ["\22"] = "^V",
       ["\22s"] = "^V",
       s = "S",
       S = "S_",
       ["\19"] = "^S",
-      i = "I",
+      i = "INSERT",
       ic = "Ic",
       ix = "Ix",
       R = "R",
@@ -77,7 +106,7 @@ local mode = {
       Rv = "Rv",
       Rvc = "Rv",
       Rvx = "Rv",
-      c = "C",
+      c = "COMMAND",
       cv = "Ex",
       r = "...",
       rm = "M",
@@ -86,7 +115,7 @@ local mode = {
       t = " ",
     },
     mode_colors = {
-      n = "red",
+      n = "blue",
       i = "green",
       v = "cyan",
       V = "cyan",
@@ -101,21 +130,37 @@ local mode = {
       t = "red",
     }
   },
-  -- note how `static` fields become just regular attributes once the
-  -- component is instantiated.
-  provider = function(self)
-    return "%2(" .. self.mode_names[self.mode] .. "%)"
-  end,
-  -- Same goes for the highlight. Now the foreground will change according to the current mode.
-  hl = function(self)
-    local mode = self.mode:sub(1, 1) -- get only the first mode character
-    return { fg = self.mode_colors[mode], bold = true, }
-  end,
-  -- Re-evaluate the component only on ModeChanged event!
-  -- This is not required in any way, but it's there, and it's a small
-  -- performance improvement.
-  condition = function() return vim.bo.buftype == '' end,
+  fallthrough = false,
 }
+
+local active_mode = {
+  provider = function(self)
+    return self.mode_names[self.mode]
+  end,
+  hl = function(self)
+    local currentMode = self.mode:sub(1, 1)
+    return { fg = "bright_bg", bold = true, }
+  end,
+  condition = function(self) return self.mode ~= 'n' and vim.bo.buftype == '' end,
+}
+
+local active_mode_surrounded = utils.surround(
+  { resources.icons.powerline.left_rounded, resources.icons.powerline.right_rounded },
+  function(self)
+    return self.mode_colors[self.mode]
+  end, active_mode)
+
+local normal_mode = {
+  provider = resources.icons.dot_circle_o,
+  hl = { fg = "orange", bold = true },
+  condition = function(self) return self.mode == 'n' and vim.bo.buftype == '' end,
+}
+
+mode = utils.insert(
+  mode,
+  normal_mode,
+  active_mode_surrounded
+)
 
 local fileNameBlock = {
   init = function(self)
