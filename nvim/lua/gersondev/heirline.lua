@@ -166,14 +166,14 @@ mode = utils.insert(
   active_mode_surrounded
 )
 
-local fileNameBlock = {
+local file_name_block = {
   init = function(self)
     self.filename = vim.api.nvim_buf_get_name(0)
   end,
 }
 -- We can now define some children separately and add them later
 
-local fileIcon = {
+local file_icon = {
   init = function(self)
     local filename = self.filename
     local extension = vim.fn.fnamemodify(filename, ":e")
@@ -187,12 +187,10 @@ local fileIcon = {
   end
 }
 
-local fileName = {
+local file_name = {
   provider = function(self)
-    local filename = vim.fn.fnamemodify(self.filename, ":.")
-    if filename == "" then return "[No Name]" end
-
-    return filename
+    self.long_filename = vim.fn.fnamemodify(self.filename, ":.")
+    if self.long_filename == "" then return "[No Name]" end
   end,
 
   hl = { fg = utils.get_highlight("Directory").fg },
@@ -201,17 +199,17 @@ local fileName = {
 
   {
     provider = function(self)
-      return self.lfilename
+      return self.long_filename
     end,
   },
   {
     provider = function(self)
-      return vim.fn.pathshorten(self.lfilename)
+      return vim.fn.pathshorten(self.long_filename)
     end,
   },
 }
 
-local fileFlags = {
+local file_flags = {
   {
     condition = function()
       return vim.bo.modified
@@ -233,7 +231,7 @@ local fileFlags = {
 -- but we'll see how easy it is to alter existing components using a "modifier"
 -- component
 
-local fileNameModifer = {
+local filename_modifier = {
   hl = function()
     if vim.bo.modified then
       -- use `force` because we need to override the child's hl foreground
@@ -243,15 +241,15 @@ local fileNameModifer = {
 }
 
 -- let's add the children to our FileNameBlock component
-fileNameBlock = utils.insert(
-  fileNameBlock,
-  fileIcon,
-  utils.insert(fileNameModifer, fileName), -- a new table where FileName is a child of FileNameModifier
-  fileFlags,
+file_name_block = utils.insert(
+  file_name_block,
+  file_icon,
+  utils.insert(filename_modifier, file_name), -- a new table where FileName is a child of FileNameModifier
+  file_flags,
   { provider = '%<' }-- this means that the statusline is cut here when there's not enough space
 )
 
-local fileType = {
+local file_type = {
   provider = function()
     return string.upper(vim.bo.filetype)
   end,
@@ -281,7 +279,7 @@ local scrollBar = {
   hl = { fg = "blue", bg = "bright_bg" },
 }
 
-local lspActive = {
+local lsp_server_list = {
   condition = conditions.lsp_attached,
   update = { 'LspAttach', 'LspDetach' },
 
@@ -306,7 +304,7 @@ local helpFileName = {
   hl = { fg = setup_colors().blue },
 }
 
-local metalsStatus = {
+local metals_status = {
   condition = function()
     return (vim.bo.filetype == 'scala'
         or vim.bo.filetype == 'sbt')
@@ -323,13 +321,13 @@ local align = { provider = "%=" }
 local space = { provider = " " }
 
 local defaultStatusline = {
-  mode, space, fileNameBlock, space, align,
-  metalsStatus, space, lspActive, space, fileType, space, ruler, space, scrollBar
+  mode, space, file_name_block, space, align,
+  metals_status, space, lsp_server_list, space, file_type, space, ruler, space, scrollBar
 }
 
 local inactiveStatusline = {
   condition = conditions.is_not_active,
-  fileType, space, fileNameBlock, align,
+  file_type, space, file_name_block, align,
 }
 
 local specialStatusline = {
@@ -340,7 +338,7 @@ local specialStatusline = {
     })
   end,
 
-  fileType, space, helpFileName, align
+  file_type, space, helpFileName, align
 }
 
 local statusLines = {
