@@ -266,7 +266,7 @@ local ruler = {
 }
 
 -- I take no credits for this! :lion:
-local scrollBar = {
+local scroll_bar = {
   static = {
     sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
   },
@@ -293,7 +293,7 @@ local lsp_server_list = {
   hl       = { fg = "green", bold = true },
 }
 
-local helpFileName = {
+local help_filename = {
   condition = function()
     return vim.bo.filetype == "help"
   end,
@@ -320,17 +320,17 @@ local metals_status = {
 local align = { provider = "%=" }
 local space = { provider = " " }
 
-local defaultStatusline = {
+local default_status_line = {
   mode, space, file_name_block, space, align,
-  metals_status, space, lsp_server_list, space, file_type, space, ruler, space, scrollBar
+  metals_status, space, lsp_server_list, space, file_type, space, ruler, space, scroll_bar
 }
 
-local inactiveStatusline = {
+local inactive_status_line = {
   condition = conditions.is_not_active,
   file_type, space, file_name_block, align,
 }
 
-local specialStatusline = {
+local special_status_line = {
   condition = function()
     return conditions.buffer_matches({
       buftype = { "nofile", "prompt", "help", "quickfix" },
@@ -338,10 +338,10 @@ local specialStatusline = {
     })
   end,
 
-  file_type, space, helpFileName, align
+  file_type, space, help_filename, align
 }
 
-local statusLines = {
+local status_lines = {
 
   hl = function()
     if conditions.is_active() then
@@ -355,7 +355,7 @@ local statusLines = {
   -- think of it as a switch case with breaks to stop fallthrough.
   fallthrough = false,
 
-  specialStatusline, inactiveStatusline, defaultStatusline,
+  special_status_line, inactive_status_line, default_status_line,
 }
 
-require 'heirline'.setup(statusLines)
+require 'heirline'.setup({ statusline = status_lines })
