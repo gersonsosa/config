@@ -1,8 +1,6 @@
 -- completion related settings
 local cmp = require "cmp"
-if cmp == nil then
-  return
-end
+if cmp == nil then return end
 
 local types = require "cmp.types"
 
@@ -36,7 +34,7 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm({ select = true })
   }),
   window = {
-    completion = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered({ col_offset = -5 }),
     documentation = cmp.config.window.bordered(),
   }
 }

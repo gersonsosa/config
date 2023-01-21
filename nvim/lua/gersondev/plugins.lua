@@ -148,7 +148,7 @@ return packer.startup(function(use)
 
   use {
     "rebelot/heirline.nvim",
-    config = function() require "gersondev.heirline"  end
+    config = function() require "gersondev.heirline" end
   }
 
   use {
@@ -254,12 +254,19 @@ return packer.startup(function(use)
 
   -- Coloschemes
   use { "folke/tokyonight.nvim", module = "tokyonight" }
-  use { "catppuccin/nvim", as = "catppuccin",
+  use { "catppuccin/nvim", as = "catppuccin", module = "catppuccin",
     config = function()
       require("gersondev.catpppuccin")
     end
   }
-  use { 'rose-pine/neovim', as = 'rose-pine', module = "rose-pine" }
+  use { 'rose-pine/neovim', as = 'rose-pine',
+    -- module = "rose-pine",
+    config = function()
+      require("gersondev.rose-pine")
+      -- set colorscheme after options
+      vim.cmd('colorscheme rose-pine')
+    end
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
