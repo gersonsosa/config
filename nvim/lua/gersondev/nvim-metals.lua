@@ -66,31 +66,13 @@ metals_config.on_attach = function(_, bufnr)
   map("n", "<leader>ds", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
 
   -- DAP mappings
-  local leader_dap_mappings = {
-    d = {
-      c = { [[<cmd>lua require"dap".continue()<CR>]], 'Debug - Continue' },
-      r = { [[<cmd>lua require"dap".repl.toggle()<CR>]], 'DAP - Toogle REPL' },
-      K = { [[<cmd>lua require"dap.ui.widgets".hover()<CR>]], 'Debug - Hover' },
-      t = { [[<cmd>lua require"dap".toggle_breakpoint()<CR>]], 'Toogle Breakpoint' },
-      s = {
-        o = { [[<cmd>lua require"dap".step_over()<CR>]], 'Debug - Step Over' },
-        i = { [[<cmd>lua require"dap".step_into()<CR>]], 'Debug - Step into' }
-      },
-      l = { [[<cmd>lua require"dap".run_last()<CR>]], 'Debug - Run last' }
-    },
-  }
-
-  local leader_opts = {
-    mode = "n", -- NORMAL mode
-    prefix = "<leader>",
-    buffer = bufnr, -- Global mappings. Specify a buffer number for buffer local mappings
-    silent = true, -- use `silent` when creating keymaps
-    noremap = true, -- use `noremap` when creating keymaps
-    nowait = false, -- use `nowait` when creating keymaps
-  }
-
-  local which_key = require "which-key"
-  which_key.register(leader_dap_mappings, leader_opts)
+  map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]], { desc = "Debug - Continue", buffer = bufnr })
+  map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]], { desc = 'DAP - Toogle REPL', buffer = bufnr })
+  map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]], { desc = 'Debug - Hover', buffer = bufnr })
+  map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]], { desc = 'Toogle Breakpoint', buffer = bufnr })
+  map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]], { desc = 'Debug - Step Over', buffer = bufnr })
+  map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]], { desc = 'Debug - Step into', buffer = bufnr })
+  map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]], { desc = 'Debug - Run last', buffer = bufnr })
 
   ----------------------------------
   -- Mappings -----------------------
