@@ -8,7 +8,6 @@ require("catppuccin").setup {
     gitsigns = true,
     treesitter = true,
     treesitter_context = true,
-    which_key = false,
     markdown = true,
     nvimtree = true,
     lsp_trouble = true,

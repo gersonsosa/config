@@ -118,68 +118,33 @@ vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 2 -- more space in the neovim command line for displaying messages
 
-local which_key = require "which-key"
+local f = require("gersondev.functions")
+local map = f.map
 
-local leader_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
+map("n", "<leader>Jo", "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
+map("n", "<leader>Jv", "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = "Extract Variable" })
+map("n", "<leader>Jc", "<Cmd>lua require('jdtls').extract_constant()<CR>", { desc = "Extract Constant" })
+map("n", "<leader>Jt", "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", { desc = "Test Method" })
+map("n", "<leader>JT", "<Cmd>lua require'jdtls'.test_class()<CR>", { desc = "Test Class" })
+map("n", "<leader>Ju", "<Cmd>JdtUpdateConfig<CR>", { desc = "Update Config" })
+map("n", "gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
+map("n", "gd", '<cmd>lua vim.lsp.buf.definition()<CR>')
+map("n", "gi", '<cmd>lua vim.lsp.buf.implementation()<CR>')
+map("n", "gr", '<cmd>lua vim.lsp.buf.references()<CR>')
+map("n", "K", '<cmd>lua vim.lsp.buf.hover()<CR>')
+map("n", "<leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
 
-local vopts = {
-  mode = "v", -- VISUAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
+map("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = "Extract Variable" })
+map("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = "Extract Constant" })
+map("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })
 
-local mappings = {
-  J = {
-    name = "Java",
-    o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
-    v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
-    c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
-    t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", "Test Method" },
-    T = { "<Cmd>lua require'jdtls'.test_class()<CR>", "Test Class" },
-    u = { "<Cmd>JdtUpdateConfig<CR>", "Update Config" },
-  },
-  g = {
-    D = { '<cmd>lua vim.lsp.buf.declaration()<CR>' },
-    d = { '<cmd>lua vim.lsp.buf.definition()<CR>' },
-    i = { '<cmd>lua vim.lsp.buf.implementation()<CR>' },
-    r = { '<cmd>lua vim.lsp.buf.references()<CR>' },
-  },
-  K = { '<cmd>lua vim.lsp.buf.hover()<CR>' },
-  ['<c-K>'] = { '<cmd>lua vim.lsp.buf.signature_help()<CR>' },
-}
-
-local vmappings = {
-  L = {
-    name = "Java",
-    v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
-    c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
-    m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
-  },
-}
-
-which_key.register(mappings, leader_opts)
-which_key.register(vmappings, vopts)
-which_key.register({
-  name = "LSP",
-  ['<space>'] = {
-    wa = { '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>' },
-    wr = { '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>' },
-    wl = { '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>' },
-    D = { '<cmd>lua vim.lsp.buf.type_definition()<CR>' },
-    rn = { '<cmd>lua vim.lsp.buf.rename()<CR>' },
-    ca = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
-  },
-})
+-- LSP mappings
+map("n", "<space>wa", '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+map("n", "<space>wr", '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+map("n", "<space>wl", '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+map("n", "<space>D", '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+map("n", "<space>rn", '<cmd>lua vim.lsp.buf.rename()<CR>')
+map("n", "<space>ca", '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
