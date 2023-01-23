@@ -6,20 +6,38 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
-local function get_visual_selection()
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
-  vim.fn.setreg('v', {})
+-- shamelessly taken from https://github.com/ojroques/nvim-osc52
+local commands = {
+  operator = { block = "`[\\<C-v>`]y", char = "`[v`]y", line = "'[V']y" },
+  visual = { ['V'] = 'y', ['v'] = 'y', [''] = 'y' },
+}
 
-  text = string.gsub(text, "\n", "")
-  if #text > 0 then
-    return text
-  else
-    return ''
-  end
+local function get_text(mode, type)
+  local clipboard = vim.go.clipboard
+  local register = vim.fn.getreginfo('"')
+  local visual_marks = { vim.fn.getpos("'<"), vim.fn.getpos("'>") }
+
+  -- Retrieve text
+  vim.go.clipboard = ''
+  local command = string:fmt('keepjumps normal! %s', commands[mode][type])
+  vim.cmd(string:fmt('silent execute "%s"', command))
+  local text = vim.fn.getreg('"')
+
+  -- Restore user settings
+  vim.go.clipboard = clipboard
+  vim.fn.setreg('"', register)
+  vim.fn.setpos("'<", visual_marks[1])
+  vim.fn.setpos("'>", visual_marks[2])
+
+  return text or ''
+end
+
+local function get_visual_text()
+  local text = get_text('visual', vim.fn.visualmode())
+  return text
 end
 
 return {
   map = map,
-  get_visual_selection = get_visual_selection
+  get_visual_text = get_visual_text
 }
