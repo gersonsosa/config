@@ -107,9 +107,30 @@ local config = {
     bundles = {},
   },
 
-  on_attach = function()
+  on_attach = function(_, bufnr)
     jdtls.setup_dap({ hotcodereplace = 'auto' })
     jdtls.setup.add_commands()
+
+    local f = require "gersondev.functions"
+    local map = f.map
+
+    map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
+    map("n", "gD", function() vim.lsp.buf.definition() end,
+      { desc = "Go to definition", buffer = bufnr })
+    map("n", "K", function() vim.lsp.buf.hover() end,
+      { desc = "Hover", buffer = bufnr })
+    map("n", "gi", function() vim.lsp.buf.implementation() end,
+      { desc = "Go to implementation", buffer = bufnr })
+    map("n", "gr", function() vim.lsp.buf.references() end,
+      { desc = "Show references", buffer = bufnr })
+    map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+      { desc = 'Execute code action', buffer = bufnr })
+    map('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+      { desc = 'Pop signature help', buffer = bufnr })
+    map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>',
+      { desc = 'Rename object', buffer = bufnr })
+    map("n", "gd", function() vim.lsp.buf.declaration() end,
+      { desc = "Go to definition", buffer = bufnr })
   end
 }
 
@@ -127,13 +148,7 @@ map("n", "<leader>Jc", "<Cmd>lua require('jdtls').extract_constant()<CR>", { des
 map("n", "<leader>Jt", "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", { desc = "Test Method" })
 map("n", "<leader>JT", "<Cmd>lua require'jdtls'.test_class()<CR>", { desc = "Test Class" })
 map("n", "<leader>Ju", "<Cmd>JdtUpdateConfig<CR>", { desc = "Update Config" })
-map("n", "gD", '<cmd>lua vim.lsp.buf.declaration()<CR>')
-map("n", "gd", '<cmd>lua vim.lsp.buf.definition()<CR>')
-map("n", "gi", '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map("n", "gr", '<cmd>lua vim.lsp.buf.references()<CR>')
-map("n", "K", '<cmd>lua vim.lsp.buf.hover()<CR>')
 map("n", "<leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-
 map("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = "Extract Variable" })
 map("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = "Extract Constant" })
 map("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })

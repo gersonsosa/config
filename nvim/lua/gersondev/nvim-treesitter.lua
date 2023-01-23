@@ -1,6 +1,18 @@
 require 'nvim-treesitter.configs'.setup {
   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = { "kotlin", "typescript", "javascript", "bash", "yaml", "scala", "rust", "java", "python" },
+  ensure_installed = {
+    "java",
+    "kotlin",
+    "scala",
+    "c",
+    "cpp",
+    "rust",
+    "javascript",
+    "typescript",
+    "bash",
+    "yaml",
+    "python",
+  },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "go" }, -- List of parsers to ignore installing
   highlight = {
