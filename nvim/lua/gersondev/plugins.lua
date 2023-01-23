@@ -36,7 +36,7 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter', build = ':TSUpdate',
     config = function() require('gersondev.nvim-treesitter') end
   },
-  { 'nvim-treesitter/nvim-treesitter-context' },
+  { 'nvim-treesitter/nvim-treesitter-context', event = "VeryLazy" },
   {
     "akinsho/toggleterm.nvim", version = "*",
     config = function()
