@@ -19,7 +19,7 @@ local on_attach = function(_, bufnr)
   map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { buffer = bufnr })
   map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { buffer = bufnr })
   map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { buffer = bufnr })
-  map('n', '<space>f', '<cmd>lua vim.lsp.buf.format {async = true}<CR>', { buffer = bufnr })
+  map('n', '<space>f', function() vim.lsp.buf.format() end, { buffer = bufnr })
 
   -- Telescope mappings
   local function telescope_lsp_doc_symbols()
@@ -50,8 +50,9 @@ nvim_lsp.tsserver.setup {
   capabilities = capabilities,
 }
 
-nvim_lsp.sumneko_lua.setup {
+nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -73,7 +74,6 @@ nvim_lsp.sumneko_lua.setup {
       },
     },
   },
-  capabilities = capabilities,
 }
 
 nvim_lsp.pyright.setup {
@@ -96,7 +96,7 @@ nvim_lsp.yamlls.setup {
 -- Use a loop to conveniently call 'setup' on multiple servers
 -- with common configurations map buffer local keybindings when
 -- the language server attaches
-local servers = { "eslint" }
+local servers = { "eslint", "gradle_ls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
