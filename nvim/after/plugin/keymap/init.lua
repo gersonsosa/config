@@ -20,9 +20,9 @@ map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "Go to next d
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
 
 -- plugin mappings
--- nvim tree
-map('n', '<leader>n', vim.cmd.NvimTreeFindFile, { desc = "Find file in tree" })
-map('n', '<C-n>', vim.cmd.NvimTreeToggle, { desc = "Toggle tree" })
+-- tree
+map('n', '<leader>n', vim.cmd.NeoTreeReveal, { desc = "Find file in tree" })
+map('n', '<C-n>', vim.cmd.NeoTreeFocusToggle, { desc = "Toggle tree" })
 
 -- neogit
 map("n", "<leader>gs", vim.cmd.Neogit, { desc = "Open neogit" })

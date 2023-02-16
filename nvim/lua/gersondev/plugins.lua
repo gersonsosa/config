@@ -17,10 +17,18 @@ local plugins = {
     config = function() require "gersondev.heirline" end
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function() require('gersondev.nvim-tree') end,
-    cmd = { "NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFindFileToggle", "NvimTreeFocus" }
+    "nvim-neo-tree/neo-tree.nvim",
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function ()
+      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+      require("neo-tree").setup()
+    end
+    -- config = function() require('gersondev.nvim-tree') end,
+    -- cmd = { "NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFindFileToggle", "NvimTreeFocus" }
   },
   {
     'nvim-telescope/telescope.nvim',
