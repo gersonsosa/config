@@ -23,12 +23,29 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
-    config = function ()
+    config = function()
       vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-      require("neo-tree").setup()
+      require("neo-tree").setup({
+        window = {
+          mappings = {
+            ["J"] = function(state)
+              local tree = state.tree
+              local node = tree:get_node()
+              local siblings = tree:get_nodes(node:get_parent_id())
+              local renderer = require('neo-tree.ui.renderer')
+              renderer.focus_node(state, siblings[#siblings]:get_id())
+            end,
+            ["K"] = function(state)
+              local tree = state.tree
+              local node = tree:get_node()
+              local siblings = tree:get_nodes(node:get_parent_id())
+              local renderer = require('neo-tree.ui.renderer')
+              renderer.focus_node(state, siblings[1]:get_id())
+            end
+          }
+        }
+      })
     end
-    -- config = function() require('gersondev.nvim-tree') end,
-    -- cmd = { "NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFindFileToggle", "NvimTreeFocus" }
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -53,7 +70,8 @@ local plugins = {
     cmd = "ToggleTerm",
     keys = { "<c-\\>" }
   },
-  { 'kevinhwang91/nvim-bqf', ft = 'qf' },
+  { 'kevinhwang91/nvim-bqf',
+    ft = 'qf' },
   {
     'rmagatti/auto-session',
     config = function()
@@ -63,7 +81,11 @@ local plugins = {
       }
     end
   },
-  { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end, event = "VeryLazy" },
+  {
+    'numToStr/Comment.nvim',
+    config = function() require('Comment').setup() end,
+    event = "VeryLazy"
+  },
   {
     "kylechui/nvim-surround",
     config = function()
@@ -71,7 +93,7 @@ local plugins = {
     end,
     event = "VeryLazy"
   },
-  { "ojroques/nvim-osc52", lazy = true },
+  { "ojroques/nvim-osc52",                     lazy = true },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -83,8 +105,8 @@ local plugins = {
     end,
     event = "VeryLazy",
   },
-  { "mbbill/undotree", cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
-  { "tpope/vim-eunuch", lazy = true },
+  { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
+  { "tpope/vim-eunuch",   lazy = true },
   { "tpope/vim-fugitive", cmd = "G" },
   {
     'TimUntersberger/neogit',
@@ -158,7 +180,7 @@ local plugins = {
       require('gersondev.cmp')
     end,
   },
-  { "mfussenegger/nvim-dap", lazy = true },
+  { "mfussenegger/nvim-dap",   lazy = true },
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "nvim-dap" },
@@ -177,7 +199,7 @@ local plugins = {
     end,
     cmd = { "ZenMode" },
   },
-  { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } },
+  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
