@@ -174,7 +174,7 @@ local plugins = {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "rcarriga/cmp-dap",
-      "uga-rosa/cmp-dictionary",
+      "uga-rosa/cmp-dictionary"
     },
     config = function()
       require('gersondev.cmp')
@@ -193,7 +193,7 @@ local plugins = {
       require("zen-mode").setup({
         window = {
           backdrop = 1,
-          width = 0.85,
+          width = 0.65,
         },
       })
     end,

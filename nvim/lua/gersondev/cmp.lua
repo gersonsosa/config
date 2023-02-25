@@ -7,11 +7,11 @@ local types = require "cmp.types"
 cmp.setup {
   sources = cmp.config.sources({
     { name = "nvim_lsp", keyword_length = 2 },
-    { name = "vsnip", keyword_length = 2 },
+    { name = "vsnip",    keyword_length = 2 },
   }, {
-    { name = "path", keyword_length = 3 },
+    { name = "path",       keyword_length = 3 },
     { name = "dictionary", keyword_length = 4 },
-    { name = "buffer", keyword_length = 99 },
+    { name = "buffer",     keyword_length = 99 },
   }),
   snippet = {
     expand = function(args)
@@ -24,7 +24,7 @@ cmp.setup {
     ["<C-h>"] = cmp.mapping.select_prev_item({ count = 5 }),
     ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-l>"] = cmp.mapping.select_next_item({ count = 5 }),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-8),
+    ['<C-b>'] = cmp.mapping.scroll_docs( -8),
     ['<C-f>'] = cmp.mapping.scroll_docs(8),
     ['<C-Space>'] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping({
@@ -40,7 +40,9 @@ cmp.setup {
 }
 
 require("cmp_dictionary").setup({
-  dic = { ["*"] = { "/usr/share/dict/words" } }
+  spelllang = {
+    en = "/usr/share/dict/words",
+  },
 })
 
 cmp.setup.filetype({ 'scala' }, {
@@ -53,8 +55,8 @@ cmp.setup.filetype({ 'scala' }, {
 
 cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
-    { name = "path", keyword_length = 3 },
+    { name = "path",       keyword_length = 3 },
     { name = "dictionary", keyword_length = 3 },
-    { name = "buffer", keyword_length = 99 },
+    { name = "buffer",     keyword_length = 99 },
   })
 })

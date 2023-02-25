@@ -45,6 +45,7 @@ map("n", "<leader>df", [[<cmd>lua require("dapui").float_element()<cr>]], { desc
 map("n", "<leader>dx", vim.cmd.Trouble, { desc = "Show current buffer trouble" })
 map("n", "<leader>xx", [[<cmd>Trouble workspace_diagnostics<cr>]], { desc = "Show current workspace trouble" })
 
+-- telescope
 map("n", "<leader>t", vim.cmd.Telescope, { desc = "Show all telescope builtin" })
 map("n", "<leader>ff", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
 map("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
@@ -60,6 +61,8 @@ map("x", "<leader>wg", [[
 map("n", "<leader>tr", [[<cmd>Telescope resume<cr>]], { desc = "Resume last telescope prompt" })
 map("n", "<leader>fr", [[<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<cr>]],
   { desc = "Find files - frecency" })
+
+map("n", "<leader>z", vim.cmd.ZenMode)
 
 -- disregard the next this is a test
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
