@@ -24,7 +24,7 @@ local plugins = {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+      vim.g.neo_tree_remove_legacy_commands = 1
       require("neo-tree").setup({
         window = {
           mappings = {
@@ -70,8 +70,7 @@ local plugins = {
     cmd = "ToggleTerm",
     keys = { "<c-\\>" }
   },
-  { 'kevinhwang91/nvim-bqf',
-    ft = 'qf' },
+  { 'kevinhwang91/nvim-bqf',                   ft = 'qf' },
   {
     'rmagatti/auto-session',
     config = function()
@@ -93,7 +92,7 @@ local plugins = {
     end,
     event = "VeryLazy"
   },
-  { "ojroques/nvim-osc52",                     lazy = true },
+  { "ojroques/nvim-osc52", lazy = true },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -105,9 +104,9 @@ local plugins = {
     end,
     event = "VeryLazy",
   },
-  { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
-  { "tpope/vim-eunuch",   lazy = true },
-  { "tpope/vim-fugitive", cmd = "G" },
+  { "mbbill/undotree",     cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
+  { "tpope/vim-eunuch",    lazy = true },
+  { "tpope/vim-fugitive",  cmd = "G" },
   {
     'TimUntersberger/neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
