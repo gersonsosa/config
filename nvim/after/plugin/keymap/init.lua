@@ -21,7 +21,7 @@ map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open 
 
 -- plugin mappings
 -- tree
-map('n', '<leader>n', vim.cmd.NeoTreeReveal, { desc = "Find file in tree" })
+map('n', '<leader>n', vim.cmd.NeoTreeRevealToggle, { desc = "Find file in tree" })
 map('n', '<C-n>', vim.cmd.NeoTreeFocusToggle, { desc = "Toggle tree" })
 
 -- neogit
