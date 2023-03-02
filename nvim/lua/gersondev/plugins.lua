@@ -42,7 +42,8 @@ local plugins = {
               local siblings = tree:get_nodes(node:get_parent_id())
               local renderer = require('neo-tree.ui.renderer')
               renderer.focus_node(state, siblings[1]:get_id())
-            end
+            end,
+            ["z"] = "none"
           }
         }
       })
