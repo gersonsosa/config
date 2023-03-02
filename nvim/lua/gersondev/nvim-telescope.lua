@@ -11,9 +11,6 @@ t.setup {
     }
   },
   prompt_prefix = "❯",
-  mappings = {
-    ["<M-q>"] = false
-  },
   pickers = {
     find_files = { theme = "ivy" },
     git_files = { theme = "ivy" },
