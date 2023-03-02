@@ -9,8 +9,8 @@ cmp.setup {
     { name = "nvim_lsp", keyword_length = 2 },
     { name = "vsnip",    keyword_length = 2 },
   }, {
-    { name = "path",       keyword_length = 3 },
-    { name = "dictionary", keyword_length = 4 },
+    { name = "dictionary", keyword_length = 3 },
+    { name = "path" },
     { name = "buffer",     keyword_length = 99 },
   }),
   snippet = {
@@ -39,11 +39,9 @@ cmp.setup {
   }
 }
 
-require("cmp_dictionary").setup({
-  spelllang = {
-    en = "/usr/share/dict/words",
-  },
-})
+local dict = require("cmp_dictionary")
+dict.switcher({ spelllang = { en = "~/.local/share/dict/en.dict" } })
+dict.update()
 
 cmp.setup.filetype({ 'scala' }, {
   completion = {
@@ -55,8 +53,8 @@ cmp.setup.filetype({ 'scala' }, {
 
 cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
-    { name = "path",       keyword_length = 3 },
     { name = "dictionary", keyword_length = 3 },
+    { name = "path",       keyword_length = 3 },
     { name = "buffer",     keyword_length = 99 },
   })
 })
