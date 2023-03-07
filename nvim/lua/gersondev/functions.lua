@@ -19,8 +19,8 @@ local function get_text(mode, type)
 
   -- Retrieve text
   vim.go.clipboard = ''
-  local command = string:fmt('keepjumps normal! %s', commands[mode][type])
-  vim.cmd(string:fmt('silent execute "%s"', command))
+  local command = string:format('keepjumps normal! %s', commands[mode][type])
+  vim.cmd(string:format('silent execute "%s"', command))
   local text = vim.fn.getreg('"')
 
   -- Restore user settings

@@ -5,8 +5,8 @@ local map = f.map
 map("t", "<esc>", "<C-\\><C-n>")
 
 -- copy to system cliboard, also on blink
-map('n', '<leader>y', function() require('osc52').copy_operator() end, { expr = true })
-map('x', '<leader>y', function() require('osc52').copy_visual() end)
+map('n', '<leader>y', require('osc52').copy_operator, { expr = true })
+map('x', '<leader>y', require('osc52').copy_visual)
 
 -- move single lines
 map("n", "<C-j>", [[<cmd>m .+1<cr>]], { desc = "Move line down" })
