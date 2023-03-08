@@ -29,21 +29,21 @@ local plugins = {
       require("neo-tree").setup({
         window = {
           mappings = {
-            ["J"] = function(state)
+                ["J"] = function(state)
               local tree = state.tree
               local node = tree:get_node()
               local siblings = tree:get_nodes(node:get_parent_id())
               local renderer = require('neo-tree.ui.renderer')
               renderer.focus_node(state, siblings[#siblings]:get_id())
             end,
-            ["K"] = function(state)
+                ["K"] = function(state)
               local tree = state.tree
               local node = tree:get_node()
               local siblings = tree:get_nodes(node:get_parent_id())
               local renderer = require('neo-tree.ui.renderer')
               renderer.focus_node(state, siblings[1]:get_id())
             end,
-            ["z"] = "none"
+                ["z"] = "none"
           }
         }
       })
@@ -60,12 +60,14 @@ local plugins = {
     cmd = { "Telescope" }
   },
   {
-    'nvim-treesitter/nvim-treesitter', build = ':TSUpdate',
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     config = function() require('gersondev.nvim-treesitter') end
   },
   { 'nvim-treesitter/nvim-treesitter-context', event = "VeryLazy" },
   {
-    "akinsho/toggleterm.nvim", version = "*",
+    "akinsho/toggleterm.nvim",
+    version = "*",
     config = function()
       require("toggleterm").setup { open_mapping = [[<c-\>]] }
     end,
@@ -181,7 +183,21 @@ local plugins = {
       require('gersondev.cmp')
     end,
   },
-  { "mfussenegger/nvim-dap",   lazy = true },
+  {
+    "mfussenegger/nvim-dap",
+    config = function()
+      local dap = require("dap")
+      dap.listeners.after.launch['from_lens'] = function(session)
+        print(vim.inspect(session))
+        if session.config.noDebug then
+          require('dapui').open({ layout = 2 })
+        else
+          require('dapui').open({})
+        end
+      end
+    end,
+    lazy = true
+  },
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "nvim-dap" },
@@ -200,7 +216,7 @@ local plugins = {
     end,
     cmd = { "ZenMode" },
   },
-  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
+  { 'rizzatti/dash.vim',       cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
