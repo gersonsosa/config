@@ -93,6 +93,18 @@ nvim_lsp.yamlls.setup {
   }
 }
 
+nvim_lsp.ccls.setup {
+  init_options = {
+    compilationDatabaseDirectory = "build";
+  --   index = {
+  --     threads = 0;
+  --   };
+    clang = {
+      excludeArgs = { "-frounding-math"} ;
+    };
+  }
+}
+
 -- Use a loop to conveniently call 'setup' on multiple servers
 -- with common configurations map buffer local keybindings when
 -- the language server attaches
