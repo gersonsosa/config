@@ -187,8 +187,8 @@ local plugins = {
     "mfussenegger/nvim-dap",
     config = function()
       local dap = require("dap")
-      dap.listeners.after.launch['from_lens'] = function(session)
-        print(vim.inspect(session))
+
+      dap.listeners.before.event_initialized["dapui_config"] = function(session, _)
         if session.config.noDebug then
           require('dapui').open({ layout = 2 })
         else
