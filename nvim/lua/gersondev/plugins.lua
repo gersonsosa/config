@@ -214,6 +214,14 @@ local plugins = {
     end,
     cmd = { "ZenMode" },
   },
+  {
+    "dpayne/CodeGPT.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = "Chat"
+  },
   { 'rizzatti/dash.vim',       cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
