@@ -19,8 +19,8 @@ local function get_text(mode, type)
 
   -- Retrieve text
   vim.go.clipboard = ''
-  local command = string:format('keepjumps normal! %s', commands[mode][type])
-  vim.cmd(string:format('silent execute "%s"', command))
+  local command = string.format('keepjumps normal! %s', commands[mode][type])
+  vim.cmd(string.format('silent execute "%s"', command))
   local text = vim.fn.getreg('"')
 
   -- Restore user settings
@@ -37,7 +37,18 @@ local function get_visual_text()
   return text
 end
 
+local function get_operator_text_callback()
+  local text = get_text('operator', type)
+  return text
+end
+
+local function get_operator_text()
+  vim.go.operatorfunc = get_operator_text_callback
+  return 'g@'
+end
+
 return {
   map = map,
-  get_visual_text = get_visual_text
+  get_visual_text = get_visual_text,
+  get_operator_text = get_operator_text
 }

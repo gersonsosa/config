@@ -56,13 +56,15 @@ map("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
 map("n", "<leader>fh", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
 map("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
 map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
-map("x", "<leader>wg", [[
-  <cmd>lua require("telescope.builtin")
-            .grep_string({ search = require("gersondev.functions").get_visual_selection() })
-  <cr>]], { desc = "Grep selected string" })
+map("x", "<leader>wg", function()
+    local status_ok, builtin = pcall(require, "telescope.builtin")
+    if not status_ok then
+      return
+    end
+    builtin.grep_string({ search = require("gersondev.functions").get_visual_text() })
+  end,
+  { desc = "Grep selected string" })
 map("n", "<leader>tr", [[<cmd>Telescope resume<cr>]], { desc = "Resume last telescope prompt" })
-map("n", "<leader>fr", [[<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<cr>]],
-  { desc = "Find files - frecency" })
 
 map("n", "<leader>z", vim.cmd.ZenMode)
 
