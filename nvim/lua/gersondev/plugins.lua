@@ -185,23 +185,13 @@ local plugins = {
   },
   {
     "mfussenegger/nvim-dap",
-    config = function()
-      local dap = require("dap")
-
-      dap.listeners.before.event_initialized["dapui_config"] = function(session, _)
-        if session.config.noDebug then
-          require('dapui').open({ layout = 2 })
-        else
-          require('dapui').open({})
-        end
-      end
-    end,
+    config = function() require('gersondev.dap') end,
     lazy = true
   },
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "nvim-dap" },
-    config = function() require("gersondev.dap") end,
+    config = function() require("gersondev.dap-ui") end,
     lazy = true
   },
   {
@@ -209,8 +199,16 @@ local plugins = {
     config = function()
       require("zen-mode").setup({
         window = {
-          backdrop = 1,
           width = 0.65,
+          options = {
+            -- signcolumn = "no", -- disable signcolumn
+            number = true,         -- disable number column
+            relativenumber = true, -- disable relative numbers
+            -- cursorline = false, -- disable cursorline
+            -- cursorcolumn = false, -- disable cursor column
+            -- foldcolumn = "0", -- disable fold column
+            -- list = false, -- disable whitespace characters
+          },
         },
       })
     end,
