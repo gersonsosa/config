@@ -25,3 +25,4 @@ vim.opt.list = true
 vim.opt.showmode = false
 vim.opt.cursorline = true
 vim.opt.dictionary:append("/usr/share/dict/words")
+vim.opt.laststatus = 3

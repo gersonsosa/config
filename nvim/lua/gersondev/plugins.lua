@@ -24,37 +24,13 @@ local plugins = {
       "MunifTanjim/nui.nvim",
     },
     cmd = { "NeoTreeFocusToggle", "NeoTreeRevealToggle" },
-    config = function()
-      vim.g.neo_tree_remove_legacy_commands = 1
-      require("neo-tree").setup({
-        window = {
-          mappings = {
-                ["J"] = function(state)
-              local tree = state.tree
-              local node = tree:get_node()
-              local siblings = tree:get_nodes(node:get_parent_id())
-              local renderer = require('neo-tree.ui.renderer')
-              renderer.focus_node(state, siblings[#siblings]:get_id())
-            end,
-                ["K"] = function(state)
-              local tree = state.tree
-              local node = tree:get_node()
-              local siblings = tree:get_nodes(node:get_parent_id())
-              local renderer = require('neo-tree.ui.renderer')
-              renderer.focus_node(state, siblings[1]:get_id())
-            end,
-                ["z"] = "none"
-          }
-        }
-      })
-    end
+    config = function() require("gersondev.neo-tree") end
   },
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       "nvim-lua/plenary.nvim",
       "natecraddock/telescope-zf-native.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function() require("gersondev.nvim-telescope") end,
     cmd = { "Telescope" }
@@ -87,16 +63,17 @@ local plugins = {
   {
     'numToStr/Comment.nvim',
     config = function() require('Comment').setup() end,
-    event = "VeryLazy"
+    keys = { { "gc", "gb" } },
   },
   {
     "kylechui/nvim-surround",
     config = function()
       require("nvim-surround").setup({})
     end,
-    event = "VeryLazy"
+    keys = { { "ys" }, { "S", mode = "v" } },
+    event = "InsertEnter",
   },
-  { "ojroques/nvim-osc52", lazy = true },
+  { "ojroques/nvim-osc52", event = "VeryLazy" },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -120,7 +97,7 @@ local plugins = {
   {
     'lewis6991/gitsigns.nvim',
     config = function() require('gersondev.gitsigns') end,
-    cmd = { 'Gitsigns' }
+    cmd = 'Gitsigns'
   },
   {
     'sindrets/diffview.nvim',
@@ -179,9 +156,7 @@ local plugins = {
       "rcarriga/cmp-dap",
       "uga-rosa/cmp-dictionary"
     },
-    config = function()
-      require('gersondev.cmp')
-    end,
+    config = function() require('gersondev.cmp') end,
   },
   {
     "mfussenegger/nvim-dap",
@@ -214,6 +189,7 @@ local plugins = {
     end,
     cmd = { "ZenMode" },
   },
+  { 'stevearc/dressing.nvim',  event = "VeryLazy" },
   {
     "dpayne/CodeGPT.nvim",
     dependencies = {
@@ -222,7 +198,7 @@ local plugins = {
     },
     cmd = "Chat"
   },
-  { 'rizzatti/dash.vim',       cmd = { "Dash", "DashKeywords" } },
+  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',

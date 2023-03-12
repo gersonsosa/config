@@ -23,4 +23,3 @@ t.setup {
 }
 
 t.load_extension('zf-native')
-t.load_extension('ui-select')
