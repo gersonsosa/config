@@ -15,6 +15,7 @@ local metals_config = metals.bare_config()
 metals_config.settings = {
   showImplicitArguments = true,
   excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  testUserInterface = "Test Explorer",
 }
 
 -- hide messages and display only trough vim.g['metals_status']
@@ -28,6 +29,14 @@ metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities(capabi
 local dap = require("dap")
 
 dap.configurations.scala = {
+  {
+    type = "scala",
+    request = "launch",
+    name = "Run",
+    metals = {
+      runType = "run",
+    }
+  },
   {
     type = "scala",
     request = "launch",
@@ -69,7 +78,8 @@ metals_config.on_attach = function(_, bufnr)
   map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]], { desc = "Debug - Continue", buffer = bufnr })
   map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]], { desc = 'DAP - Toogle REPL', buffer = bufnr })
   map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]], { desc = 'Debug - Hover', buffer = bufnr })
-  map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]], { desc = 'Toogle Breakpoint', buffer = bufnr })
+  map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
+  { desc = 'Toogle Breakpoint', buffer = bufnr })
   map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]], { desc = 'Debug - Step Over', buffer = bufnr })
   map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]], { desc = 'Debug - Step into', buffer = bufnr })
   map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]], { desc = 'Debug - Run last', buffer = bufnr })
