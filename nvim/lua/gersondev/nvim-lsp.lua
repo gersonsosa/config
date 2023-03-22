@@ -23,10 +23,14 @@ local on_attach = function(_, bufnr)
 
   -- Telescope mappings
   local function telescope_lsp_doc_symbols()
-    require "telescope.builtin".lsp_document_symbols()
+    status_ok, telescope_builtin = pcall(require,  "telescope.builtin")
+    if not status_ok then
+      print("Couln't load telescope, is it installed?")
+    end
+    require.lsp_document_symbols()
   end
 
-  map("n", "<leader>ds", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
+  map("n", "<leader>dS", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
 end
 
 local nvim_lsp = require('lspconfig')
@@ -95,15 +99,27 @@ nvim_lsp.yamlls.setup {
 
 nvim_lsp.ccls.setup {
   init_options = {
-    compilationDatabaseDirectory = "build";
-  --   index = {
-  --     threads = 0;
-  --   };
+    compilationDatabaseDirectory = "build",
+    --   index = {
+    --     threads = 0;
+    --   };
     clang = {
-      excludeArgs = { "-frounding-math"} ;
-    };
+      excludeArgs = { "-frounding-math" },
+    },
   }
 }
+
+nvim_lsp.rust_analyzer.setup({
+  on_attach = on_attach,
+  settings = {
+    ["rust-analyzer"] = {
+      imports = { granularity = { group = "module" } },
+      cargo = { buildScripts = { enable = true } },
+      procMacro = { enable = true },
+      diagnostics = { enable = false }
+    }
+  }
+})
 
 -- Use a loop to conveniently call 'setup' on multiple servers
 -- with common configurations map buffer local keybindings when
