@@ -10,6 +10,7 @@ local languages = {
   "bash",
   "yaml",
   "python",
+  "vim",
   "sql"
 };
 require 'nvim-treesitter.configs'.setup {
