@@ -23,11 +23,11 @@ local on_attach = function(_, bufnr)
 
   -- Telescope mappings
   local function telescope_lsp_doc_symbols()
-    status_ok, telescope_builtin = pcall(require,  "telescope.builtin")
+    local status_ok, telescope_builtin = pcall(require,  "telescope.builtin")
     if not status_ok then
       print("Couln't load telescope, is it installed?")
     end
-    require.lsp_document_symbols()
+    telescope_builtin.lsp_document_symbols()
   end
 
   map("n", "<leader>dS", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
