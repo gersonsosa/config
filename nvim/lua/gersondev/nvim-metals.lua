@@ -11,10 +11,12 @@ local map = f.map
 local metals = require "metals"
 local metals_config = metals.bare_config()
 
--- Example of settings
 metals_config.settings = {
   showImplicitArguments = true,
-  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  excludedPackages = {
+    "akka.actor.typed.javadsl",
+    "com.github.swagger.akka.javadsl"
+  },
   testUserInterface = "Test Explorer",
 }
 
@@ -79,7 +81,7 @@ metals_config.on_attach = function(_, bufnr)
   map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]], { desc = 'DAP - Toogle REPL', buffer = bufnr })
   map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]], { desc = 'Debug - Hover', buffer = bufnr })
   map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
-  { desc = 'Toogle Breakpoint', buffer = bufnr })
+    { desc = 'Toogle Breakpoint', buffer = bufnr })
   map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]], { desc = 'Debug - Step Over', buffer = bufnr })
   map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]], { desc = 'Debug - Step into', buffer = bufnr })
   map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]], { desc = 'Debug - Run last', buffer = bufnr })

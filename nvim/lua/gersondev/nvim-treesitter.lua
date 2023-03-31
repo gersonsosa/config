@@ -1,12 +1,14 @@
 local languages = {
   "java",
-  "kotlin",
   "scala",
   "c",
   "cpp",
   "rust",
+  "kotlin",
   "javascript",
   "typescript",
+  "fish",
+  "lua",
   "bash",
   "yaml",
   "python",
@@ -36,9 +38,9 @@ require 'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
-  indent = {
-    enable = true
-  },
+  -- indent = {
+  --   enable = true
+  -- },
 }
 
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"

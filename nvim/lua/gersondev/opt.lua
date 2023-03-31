@@ -11,6 +11,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.undofile = true
 
 vim.opt.colorcolumn = "80"
+vim.opt.linebreak = true
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
