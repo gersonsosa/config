@@ -63,7 +63,7 @@ local plugins = {
   {
     'numToStr/Comment.nvim',
     config = function() require('Comment').setup() end,
-    keys = { { "gc", "gb" } },
+    keys = { { "gc", "gb", mode = { "n", "v" } } },
   },
   {
     "kylechui/nvim-surround",
