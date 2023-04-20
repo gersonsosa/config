@@ -40,7 +40,10 @@ local plugins = {
     build = ':TSUpdate',
     config = function() require('gersondev.nvim-treesitter') end
   },
-  { 'nvim-treesitter/nvim-treesitter-context', event = "VeryLazy" },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    lazy = true
+  },
   {
     "akinsho/toggleterm.nvim",
     version = "*",
@@ -50,7 +53,7 @@ local plugins = {
     cmd = "ToggleTerm",
     keys = { "<c-\\>" }
   },
-  { 'kevinhwang91/nvim-bqf',                   ft = 'qf' },
+  { 'kevinhwang91/nvim-bqf', ft = 'qf' },
   {
     'rmagatti/auto-session',
     config = function()
@@ -73,7 +76,7 @@ local plugins = {
     keys = { { "ys" }, { "S", mode = "v" } },
     event = "InsertEnter",
   },
-  { "ojroques/nvim-osc52", event = "VeryLazy" },
+  { "ojroques/nvim-osc52",   event = "VeryLazy" },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -85,9 +88,9 @@ local plugins = {
     end,
     event = "VeryLazy",
   },
-  { "mbbill/undotree",     cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
-  { "tpope/vim-eunuch",    lazy = true },
-  { "tpope/vim-fugitive",  cmd = "G" },
+  { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
+  { "tpope/vim-eunuch",   lazy = true },
+  { "tpope/vim-fugitive", cmd = "G" },
   {
     'TimUntersberger/neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },

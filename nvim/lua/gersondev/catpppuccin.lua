@@ -1,7 +1,7 @@
 vim.o.termguicolors = true
 
 require("catppuccin").setup {
-  flavour = "macchiato", -- mocha, macchiato, frappe, latte
+  flavour = "frappe", -- mocha, macchiato, frappe, latte
   integrations = {
     telescope = true,
     neogit = true,

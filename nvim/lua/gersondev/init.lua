@@ -2,4 +2,4 @@ require('gersondev.functions')
 require('gersondev.opt')
 require('gersondev.plugins')
 
-vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme tokyonight-storm]])
