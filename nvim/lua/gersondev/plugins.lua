@@ -214,6 +214,7 @@ local plugins = {
         on_stderr = function(_, data)
           vim.notify("Failed to load OpenAI credential:" .. data, vim.log.levels.ERROR)
         end,
+        timeout = 15000,
       }):sync()
     end
   },
