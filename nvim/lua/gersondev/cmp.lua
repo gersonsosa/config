@@ -1,6 +1,8 @@
 -- completion related settings
-local cmp = require "cmp"
-if cmp == nil then return end
+local status_ok, cmp = pcall(require, "cmp")
+if not status_ok then
+  return
+end
 
 local compare = require("cmp.config.compare")
 
@@ -13,7 +15,7 @@ cmp.setup {
   }, {
     { name = "dictionary", keyword_length = 3 },
     { name = "path" },
-    { name = "buffer",     keyword_length = 99 },
+    { name = "buffer" },
   }),
   snippet = {
     expand = function(args)
@@ -22,9 +24,9 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert({
+    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-h>"] = cmp.mapping.select_prev_item({ count = 5 }),
-    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-l>"] = cmp.mapping.select_next_item({ count = 5 }),
     ['<C-b>'] = cmp.mapping.scroll_docs(-8),
     ['<C-f>'] = cmp.mapping.scroll_docs(8),
@@ -45,6 +47,25 @@ cmp.setup {
 local dict = require("cmp_dictionary")
 dict.switcher({ spelllang = { en = "~/.local/share/dict/en.dict" } })
 dict.update()
+
+
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 cmp.setup.filetype({ 'scala' }, {
   sorting = {

@@ -5,7 +5,7 @@ end
 
 dapui.setup({
   controls = {
-    enabled = false
+    enabled = true
   }
 })
 
