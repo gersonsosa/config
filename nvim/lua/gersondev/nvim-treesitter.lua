@@ -12,8 +12,11 @@ local languages = {
   "bash",
   "yaml",
   "python",
+  "sql",
   "vim",
-  "sql"
+  "toml",
+  "terraform",
+  "nix"
 };
 require 'nvim-treesitter.configs'.setup {
   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
