@@ -156,6 +156,7 @@ local plugins = {
       "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
       "rcarriga/cmp-dap",
       "uga-rosa/cmp-dictionary"
     },
@@ -218,7 +219,8 @@ local plugins = {
       }):sync()
     end
   },
-  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
+  { "github/copilot.vim" },
+  { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
