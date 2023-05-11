@@ -1,10 +1,10 @@
-#/bin/bash
-pushd ~/.dotfiles
+#!/bin/bash
 if [ -d "~/.config/nvim" ] 
 then
-    echo "Couln't link neovim config files, ~/.config/nvim already exists" 
+  echo "Couln't link neovim config files, ~/.config/nvim already exists" 
 else
-    ln -s ~/.config/nvim ./nvim
+  pushd ~/.config/
+  ln -s ~/.dotfiles/nvim/
 fi
 
-ln -s ~/.tmux.conf .tmux.conf
+ln -s .tmux.conf ~/
