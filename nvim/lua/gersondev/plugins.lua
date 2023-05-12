@@ -56,6 +56,7 @@ local plugins = {
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
   {
     'rmagatti/auto-session',
+    commit = '21033c6',
     config = function()
       require("auto-session").setup {
         log_level = "error",
