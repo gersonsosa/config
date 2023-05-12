@@ -23,7 +23,7 @@ local on_attach = function(_, bufnr)
 
   -- Telescope mappings
   local function telescope_lsp_doc_symbols()
-    local status_ok, telescope_builtin = pcall(require,  "telescope.builtin")
+    local status_ok, telescope_builtin = pcall(require, "telescope.builtin")
     if not status_ok then
       print("Couln't load telescope, is it installed?")
     end
@@ -98,6 +98,8 @@ nvim_lsp.yamlls.setup {
 }
 
 nvim_lsp.ccls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
   init_options = {
     compilationDatabaseDirectory = "build",
     --   index = {
@@ -111,6 +113,7 @@ nvim_lsp.ccls.setup {
 
 nvim_lsp.rust_analyzer.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
   settings = {
     ["rust-analyzer"] = {
       imports = { granularity = { group = "module" } },
