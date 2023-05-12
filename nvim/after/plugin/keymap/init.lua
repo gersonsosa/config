@@ -70,6 +70,8 @@ map("x", "<leader>wg", function()
 
 map("n", "<leader>z", vim.cmd.ZenMode)
 
+map("n", "<space>e", [[:e <c-r>=expand("%:p:h") . "/"<cr>]], { desc = "Set command to expand to current file dir" })
+
 -- Test mappings
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
   { desc = "Get elastic cloud pr" })
