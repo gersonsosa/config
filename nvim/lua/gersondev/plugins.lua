@@ -56,7 +56,6 @@ local plugins = {
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
   {
     'rmagatti/auto-session',
-    commit = '21033c6',
     config = function()
       require("auto-session").setup {
         log_level = "error",
@@ -220,8 +219,14 @@ local plugins = {
       }):sync()
     end
   },
-  { "github/copilot.vim" },
-  { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } },
+  {
+    "github/copilot.vim",
+    config = function()
+      -- Disable copilot by default, invoked manually with cmd+option+\
+      vim.g.copilot_enabled = false
+    end
+  },
+  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
