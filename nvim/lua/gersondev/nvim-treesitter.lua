@@ -9,6 +9,7 @@ local languages = {
   "typescript",
   "fish",
   "lua",
+  "teal",
   "bash",
   "yaml",
   "python",
