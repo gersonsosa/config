@@ -77,6 +77,7 @@ local plugins = {
     event = "InsertEnter",
   },
   { "ojroques/nvim-osc52",   event = "VeryLazy" },
+  { "ojroques/nvim-bufdel",  event = "VeryLazy" },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()

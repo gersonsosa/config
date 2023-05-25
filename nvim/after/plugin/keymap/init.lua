@@ -70,8 +70,11 @@ map("x", "<leader>wg", function()
 
 map("n", "<leader>z", vim.cmd.ZenMode)
 
-map("n", "<space>e", [[:e <c-r>=expand("%:p:h") . "/"<cr>]], { desc = "Set command to expand to current file dir" })
+map("n", "<space>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set command to expand to current file dir" })
 
--- Test mappings
+map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
+
+-- elastic specific mappings
+-- is there a way to map this only when working in a specific repo?
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
   { desc = "Get elastic cloud pr" })
