@@ -159,7 +159,8 @@ local plugins = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-cmdline",
       "rcarriga/cmp-dap",
-      "uga-rosa/cmp-dictionary"
+      "uga-rosa/cmp-dictionary",
+      "amarakon/nvim-cmp-buffer-lines"
     },
     config = function() require('gersondev.cmp') end,
   },

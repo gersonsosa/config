@@ -38,7 +38,7 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm({ select = true })
   }),
   window = {
-    completion = cmp.config.window.bordered({ col_offset = -5 }),
+    completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
   preselect = cmp.PreselectMode.None,
