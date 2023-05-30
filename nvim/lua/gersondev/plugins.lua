@@ -55,12 +55,13 @@ local plugins = {
   },
   { 'kevinhwang91/nvim-bqf', ft = 'qf' },
   {
-    'rmagatti/auto-session',
+    "Shatur/neovim-session-manager",
     config = function()
-      require("auto-session").setup {
-        log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
-      }
+      local config = require('session_manager.config')
+      require("session_manager").setup({
+        autoload_mode = config.AutoloadMode.CurrentDir,
+        autosave_ignore_dirs = { "~/" }, -- A list of directories where the session will not be autosaved.
+      })
     end
   },
   {
