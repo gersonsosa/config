@@ -60,7 +60,7 @@ local plugins = {
       local config = require('session_manager.config')
       require("session_manager").setup({
         autoload_mode = config.AutoloadMode.CurrentDir,
-        autosave_ignore_dirs = { "~/" }, -- A list of directories where the session will not be autosaved.
+        autosave_ignore_dirs = { "~/", "~/Downloads" }, -- A list of directories where the session will not be autosaved.
       })
     end
   },
@@ -181,7 +181,7 @@ local plugins = {
     config = function()
       require("zen-mode").setup({
         window = {
-          width = 0.65,
+          width = 0.7,
           options = {
             -- signcolumn = "no", -- disable signcolumn
             number = true,         -- disable number column
