@@ -88,7 +88,7 @@ local plugins = {
         show_current_context_start = true,
       }
     end,
-    event = "VeryLazy",
+    event = "InsertEnter",
   },
   { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
   { "tpope/vim-eunuch",   lazy = true },
@@ -161,7 +161,8 @@ local plugins = {
       "hrsh7th/cmp-cmdline",
       "rcarriga/cmp-dap",
       "uga-rosa/cmp-dictionary",
-      "amarakon/nvim-cmp-buffer-lines"
+      "amarakon/nvim-cmp-buffer-lines",
+      "onsails/lspkind.nvim",
     },
     config = function() require('gersondev.cmp') end,
   },
