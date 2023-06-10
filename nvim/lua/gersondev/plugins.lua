@@ -219,14 +219,13 @@ local plugins = {
         on_stderr = function(_, data)
           vim.notify("Failed to load OpenAI credential:" .. data, vim.log.levels.ERROR)
         end,
-        timeout = 15000,
-      }):sync()
+      }):sync(15000, 5000)
     end
   },
   {
     "github/copilot.vim",
     config = function()
-      -- Disable copilot by default, invoked manually with cmd+option+\
+      -- Disable copilot by default, invoke with cmd+option+\
       vim.g.copilot_enabled = false
     end
   },
