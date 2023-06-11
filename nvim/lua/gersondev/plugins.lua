@@ -182,7 +182,7 @@ local plugins = {
     config = function()
       require("zen-mode").setup({
         window = {
-          width = 0.7,
+          width = 0.75,
           options = {
             -- signcolumn = "no", -- disable signcolumn
             number = true,         -- disable number column
@@ -225,8 +225,11 @@ local plugins = {
   {
     "github/copilot.vim",
     config = function()
-      -- Disable copilot by default, invoke with cmd+option+\
-      vim.g.copilot_enabled = false
+      -- Disable copilot by default, invoke with M+\
+      local file_types = { rust = true, lua = true }
+      file_types["*"] = false
+      vim.inspect(file_types)
+      vim.g.copilot_filetypes = file_types
     end
   },
   { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
