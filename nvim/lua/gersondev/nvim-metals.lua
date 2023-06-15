@@ -100,13 +100,13 @@ metals_config.on_attach = function(_, bufnr)
   map('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>',
     { desc = 'Hover workspace', buffer = bufnr })
   -- all workspace diagnostics
-  map('n', '<leader>aa', '<cmd>lua vim.diagnostic.setqflist()<CR>',
+  map('n', '<leader>wd', '<cmd>lua vim.diagnostic.setqflist()<CR>',
     { desc = 'Workspace diagnostics', buffer = bufnr })
   -- all workspace errors
-  map('n', '<leader>ae', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
+  map('n', '<leader>we', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
     { desc = 'Workspace errors', buffer = bufnr })
   -- all workspace warnings
-  map('n', '<leader>aw', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
+  map('n', '<leader>ww', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
     { desc = 'Workspace warnings', buffer = bufnr })
   -- buffer diagnostics only
   map('n', '<leader>bd', '<cmd>lua vim.diagnostic.setloclist()<CR>',

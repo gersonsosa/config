@@ -20,7 +20,7 @@ cmp.setup {
         nvim_lua = "[LUA]",
         latex_symbols = "[LATEX]",
       }),
-      maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      maxwidth = 60,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
       -- The function below will be called before any actual modifications from lspkind
@@ -34,9 +34,10 @@ cmp.setup {
     { name = "nvim_lsp", keyword_length = 2 },
     { name = "vsnip",    keyword_length = 2 },
   }, {
-    { name = "dictionary", keyword_length = 3 },
-    { name = "path" },
     { name = "buffer" },
+    { name = "buffer-lines" },
+    { name = "path" },
+    { name = "dictionary",  keyword_length = 3 },
   }),
   snippet = {
     expand = function(args)
@@ -74,7 +75,10 @@ dict.update()
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = 'buffer' }
+    {
+      name = 'buffer',
+      option = { keyword_pattern = [[\k\+]] }
+    }
   }
 })
 
@@ -115,6 +119,12 @@ cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
     { name = "dictionary", keyword_length = 3 },
     { name = "path",       keyword_length = 3 },
-    { name = "buffer",     keyword_length = 99 },
+    { name = "buffer" },
   })
+})
+
+cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+  sources = {
+    { name = "dap" },
+  },
 })

@@ -51,8 +51,8 @@ require("neo-tree").setup({
   filesystem = {
     window = {
       mappings = {
-        ["tf"] = "telescope_find",
-        ["tg"] = "telescope_grep",
+        ["<space>tf"] = "telescope_find",
+        ["<space>tg"] = "telescope_grep",
       },
     },
     commands = {

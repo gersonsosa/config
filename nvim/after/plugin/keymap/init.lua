@@ -43,10 +43,6 @@ map("n", "<leader>du", [[<cmd>lua require("dapui").toggle()<cr>]], { desc = "Tog
 map("n", "<leader>de", [[<cmd>lua require("dapui").eval()<cr>]], { desc = "Evaluate expression" })
 map("n", "<leader>df", [[<cmd>lua require("dapui").float_element()<cr>]], { desc = "List float elements" })
 
--- trouble
-map("n", "<leader>dx", vim.cmd.Trouble, { desc = "Show current buffer trouble" })
-map("n", "<leader>xx", [[<cmd>Trouble workspace_diagnostics<cr>]], { desc = "Show current workspace trouble" })
-
 -- telescope
 map("n", "<leader>t", vim.cmd.Telescope, { desc = "Show all telescope builtin" })
 map("n", "<leader>ff", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
@@ -74,7 +70,9 @@ map("n", "<space>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set comm
 
 map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
 
--- elastic specific mappings
+map("n", "<space>wx", function () require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
+map("n", "<space>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
+
 -- is there a way to map this only when working in a specific repo?
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
   { desc = "Get elastic cloud pr" })

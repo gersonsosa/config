@@ -134,10 +134,9 @@ local plugins = {
     config = function() require('gersondev.null-ls') end,
   },
   {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function() require('gersondev.trouble') end,
-    cmd = "Trouble"
+    "onsails/diaglist.nvim",
+    config = function() require("diaglist").init() end,
+    lazy = true,
   },
   { "mfussenegger/nvim-jdtls", ft = "java" },
   {
@@ -232,7 +231,7 @@ local plugins = {
       vim.g.copilot_filetypes = file_types
     end
   },
-  { 'rizzatti/dash.vim',     cmd = { "Dash", "DashKeywords" } },
+  { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
@@ -249,7 +248,11 @@ local plugins = {
       require("gersondev.catpppuccin")
     end
   },
-  { "folke/tokyonight.nvim", lazy = true, }
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000
+  }
 }
 
 require("lazy").setup(plugins)
