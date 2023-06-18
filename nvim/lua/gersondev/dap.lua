@@ -15,3 +15,22 @@ dap.listeners.before.event_initialized["dapui_config"] = function(session, _)
     dapui.open({})
   end
 end
+
+-- close dapui and open dap repl
+local function close_ui_open_repl()
+  local ok_dap_ui, dapui = pcall(require, "dapui")
+  if not ok_dap_ui then
+    return
+  end
+  dapui.close()
+  dap.repl.open()
+end
+
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  close_ui_open_repl()
+end
+
+dap.listeners.before.event_exited["dapui_config"] = function()
+  close_ui_open_repl()
+end
+
