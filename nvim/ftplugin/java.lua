@@ -114,7 +114,7 @@ local config = {
     local f = require "gersondev.functions"
     local map = f.map
 
-    map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
+    map('n', '<leader>fm', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
     map("n", "gD", function() vim.lsp.buf.definition() end,
       { desc = "Go to definition", buffer = bufnr })
     map("n", "K", function() vim.lsp.buf.hover() end,
@@ -154,12 +154,12 @@ map("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR
 map("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })
 
 -- LSP mappings
-map("n", "<space>wa", '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
-map("n", "<space>wr", '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
-map("n", "<space>wl", '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
-map("n", "<space>D", '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-map("n", "<space>rn", '<cmd>lua vim.lsp.buf.rename()<CR>')
-map("n", "<space>ca", '<cmd>lua vim.lsp.buf.code_action()<CR>')
+map("n", "<leader>wa", '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+map("n", "<leader>wr", '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+map("n", "<leader>wl", '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+map("n", "<leader>D", '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+map("n", "<leader>rn", '<cmd>lua vim.lsp.buf.rename()<CR>')
+map("n", "<leader>ca", '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.

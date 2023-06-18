@@ -17,7 +17,7 @@ map("n", "<C-k>", [[<cmd>m .-2<cr>]], { desc = "Move line up" })
 map('n', '<leader>di', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic in a window" })
 map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "Go to prev diagnostic" })
 map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "Go to next diagnostic" })
-map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
+map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open diagnostics" })
 
 -- plugin mappings
 -- tree
@@ -66,12 +66,12 @@ map("x", "<leader>wg", function()
 
 map("n", "<leader>z", vim.cmd.ZenMode)
 
-map("n", "<space>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set command to expand to current file dir" })
+map("n", "<leader>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set command to expand to current file dir" })
 
 map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
 
-map("n", "<space>wx", function () require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
-map("n", "<space>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
+map("n", "<leader>wx", function () require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
+map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
 
 -- is there a way to map this only when working in a specific repo?
 map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],

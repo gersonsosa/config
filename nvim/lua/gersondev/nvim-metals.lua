@@ -93,7 +93,7 @@ metals_config.on_attach = function(_, bufnr)
     { desc = 'Run code lens', buffer = bufnr })
   map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
     { desc = 'Execute code action', buffer = bufnr })
-  map('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+  map('n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
     { desc = 'Pop signature help', buffer = bufnr })
   map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>',
     { desc = 'Rename object', buffer = bufnr })
@@ -111,20 +111,26 @@ metals_config.on_attach = function(_, bufnr)
   -- buffer diagnostics only
   map('n', '<leader>bd', '<cmd>lua vim.diagnostic.setloclist()<CR>',
     { desc = 'Current buffer diagnostics', buffer = bufnr })
-  map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
+
+  map('n', '<leader>fm', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
 
   -- LSP mappings
   map("n", "gD", function() vim.lsp.buf.definition() end,
     { desc = "Go to definition", buffer = bufnr })
+  map("n", "gd", function() vim.lsp.buf.declaration() end,
+    { desc = "Go to declaration", buffer = bufnr })
+  map('n', 'gy', function() vim.lsp.buf.type_definition() end,
+    { desc = "Go to type definition", buffer = bufnr })
+  map("n", "gr", function() vim.lsp.buf.references() end,
+    { desc = "Show references", buffer = bufnr })
   map("n", "K", function() vim.lsp.buf.hover() end,
     { desc = "Hover", buffer = bufnr })
   map("n", "gi", function() vim.lsp.buf.implementation() end,
     { desc = "Go to implementation", buffer = bufnr })
-  map("n", "gr", function() vim.lsp.buf.references() end,
-    { desc = "Show references", buffer = bufnr })
-  map("n", "gds", function() vim.lsp.buf.document_symbol() end,
+
+  map("n", "gdS", function() vim.lsp.buf.document_symbol() end,
     { desc = "List symbols", buffer = bufnr })
-  map("n", "gws", function() vim.lsp.buf.workspace_symbol() end,
+  map("n", "gwS", function() vim.lsp.buf.workspace_symbol() end,
     { desc = "List workspace symbols", buffer = bufnr })
 end
 
