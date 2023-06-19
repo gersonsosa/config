@@ -21,7 +21,7 @@ map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open
 
 -- plugin mappings
 -- tree
-map('n', '<leader>n', vim.cmd.NeoTreeRevealToggle, { desc = "Find file in tree" })
+map('n', '<leader>n', vim.cmd.NeoTreeReveal, { desc = "Find file in tree" })
 map('n', '<C-n>', vim.cmd.NeoTreeFocusToggle, { desc = "Toggle tree" })
 
 -- neogit
@@ -70,7 +70,7 @@ map("n", "<leader>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set com
 
 map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
 
-map("n", "<leader>wx", function () require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
+map("n", "<leader>wx", function() require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
 map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
 
 -- is there a way to map this only when working in a specific repo?
