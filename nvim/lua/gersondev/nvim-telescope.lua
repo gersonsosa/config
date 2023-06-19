@@ -1,7 +1,8 @@
 local t = require('telescope')
+
 t.setup {
   defaults = {
-    path_display = { "shorten" },
+    path_display = { "smart" },
     preview = {
       filesize_hook = function(filepath, bufnr, opts)
         local max_bytes = 10000

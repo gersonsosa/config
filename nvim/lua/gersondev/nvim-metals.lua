@@ -2,7 +2,7 @@
 -- Metals config
 -------------------------------------------------------------------------------
 local api = vim.api
-local f = require "gersondev.functions"
+local f = require "gersondev.common.functions"
 local map = f.map
 
 ----------------------------------

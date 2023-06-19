@@ -1,14 +1,15 @@
 local languages = {
-  "java",
   "scala",
-  "c",
-  "cpp",
   "rust",
+  "lua",
+  "java",
+  "c",
+  "cmake",
+  "cpp",
   "kotlin",
   "javascript",
   "typescript",
   "fish",
-  "lua",
   "teal",
   "bash",
   "yaml",
@@ -17,8 +18,10 @@ local languages = {
   "vim",
   "toml",
   "terraform",
-  "nix"
-};
+  "nix",
+  "make"
+}
+
 require 'nvim-treesitter.configs'.setup {
   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ensure_installed = languages,

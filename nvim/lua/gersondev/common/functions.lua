@@ -1,4 +1,6 @@
-local function map(mode, lhs, rhs, opts)
+local M = {}
+
+M.map = function(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
     options = vim.tbl_extend("force", options, opts)
@@ -6,7 +8,7 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
--- shamelessly taken from https://github.com/ojroques/nvim-osc52
+-- taken from https://github.com/ojroques/nvim-osc52
 local commands = {
   operator = { block = "`[\\<C-v>`]y", char = "`[v`]y", line = "'[V']y" },
   visual = { ['V'] = 'y', ['v'] = 'y', [''] = 'y' },
@@ -32,7 +34,7 @@ local function get_text(mode, type)
   return text or ''
 end
 
-local function get_visual_text()
+M.get_visual_text = function()
   local text = get_text('visual', vim.fn.visualmode())
   return text
 end
@@ -42,13 +44,9 @@ local function get_operator_text_callback()
   return text
 end
 
-local function get_operator_text()
+M.get_operator_text = function()
   vim.go.operatorfunc = get_operator_text_callback
   return 'g@'
 end
 
-return {
-  map = map,
-  get_visual_text = get_visual_text,
-  get_operator_text = get_operator_text
-}
+return M
