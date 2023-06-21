@@ -1,6 +1,4 @@
-local f = require "gersondev.common.functions"
 local lsp_commons = require "gersondev.common.lsp"
-local map = f.map
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -10,10 +8,10 @@ local nvim_lsp = require('lspconfig')
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local signs = { Error = " ", Warn = " ", Hint = "󰛩 ", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "󰛩", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  vim.fn.sign_define(hl, { text = " " .. icon, texthl = hl, numhl = hl })
 end
 
 -- Language specific configurations, move to a specific file?

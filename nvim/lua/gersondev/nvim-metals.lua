@@ -4,6 +4,7 @@
 local api = vim.api
 local f = require "gersondev.common.functions"
 local map = f.map
+local setup_lsp_keymap = require "gersondev.common.lsp".setup_lsp_keymap
 
 ----------------------------------
 -- LSP Setup ---------------------
@@ -62,19 +63,18 @@ metals_config.on_attach = function(_, bufnr)
   metals.setup_dap()
 
   -- Telescope mappings
-  local telescope = require "telescope"
-  local telescope_builtin = require "telescope.builtin"
-
   local function metals_commands()
+    local telescope_ok, telescope = pcall(require, "telescope")
+    if not telescope_ok then
+      vim.notify("Couln't load telescope, is it installed?", vim.log.levels.ERROR)
+    end
     telescope.extensions.metals.commands()
   end
 
-  local function telescope_lsp_doc_symbols()
-    telescope_builtin.lsp_document_symbols()
-  end
-
   map("n", "<leader>mc", metals_commands, { desc = 'Show metals commands', buffer = bufnr })
-  map("n", "<leader>ds", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
+
+  map('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>',
+    { desc = 'Hover worksheet', buffer = bufnr })
 
   -- DAP mappings
   map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]], { desc = "Debug - Continue", buffer = bufnr })
@@ -89,16 +89,8 @@ metals_config.on_attach = function(_, bufnr)
   ----------------------------------
   -- Mappings -----------------------
   ----------------------------------
-  map('n', '<leader>cl', '<cmd>lua vim.lsp.codelens.run()<CR>',
-    { desc = 'Run code lens', buffer = bufnr })
-  map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
-    { desc = 'Execute code action', buffer = bufnr })
-  map('n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-    { desc = 'Pop signature help', buffer = bufnr })
-  map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>',
-    { desc = 'Rename object', buffer = bufnr })
-  map('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>',
-    { desc = 'Hover workspace', buffer = bufnr })
+  setup_lsp_keymap(nil, bufnr)
+
   -- all workspace diagnostics
   map('n', '<leader>wd', '<cmd>lua vim.diagnostic.setqflist()<CR>',
     { desc = 'Workspace diagnostics', buffer = bufnr })
@@ -111,27 +103,6 @@ metals_config.on_attach = function(_, bufnr)
   -- buffer diagnostics only
   map('n', '<leader>bd', '<cmd>lua vim.diagnostic.setloclist()<CR>',
     { desc = 'Current buffer diagnostics', buffer = bufnr })
-
-  map('n', '<leader>fm', function() vim.lsp.buf.format { async = true } end, { desc = "Format", buffer = bufnr })
-
-  -- LSP mappings
-  map("n", "gD", function() vim.lsp.buf.definition() end,
-    { desc = "Go to definition", buffer = bufnr })
-  map("n", "gd", function() vim.lsp.buf.declaration() end,
-    { desc = "Go to declaration", buffer = bufnr })
-  map('n', 'gy', function() vim.lsp.buf.type_definition() end,
-    { desc = "Go to type definition", buffer = bufnr })
-  map("n", "gr", function() vim.lsp.buf.references() end,
-    { desc = "Show references", buffer = bufnr })
-  map("n", "K", function() vim.lsp.buf.hover() end,
-    { desc = "Hover", buffer = bufnr })
-  map("n", "gi", function() vim.lsp.buf.implementation() end,
-    { desc = "Go to implementation", buffer = bufnr })
-
-  map("n", "gdS", function() vim.lsp.buf.document_symbol() end,
-    { desc = "List symbols", buffer = bufnr })
-  map("n", "gwS", function() vim.lsp.buf.workspace_symbol() end,
-    { desc = "List workspace symbols", buffer = bufnr })
 end
 
 -- Autocmd that will actually be in charging of starting the whole thing
