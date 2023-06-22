@@ -60,7 +60,7 @@ map("x", "<leader>wg", function()
       return
     end
 
-    builtin.grep_string({ search = require("gersondev.functions").get_visual_text() })
+    builtin.grep_string({ search = require("gersondev.common.functions").get_visual_text() })
   end,
   { desc = "Grep selected string" })
 

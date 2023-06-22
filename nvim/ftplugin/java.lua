@@ -111,7 +111,7 @@ local config = {
     jdtls.setup_dap({ hotcodereplace = 'auto' })
     jdtls.setup.add_commands()
 
-    local map = require "gersondev.functions".map
+    local map = require "gersondev.common.functions".map
     local setup_lsp_keymap = require "gersondev.common.lsp".setup_lsp_keymap
 
     -- LSP mappings
