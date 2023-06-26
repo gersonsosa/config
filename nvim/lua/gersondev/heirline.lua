@@ -41,21 +41,31 @@ resources.icons = {
     vertical_bar = '┃',
     block = '█',
     ----------------------------------------------
-    left = '', left_filled = '',
-    right = '', right_filled = '',
+    left = '',
+    left_filled = '',
+    right = '',
+    right_filled = '',
     ----------------------------------------------
-    slant_left = '', slant_left_thin = '',
-    slant_right = '', slant_right_thin = '',
+    slant_left = '',
+    slant_left_thin = '',
+    slant_right = '',
+    slant_right_thin = '',
     ----------------------------------------------
-    slant_left_2 = '', slant_left_2_thin = '',
-    slant_right_2 = '', slant_right_2_thin = '',
+    slant_left_2 = '',
+    slant_left_2_thin = '',
+    slant_right_2 = '',
+    slant_right_2_thin = '',
     ----------------------------------------------
-    left_rounded = '', left_rounded_thin = '',
-    right_rounded = '', right_rounded_thin = '',
+    left_rounded = '',
+    left_rounded_thin = '',
+    right_rounded = '',
+    right_rounded_thin = '',
     ----------------------------------------------
-    trapezoid_left = '', trapezoid_right = '',
+    trapezoid_left = '',
+    trapezoid_right = '',
     ----------------------------------------------
-    line_number = '', column_number = '',
+    line_number = '',
+    column_number = '',
   },
   padlock      = '',
   circle_small = '●', -- ●
@@ -63,6 +73,15 @@ resources.icons = {
   circle_plus  = '', -- 
   dot_circle_o = '', -- 
   circle_o     = '⭘', -- ⭘
+  lsp          = {
+    default = "󱐋",
+    copilot = "",
+    metals = "",
+    pyright = "",
+    tsserver = "󰛦",
+    lua_ls = "",
+    rust_analyzer = "",
+  }
 }
 
 local mode = {
@@ -246,7 +265,7 @@ file_name_block = utils.insert(
   file_icon,
   utils.insert(filename_modifier, file_name), -- a new table where FileName is a child of FileNameModifier
   file_flags,
-  { provider = '%<' }-- this means that the statusline is cut here when there's not enough space
+  { provider = '%<' }                         -- this means that the statusline is cut here when there's not enough space
 )
 
 local file_type = {
@@ -263,6 +282,7 @@ local ruler = {
   -- %c = column number
   -- %P = percentage through file of displayed window
   provider = "%7(%l/%3L%):%2c %P",
+  hl = { fg = "blue", bold = true },
 }
 
 -- I take no credits for this! :lion:
@@ -281,16 +301,17 @@ local scroll_bar = {
 
 local lsp_server_list = {
   condition = conditions.lsp_attached,
-  update = { 'LspAttach', 'LspDetach' },
+  update    = { 'LspAttach', 'LspDetach' },
 
-  provider = function()
+  provider  = function()
     local names = {}
     for _, server in pairs(vim.lsp.buf_get_clients(0)) do
-      table.insert(names, server.name)
+      local icon = resources.icons.lsp[server.name] or server.name:sub(1, 1) .. resources.icons.lsp.default
+      table.insert(names, icon)
     end
-    return " [" .. table.concat(names, " ") .. "]"
+    return " [ " .. table.concat(names, " ") .. " ]"
   end,
-  hl       = { fg = "green", bold = true },
+  hl        = { fg = "orange", bold = true },
 }
 
 local help_filename = {
@@ -307,7 +328,7 @@ local help_filename = {
 local metals_status = {
   condition = function()
     return (vim.bo.filetype == 'scala'
-        or vim.bo.filetype == 'sbt')
+          or vim.bo.filetype == 'sbt' or vim.bo.filetype == 'java')
         and vim.g['metals_status'] ~= nil
         and vim.g['metals_status'] ~= ''
   end,
@@ -327,7 +348,10 @@ local default_status_line = {
 
 local inactive_status_line = {
   condition = conditions.is_not_active,
-  file_type, space, file_name_block, align,
+  file_type,
+  space,
+  file_name_block,
+  align,
 }
 
 local special_status_line = {
@@ -338,7 +362,10 @@ local special_status_line = {
     })
   end,
 
-  file_type, space, help_filename, align
+  file_type,
+  space,
+  help_filename,
+  align
 }
 
 local status_lines = {
@@ -355,7 +382,9 @@ local status_lines = {
   -- think of it as a switch case with breaks to stop fallthrough.
   fallthrough = false,
 
-  special_status_line, inactive_status_line, default_status_line,
+  special_status_line,
+  inactive_status_line,
+  default_status_line,
 }
 
 require 'heirline'.setup({ statusline = status_lines })
