@@ -204,22 +204,7 @@ local plugins = {
       "MunifTanjim/nui.nvim",
     },
     cmd = "Chat",
-    config = function()
-      local job = require('plenary.job')
-
-      job:new({
-        command = 'op',
-        args = { 'item', 'get', 'OpenAI-API', '--fields', 'label=credential' },
-        cwd = '/usr/bin',
-        on_stdout = function(_, return_val)
-          vim.g.codegpt_openai_api_key = return_val
-          require("codegpt.config")
-        end,
-        on_stderr = function(_, data)
-          vim.notify("Failed to load OpenAI credential:" .. data, vim.log.levels.ERROR)
-        end,
-      }):sync(15000, 5000)
-    end
+    config = function() require("gersondev.codegpt") end,
   },
   {
     "github/copilot.vim",
