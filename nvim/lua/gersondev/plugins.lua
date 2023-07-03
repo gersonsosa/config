@@ -94,7 +94,7 @@ local plugins = {
   { "tpope/vim-eunuch",   lazy = true },
   { "tpope/vim-fugitive", cmd = "G" },
   {
-    'TimUntersberger/neogit',
+    'NeogitOrg/neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function() require("gersondev.neogit") end,
     cmd = 'Neogit'
