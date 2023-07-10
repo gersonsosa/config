@@ -1,0 +1,97 @@
+import = [
+  "/Users/gersonsosa/.config/alacritty/colors/tokyo-night-storm.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/tokyo-night.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-latte.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-mocha.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-frappe.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-machiatto.toml",
+]
+
+live_config_reload = true
+
+[bell]
+animation = "Ease"
+color = "0xf7768e"
+duration = 300
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[env]
+TERM = "alacritty-direct"
+
+[font]
+size = 18.0
+
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+
+[hints]
+alphabet = "jfkdls;ahgurieowpq"
+
+[[hints.enabled]]
+command = "open"
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+[hints.enabled.binding]
+key = "U"
+mods = "Control|Shift"
+
+[hints.enabled.mouse]
+enabled = true
+mods = "None"
+
+[[keyboard.bindings]]
+key = "Comma"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["-c", "open ~/.config/alacritty/alacritty.toml"]
+program = "sh"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = " "
+key = "Space"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u0015"
+key = "Back"
+mods = "Super"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "Right"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BOH"
+key = "Left"
+mode = "AppCursor"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001BOF"
+key = "Right"
+mode = "AppCursor"
+mods = "Command"
+
+[window]
+decorations = "buttonless"
+option_as_alt = "OnlyRight"
+
+[window.dimensions]
+columns = 180
+lines = 50
