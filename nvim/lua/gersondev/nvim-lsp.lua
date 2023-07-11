@@ -82,7 +82,7 @@ nvim_lsp.ccls.setup {
   }
 }
 
-nvim_lsp.rust_analyzer.setup({
+nvim_lsp.rust_analyzer.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -93,7 +93,21 @@ nvim_lsp.rust_analyzer.setup({
       diagnostics = { enable = false }
     }
   }
-})
+}
+
+nvim_lsp.gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { "gopls", "serve" },
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
+}
 
 -- Use a loop to conveniently call 'setup' on multiple servers
 -- with common configurations map buffer local keybindings when
