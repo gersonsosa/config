@@ -64,15 +64,18 @@ map("x", "<leader>wg", function()
   end,
   { desc = "Grep selected string" })
 
+-- zen mode
 map("n", "<leader>z", vim.cmd.ZenMode)
 
 map("n", "<leader>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set command to expand to current file dir" })
 
 map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
+map("n", "<leader>qq", vim.cmd.BufDelOthers, { desc = "Delete all buffers but the current one" })
 
 map("n", "<leader>wx", function() require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
 map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
 
--- is there a way to map this only when working in a specific repo?
-map("n", "<leader>pr", [[<cmd>Octo pr list elastic/cloud labels=Team:Journey/Onboarding<cr>]],
-  { desc = "Get elastic cloud pr" })
+-- testing these out
+map("n", "<leader>c", "<cmd>noh<cr>", { desc = "Clear highlights" })
+map("i", "<C-c>", "<Esc>")
+map("x", "<leader>p", [["_dP]], { desc = "Paste over selected text" })

@@ -35,9 +35,8 @@ cmp.setup {
     { name = "vsnip",    keyword_length = 2 },
   }, {
     { name = "buffer" },
-    { name = "buffer-lines" },
     { name = "path" },
-    { name = "dictionary",  keyword_length = 3 },
+    { name = "dictionary",  keyword_length = 2 },
   }),
   snippet = {
     expand = function(args)
@@ -69,7 +68,6 @@ cmp.setup {
 local dict = require("cmp_dictionary")
 dict.switcher({ spelllang = { en = "~/.local/share/dict/en.dict" } })
 dict.update()
-
 
 -- `/` cmdline setup.
 cmp.setup.cmdline('/', {
@@ -117,8 +115,8 @@ cmp.setup.filetype({ 'scala' }, {
 
 cmp.setup.filetype({ 'gitcommit', 'markdown' }, {
   sources = cmp.config.sources({
-    { name = "dictionary", keyword_length = 3 },
-    { name = "path",       keyword_length = 3 },
+    { name = "dictionary", keyword_length = 2 },
+    { name = "path",       keyword_length = 2 },
     { name = "buffer" },
   })
 })

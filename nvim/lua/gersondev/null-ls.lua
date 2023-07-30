@@ -9,5 +9,6 @@ n.setup {
     n.builtins.diagnostics.fish,
     n.builtins.diagnostics.ruff,
     n.builtins.formatting.jq,
+    n.builtins.diagnostics.cfn_lint,
   }
 }
