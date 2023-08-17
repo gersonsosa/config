@@ -4,6 +4,9 @@ if not status_ok then
 end
 
 neogit.setup {
+  status = {
+    recent_commit_count = 10,
+  },
   integrations = {
     diffview = true
   }
