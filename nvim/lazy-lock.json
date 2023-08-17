@@ -1,4 +1,5 @@
 {
+  "ChatGPT.nvim": { "branch": "main", "commit": "fba5423b3ddf0b67ada2bbb4d5f66d9cf76c996a" },
   "CodeGPT.nvim": { "branch": "master", "commit": "6e3714e8d336aea4a205081d44ed8b2e3505dee2" },
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "catppuccin": { "branch": "main", "commit": "490078b1593c6609e6a50ad5001e7902ea601824" },

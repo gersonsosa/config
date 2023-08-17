@@ -197,13 +197,19 @@ local plugins = {
   },
   { 'stevearc/dressing.nvim',  event = "VeryLazy" },
   {
-    "dpayne/CodeGPT.nvim",
+    "jackMort/ChatGPT.nvim",
+    lazy = true,
+    cmd = { "ChatGPT" },
+    config = function()
+      require("chatgpt").setup({
+        api_key_cmd = "op read op://Personal/OpenAI-API/credential --no-newline"
+      })
+    end,
     dependencies = {
-      "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-    },
-    cmd = "Chat",
-    config = function() require("gersondev.codegpt") end,
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
   },
   {
     "github/copilot.vim",
