@@ -24,7 +24,7 @@ TERM = "alacritty-direct"
 size = 18.0
 
 [font.normal]
-family = "FiraCode Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 
 [hints]
 alphabet = "jfkdls;ahgurieowpq"
