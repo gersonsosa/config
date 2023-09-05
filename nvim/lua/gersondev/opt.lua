@@ -17,6 +17,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smarttab = true
+vim.opt.smartindent = true
+vim.opt.scrolloff = 8
 
 vim.opt.listchars:append({ tab = "▸▸" })
 vim.opt.listchars:append({ trail = "·" })

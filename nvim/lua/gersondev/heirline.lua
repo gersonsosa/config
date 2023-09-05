@@ -1,11 +1,12 @@
 local utils = require("heirline.utils")
+local conditions = require("heirline.conditions")
 
 local function setup_colors()
   return {
-    bright_bg = utils.get_highlight("Folded").bg,
+    bright_bg = utils.get_highlight("Folded").bg or utils.get_highlight("EndOfBuffer").fg,
     bright_fg = utils.get_highlight("Folded").fg,
     red = utils.get_highlight("DiagnosticError").fg,
-    dark_red = utils.get_highlight("DiffDelete").bg,
+    dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("EndOfBuffer").fg,
     green = utils.get_highlight("String").fg,
     blue = utils.get_highlight("Function").fg,
     gray = utils.get_highlight("NonText").fg,
@@ -16,21 +17,13 @@ local function setup_colors()
     diag_error = utils.get_highlight("DiagnosticError").fg,
     diag_hint = utils.get_highlight("DiagnosticHint").fg,
     diag_info = utils.get_highlight("DiagnosticInfo").fg,
+    git_del = utils.get_highlight("diffDeleted").fg,
+    git_add = utils.get_highlight("diffAdded").fg,
+    git_change = utils.get_highlight("diffChanged").fg,
   }
 end
 
 require('heirline').load_colors(setup_colors())
-
-local conditions = require("heirline.conditions")
-
-vim.api.nvim_create_augroup("Heirline", { clear = true })
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    local colors = setup_colors()
-    utils.on_colorscheme(colors)
-  end,
-  group = "Heirline",
-})
 
 local resources = {}
 
@@ -322,7 +315,7 @@ local help_filename = {
     local filename = vim.api.nvim_buf_get_name(0)
     return vim.fn.fnamemodify(filename, ":t")
   end,
-  hl = { fg = setup_colors().blue },
+  hl = { fg = "blue" },
 }
 
 local metals_status = {
@@ -333,7 +326,7 @@ local metals_status = {
         and vim.g['metals_status'] ~= ''
   end,
   provider = function() return ' ' .. vim.g['metals_status'] end,
-  hl = { fg = setup_colors().blue },
+  hl = { fg = "blue" },
 }
 
 -- Put it all together
@@ -386,5 +379,13 @@ local status_lines = {
   inactive_status_line,
   default_status_line,
 }
+
+vim.api.nvim_create_augroup("Heirline", { clear = true })
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    utils.on_colorscheme(setup_colors)
+  end,
+  group = "Heirline",
+})
 
 require 'heirline'.setup({ statusline = status_lines })

@@ -13,6 +13,38 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    lazy = true,
+    config = function()
+      require("gersondev.rose-pine")
+      vim.cmd [[colorscheme rose-pine]]
+    end
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    lazy = false,
+    priority = 1000,
+    -- lazy = true,
+    config = function()
+      require("gersondev.catpppuccin")
+      vim.cmd([[colorscheme catppuccin]])
+    end
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    opts = {
+    },
+    config = function()
+      require("tokyonight").setup({
+        transparent = true,
+      })
+      vim.cmd [[colorscheme tokyonight]]
+    end
+  },
+  {
     "rebelot/heirline.nvim",
     config = function() require "gersondev.heirline" end
   },
@@ -38,11 +70,11 @@ local plugins = {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    config = function() require('gersondev.nvim-treesitter') end
-  },
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    lazy = true
+    config = function() require('gersondev.nvim-treesitter') end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    }
   },
   {
     "akinsho/toggleterm.nvim",
@@ -53,7 +85,17 @@ local plugins = {
     cmd = "ToggleTerm",
     keys = { "<c-\\>" }
   },
-  { 'kevinhwang91/nvim-bqf', ft = 'qf' },
+  {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    config = function()
+      require('bqf').setup({
+        preview = {
+          auto_preview = false,
+        }
+      })
+    end
+  },
   {
     "Shatur/neovim-session-manager",
     config = function()
@@ -77,8 +119,8 @@ local plugins = {
     keys = { { "ys" }, { "S", mode = "v" } },
     event = "InsertEnter",
   },
-  { "ojroques/nvim-osc52",   event = "VeryLazy" },
-  { "ojroques/nvim-bufdel",  event = "VeryLazy" },
+  { "ojroques/nvim-osc52",  event = "VeryLazy" },
+  { "ojroques/nvim-bufdel", event = "VeryLazy" },
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -101,8 +143,8 @@ local plugins = {
   },
   {
     'lewis6991/gitsigns.nvim',
+    event = "BufRead",
     config = function() require('gersondev.gitsigns') end,
-    cmd = 'Gitsigns'
   },
   {
     'sindrets/diffview.nvim',
@@ -127,23 +169,18 @@ local plugins = {
   },
   {
     'neovim/nvim-lspconfig',
+    event = "BufRead",
     config = function() require('gersondev.nvim-lsp') end
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    event = "BufRead",
     config = function() require('gersondev.null-ls') end,
   },
   {
     "onsails/diaglist.nvim",
     config = function() require("diaglist").init() end,
     lazy = true,
-  },
-  { "mfussenegger/nvim-jdtls", ft = "java" },
-  {
-    "scalameta/nvim-metals",
-    dependencies = "nvim-lua/plenary.nvim",
-    ft = { "scala", "sbt" },
-    config = function() require("gersondev.nvim-metals") end
   },
   {
     "hrsh7th/nvim-cmp",
@@ -164,6 +201,13 @@ local plugins = {
     },
     config = function() require('gersondev.cmp') end,
   },
+  { "mfussenegger/nvim-jdtls", ft = "java" },
+  {
+    "scalameta/nvim-metals",
+    dependencies = "nvim-lua/plenary.nvim",
+    ft = { "scala", "sbt" },
+    config = function() require("gersondev.nvim-metals") end
+  },
   {
     "mfussenegger/nvim-dap",
     config = function() require('gersondev.dap') end,
@@ -177,25 +221,30 @@ local plugins = {
   },
   {
     "folke/zen-mode.nvim",
-    config = function()
-      require("zen-mode").setup({
-        window = {
-          width = 0.75,
-          options = {
-            -- signcolumn = "no", -- disable signcolumn
-            number = true,         -- disable number column
-            relativenumber = true, -- disable relative numbers
-            -- cursorline = false, -- disable cursorline
-            -- cursorcolumn = false, -- disable cursor column
-            -- foldcolumn = "0", -- disable fold column
-            -- list = false, -- disable whitespace characters
-          },
+    opts = {
+      window = {
+        width = 120,
+        height = 0.90,
+        options = {
+          -- signcolumn = "no", -- disable signcolumn
+          number = true,         -- disable number column
+          relativenumber = true, -- disable relative numbers
+          -- cursorline = false, -- disable cursorline
+          -- cursorcolumn = false, -- disable cursor column
+          -- foldcolumn = "0", -- disable fold column
+          -- list = false, -- disable whitespace characters
         },
-      })
-    end,
+      },
+      plugins = {
+        alacritty = {
+          enabled = true,
+          font = "24",
+        },
+      },
+    },
     cmd = { "ZenMode" },
   },
-  { 'stevearc/dressing.nvim',  event = "VeryLazy" },
+  { 'stevearc/dressing.nvim',  event = "BufRead" },
   {
     "jackMort/ChatGPT.nvim",
     lazy = true,
@@ -222,27 +271,6 @@ local plugins = {
     end
   },
   { 'rizzatti/dash.vim', cmd = { "Dash", "DashKeywords" } },
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    lazy = true,
-    config = function()
-      require("gersondev.rose-pine")
-    end
-  },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    lazy = true,
-    config = function()
-      require("gersondev.catpppuccin")
-    end
-  },
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000
-  }
 }
 
 require("lazy").setup(plugins)

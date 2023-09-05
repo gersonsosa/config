@@ -26,8 +26,8 @@ map('n', '<C-n>', vim.cmd.NeoTreeFocusToggle, { desc = "Toggle tree" })
 
 -- neogit
 map("n", "<leader>gs", vim.cmd.Neogit, { desc = "Open neogit" })
-map("n", "<leader>gj", "<cmd>diffget //3<CR>")
-map("n", "<leader>gf", "<cmd>diffget //2<CR>")
+map("n", "<leader>gh", "<cmd>diffget //3<CR>")
+map("n", "<leader>gu", "<cmd>diffget //2<CR>")
 map("n", "<leader>ga", "<cmd>!git fetch --all<CR>")
 
 -- gitsigns
@@ -79,3 +79,22 @@ map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() 
 map("n", "<leader>c", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("i", "<C-c>", "<Esc>")
 map("x", "<leader>p", [["_dP]], { desc = "Paste over selected text" })
+
+map("n", "[c", function()
+  require("treesitter-context").go_to_context()
+  -- center the screen with zz
+end, { desc = "Go to previous context" })
+
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+
+map("n", "J", "mzJ`z")
+-- scroll with zz to center screen
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("n", "<C-k>", "<cmd>cnext<CR>zz")
+map("n", "<C-j>", "<cmd>cprev<CR>zz")
+map("n", "<leader>k", "<cmd>lnext<CR>zz")
+map("n", "<leader>j", "<cmd>lprev<CR>zz")
