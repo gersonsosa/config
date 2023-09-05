@@ -1,8 +1,8 @@
 import = [
-  "/Users/gersonsosa/.config/alacritty/colors/tokyo-night-storm.toml",
+  # "/Users/gersonsosa/.config/alacritty/colors/tokyo-night-storm.toml",
   # "/Users/gersonsosa/.config/alacritty/colors/tokyo-night.toml",
   # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-latte.toml",
-  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-mocha.toml",
+  "/Users/gersonsosa/.config/alacritty/colors/catppuccin-mocha.toml",
   # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-frappe.toml",
   # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-machiatto.toml",
 ]
@@ -88,9 +88,15 @@ key = "Right"
 mode = "AppCursor"
 mods = "Command"
 
+[[keyboard.bindings]]
+action = "ToggleSimpleFullscreen"
+key = "F"
+mods = "Command|Control|Alt"
+
 [window]
-decorations = "buttonless"
+decorations = "Buttonless"
 option_as_alt = "OnlyRight"
+opacity = 0.9
 
 [window.dimensions]
 columns = 180
