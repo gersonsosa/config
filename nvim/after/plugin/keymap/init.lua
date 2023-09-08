@@ -75,7 +75,6 @@ map("n", "<leader>qq", vim.cmd.BufDelOthers, { desc = "Delete all buffers but th
 map("n", "<leader>wx", function() require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
 map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
 
--- testing these out
 map("n", "<leader>c", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("i", "<C-c>", "<Esc>")
 map("x", "<leader>p", [["_dP]], { desc = "Paste over selected text" })
