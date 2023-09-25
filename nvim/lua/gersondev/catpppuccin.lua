@@ -10,8 +10,8 @@ require("catppuccin").setup {
     treesitter = true,
     treesitter_context = true,
     markdown = true,
-    nvimtree = true,
-    lsp_trouble = true,
+    neotree = true,
+    lsp_trouble = false,
     dap = {
       enabled = true,
       enable_ui = true,
@@ -19,7 +19,7 @@ require("catppuccin").setup {
     native_lsp = {
       enabled = true,
       virtual_text = {
-        errors = { "bold" },
+        errors = { "italic" },
         hints = { "italic" },
         warnings = { "italic" },
         information = { "italic" },
@@ -30,10 +30,16 @@ require("catppuccin").setup {
         warnings = { "underline" },
         information = { "underline" },
       },
+      inlay_hints = {
+        background = true,
+      },
+
     },
     indent_blankline = {
       enabled = true,
       colored_indent_levels = true,
     },
+    cmp = true,
+    octo = true,
   }
 }

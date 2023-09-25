@@ -8,10 +8,6 @@ map("t", "<esc>", "<C-\\><C-n>")
 map('n', '<leader>y', require('osc52').copy_operator, { expr = true })
 map('x', '<leader>y', require('osc52').copy_visual)
 
--- move single lines
-map("n", "<C-j>", [[<cmd>m .+1<cr>]], { desc = "Move line down" })
-map("n", "<C-k>", [[<cmd>m .-2<cr>]], { desc = "Move line up" })
-
 -- Mappings.lsp
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 map('n', '<leader>di', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic in a window" })
@@ -79,7 +75,7 @@ map("n", "<leader>c", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("i", "<C-c>", "<Esc>")
 map("x", "<leader>p", [["_dP]], { desc = "Paste over selected text" })
 
-map("n", "[c", function()
+map("n", "[C", function()
   require("treesitter-context").go_to_context()
   -- center the screen with zz
 end, { desc = "Go to previous context" })
@@ -93,7 +89,7 @@ map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
-map("n", "<C-k>", "<cmd>cnext<CR>zz")
-map("n", "<C-j>", "<cmd>cprev<CR>zz")
+map("n", "<C-j>", "<cmd>cnext<CR>zz")
+map("n", "<C-k>", "<cmd>cprev<CR>zz")
 map("n", "<leader>k", "<cmd>lnext<CR>zz")
 map("n", "<leader>j", "<cmd>lprev<CR>zz")

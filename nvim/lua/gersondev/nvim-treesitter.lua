@@ -102,7 +102,9 @@ require 'nvim-treesitter.configs'.setup {
   }
 }
 
-require("treesitter-context").setup()
+require("treesitter-context").setup {
+  multiline_threshold = 10
+}
 
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldmethod = "expr"
