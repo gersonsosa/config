@@ -10,7 +10,7 @@ import = [
 live_config_reload = true
 
 [bell]
-animation = "Ease"
+animation = "EaseOutQuad"
 color = "0xf7768e"
 duration = 300
 
@@ -95,9 +95,9 @@ mods = "Command|Control|Alt"
 
 [window]
 decorations = "Buttonless"
-option_as_alt = "OnlyRight"
+option_as_alt = "OnlyLeft"
 opacity = 0.9
 
 [window.dimensions]
-columns = 180
-lines = 50
+columns = 140
+lines = 40
