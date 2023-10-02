@@ -24,7 +24,8 @@ TERM = "alacritty-direct"
 size = 18.0
 
 [font.normal]
-family = "Hack Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
+style = "Medium"
 
 [hints]
 alphabet = "jfkdls;ahgurieowpq"
@@ -96,7 +97,7 @@ mods = "Command|Control|Alt"
 [window]
 decorations = "Buttonless"
 option_as_alt = "OnlyLeft"
-opacity = 0.9
+opacity = 0.95
 
 [window.dimensions]
 columns = 140
