@@ -6,9 +6,9 @@ M.setup_lsp_keymap = function(_, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   map("n", "gD", [[<cmd>lua vim.lsp.buf.declaration()<CR>]],
-    { desc = "Go to declaration", buffer = bufnr })
+    { desc = "Go to declaration", buffer = bufnr, nowait = true })
   map("n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]],
-    { desc = "Go to definition", buffer = bufnr })
+    { desc = "Go to definition", buffer = bufnr, nowait = true })
   map("n", "gy", [[<cmd>lua vim.lsp.buf.type_definition()<CR>]],
     { desc = "Go to type definition", buffer = bufnr })
   map("n", "gr", [[<cmd>lua vim.lsp.buf.references()<CR>]],

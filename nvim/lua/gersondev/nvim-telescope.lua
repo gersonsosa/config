@@ -2,11 +2,13 @@ local t = require('telescope')
 
 t.setup {
   defaults = {
-    path_display = { "smart" },
+    layout_strategy = 'flex',
+    layout_config = { height = 0.95 },
+    path_display = { shorten = { len = 3, exclude = { 1, -1 } } },
     preview = {
       filesize_hook = function(filepath, bufnr, opts)
         local max_bytes = 10000
-        local cmd = { "head", "-c", max_bytes, filepath }
+        local cmd = { "head-rs", "-c", max_bytes, filepath }
         require('telescope.previewers.utils').job_maker(cmd, bufnr, opts)
       end
     }

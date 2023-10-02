@@ -123,13 +123,11 @@ local plugins = {
   { "ojroques/nvim-bufdel", event = "VeryLazy" },
   {
     'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      require("indent_blankline").setup {
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-      }
-    end,
+    main = "ibl",
+    opts = {
+      debounce = 100,
+      indent = { char = "" },
+    },
     event = "InsertEnter",
   },
   { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
