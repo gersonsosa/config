@@ -50,12 +50,13 @@ local plugins = {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
     dependencies = {
       'nvim-tree/nvim-web-devicons',
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
-    cmd = { "NeoTreeFocusToggle", "NeoTreeRevealToggle" },
+    cmd = { "Neotree" },
     config = function() require("gersondev.neo-tree") end
   },
   {

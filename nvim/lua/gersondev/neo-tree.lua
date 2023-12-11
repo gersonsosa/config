@@ -28,6 +28,13 @@ local function build_telescope_options(state)
   }
 end
 
+local telescope_find = function(state)
+  require('telescope.builtin').find_files(build_telescope_options(state))
+end
+local telescope_grep = function(state)
+  require('telescope.builtin').live_grep(build_telescope_options(state))
+end
+
 require("neo-tree").setup({
   window = {
     mappings = {
@@ -51,17 +58,9 @@ require("neo-tree").setup({
   filesystem = {
     window = {
       mappings = {
-        ["tF"] = "telescope_find",
-        ["tG"] = "telescope_grep",
+        ["tF"] = telescope_find,
+        ["tG"] = telescope_grep,
       },
-    },
-    commands = {
-      telescope_find = function(state)
-        require('telescope.builtin').find_files(build_telescope_options(state))
-      end,
-      telescope_grep = function(state)
-        require('telescope.builtin').live_grep(build_telescope_options(state))
-      end,
     },
   },
 })
