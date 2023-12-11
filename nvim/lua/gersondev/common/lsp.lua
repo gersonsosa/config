@@ -19,6 +19,8 @@ M.setup_lsp_keymap = function(_, bufnr)
     { desc = "Go to implementation", buffer = bufnr })
   map("n", "<leader>h", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
     { desc = "Pop signature help", buffer = bufnr })
+  map("i", "<C-s>", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
+    { desc = "Pop signature help", buffer = bufnr })
 
   map("n", "<leader>wl",
     "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",

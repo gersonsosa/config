@@ -31,24 +31,21 @@ cmp.setup {
     })
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp", keyword_length = 2 },
-    { name = "vsnip",    keyword_length = 2 },
+    { name = "nvim_lsp",               keyword_length = 2 },
+    { name = "luasnip" },
+    { name = 'nvim_lsp_signature_help' }
   }, {
     { name = "buffer" },
     { name = "path" },
-    { name = "dictionary",  keyword_length = 2 },
+    { name = "dictionary", keyword_length = 2 },
   }),
   snippet = {
     expand = function(args)
-      -- Comes from vsnip
-      vim.fn["vsnip#anonymous"](args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ["<C-j>"] = cmp.mapping.select_next_item(),
-    ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-h>"] = cmp.mapping.select_prev_item({ count = 5 }),
-    ["<C-l>"] = cmp.mapping.select_next_item({ count = 5 }),
     ['<C-b>'] = cmp.mapping.scroll_docs(-8),
     ['<C-f>'] = cmp.mapping.scroll_docs(8),
     ['<C-Space>'] = cmp.mapping.complete(),

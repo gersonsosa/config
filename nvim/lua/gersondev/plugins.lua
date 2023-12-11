@@ -189,16 +189,24 @@ local plugins = {
     -- dependencies are always lazy-loaded unless specified otherwise
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-vsnip",
-      "hrsh7th/vim-vsnip",
+      "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "rcarriga/cmp-dap",
       "uga-rosa/cmp-dictionary",
       "onsails/lspkind.nvim",
     },
     config = function() require('gersondev.cmp') end,
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    -- follow latest release.
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    -- install jsregexp (optional!).
+    build = "make install_jsregexp",
+    config = function() require('gersondev.luasnip') end,
   },
   { "mfussenegger/nvim-jdtls", ft = "java" },
   {
