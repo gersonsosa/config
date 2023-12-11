@@ -223,7 +223,7 @@ local plugins = {
     opts = {
       window = {
         width = 120,
-        height = 0.90,
+        height = 0.80,
         options = {
           -- signcolumn = "no", -- disable signcolumn
           number = true,         -- disable number column
@@ -235,8 +235,9 @@ local plugins = {
         },
       },
       plugins = {
+        tmux = { enabled = true },
         alacritty = {
-          enabled = true,
+          enabled = false,
           font = "24",
         },
       },
