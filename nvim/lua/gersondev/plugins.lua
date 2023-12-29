@@ -78,10 +78,42 @@ local plugins = {
     }
   },
   {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local harpoon = require("harpoon")
+      harpoon:setup()
+      vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+      vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+      vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+      vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+      vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+      vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+    end,
+  },
+  {
     "akinsho/toggleterm.nvim",
     version = "*",
     config = function()
       require("toggleterm").setup { open_mapping = [[<c-\>]] }
+      local trim_spaces = true
+      vim.keymap.set("v", "<space>s", function()
+        require("toggleterm").send_lines_to_terminal("single_line", trim_spaces, { args = vim.v.count })
+      end)
+      -- Replace with these for the other two options
+      -- require("toggleterm").send_lines_to_terminal("visual_line", trim_spaces, { args = vim.v.count })
+      -- require("toggleterm").send_lines_to_terminal("visual_selection", trim_spaces, { args = vim.v.count })
+
+      -- For use as an operator map:
+      -- Send motion to terminal
+      vim.keymap.set("n", [[<leader><c-\>]], function()
+        set_opfunc(function(motion_type)
+          require("toggleterm").send_lines_to_terminal(motion_type, false, { args = vim.v.count })
+        end)
+        vim.api.nvim_feedkeys("g@", "n", false)
+      end)
     end,
     cmd = "ToggleTerm",
     keys = { "<c-\\>" }
