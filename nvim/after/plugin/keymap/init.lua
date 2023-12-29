@@ -8,7 +8,7 @@ map("t", "<esc>", "<C-\\><C-n>")
 map('n', '<leader>y', require('osc52').copy_operator, { expr = true })
 map('x', '<leader>y', require('osc52').copy_visual)
 
--- Mappings.lsp
+-- Mappings.diagnostics
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 map('n', '<leader>di', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Show diagnostic in a window" })
 map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "Go to prev diagnostic" })
@@ -20,7 +20,7 @@ map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', { desc = "Open
 map('n', '<leader>n', function()
   vim.cmd.Neotree('toggle', 'reveal')
 end, { desc = "Find file in tree" })
-map('n', '<C-n>', function()
+map('n', '<M-n>', function()
   vim.cmd.Neotree('toggle')
 end, { desc = "Toggle tree" })
 
@@ -69,8 +69,8 @@ map("n", "<leader>z", vim.cmd.ZenMode)
 
 map("n", "<leader>e", [[:e <c-r>=expand("%:p:h") . "/" <cr>]], { desc = "Set command to expand to current file dir" })
 
-map("n", "<leader>q", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
-map("n", "<leader>qq", vim.cmd.BufDelOthers, { desc = "Delete all buffers but the current one" })
+map("n", "<leader>da", [[:%bd | norm <C-o><cr>]], { desc = "Delete all buffers but the current one" })
+map("n", "<leader>do", vim.cmd.BufDelOthers, { desc = "Delete all buffers but the current one" })
 
 map("n", "<leader>wx", function() require('diaglist').open_all_diagnostics() end, { desc = "Open all diagnostics" })
 map("n", "<leader>dx", function() require('diaglist').open_buffer_diagnostics() end, { desc = "Open buffer diagnostics" })
@@ -81,15 +81,13 @@ map("x", "<leader>p", [["_dP]], { desc = "Paste over selected text" })
 
 map("n", "[C", function()
   require("treesitter-context").go_to_context()
-  -- center the screen with zz
 end, { desc = "Go to previous context" })
 
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 
 map("n", "J", "mzJ`z")
--- scroll with zz to center screen
-map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-d>", "<C-d>zz") -- scroll down with zz to center screen
 map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
