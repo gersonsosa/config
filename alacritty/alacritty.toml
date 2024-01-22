@@ -96,7 +96,7 @@ mods = "Command|Control|Alt"
 [window]
 decorations = "Buttonless"
 option_as_alt = "Both"
-opacity = 0.94
+opacity = 0.9
 
 [window.dimensions]
 columns = 140
