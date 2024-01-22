@@ -59,6 +59,13 @@ nvim_lsp.pyright.setup {
   end
 }
 
+nvim_lsp.ruff_lsp.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    client.server_capabilities.hoverProvider = false
+  end
+}
+
 nvim_lsp.yamlls.setup {
   on_attach = on_attach,
   capabilities = capabilities,

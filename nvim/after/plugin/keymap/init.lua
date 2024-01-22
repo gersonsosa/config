@@ -37,7 +37,7 @@ map("n", "<leader>gb", [[<cmd>Gitsigns toggle_current_line_blame<cr>]], { desc =
 map("n", "<leader>gd", [[<cmd>Gitsigns diffthis<cr>]], { desc = "Diff current buffer" })
 
 -- dap-ui
-map("n", "<leader>dq", [[<cmd>lua require("dapui").close()<cr>]], { desc = "Close dap ui" })
+map("n", "<leader>dq", [[<cmd>DapToggleRepl<cr>]], { desc = "Close dap ui" })
 map("n", "<leader>dl", [[<cmd>lua require("dap").run_last()<cr>]], { desc = "Run last" })
 map("n", "<leader>du", [[<cmd>lua require("dapui").toggle()<cr>]], { desc = "Toggle dap ui" })
 map("n", "<leader>de", [[<cmd>lua require("dapui").eval()<cr>]], { desc = "Evaluate expression" })
@@ -45,13 +45,15 @@ map("n", "<leader>df", [[<cmd>lua require("dapui").float_element()<cr>]], { desc
 
 -- telescope
 map("n", "<leader>t", vim.cmd.Telescope, { desc = "Show all telescope builtin" })
-map("n", "<leader>ff", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
+map("n", "<leader>o", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
 map("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
-map("n", "<leader>fg", [[<cmd>Telescope live_grep<cr>]], { desc = "Live grep" })
-map("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
-map("n", "<leader>fh", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
+map("n", "<leader>rg", [[<cmd>Telescope live_grep<cr>]], { desc = "Live grep" })
+map("n", "<leader>b", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
+map("n", "<leader>rr", [[<cmd>Telescope registers<cr>]], { desc = "Registers" })
+map("n", "<leader>cc", [[<cmd>Telescope commands<cr>]], { desc = "Commands" })
+map("n", "<leader>of", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
 map("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
-map("n", "<leader>tr", [[<cmd>Telescope resume<cr>]], { desc = "Resume last telescope prompt" })
+map("n", "<leader>tr", [[<cmd>Telescope pickers<cr>]], { desc = "Resume a telescope prompt" })
 map("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
 map("x", "<leader>wg", function()
     local status_ok, builtin = pcall(require, "telescope.builtin")

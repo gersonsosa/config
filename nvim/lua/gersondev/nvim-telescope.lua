@@ -11,7 +11,11 @@ t.setup {
         local cmd = { "head-rs", "-c", max_bytes, filepath }
         require('telescope.previewers.utils').job_maker(cmd, bufnr, opts)
       end
-    }
+    },
+    cache_picker = {
+      num_pickers = 10,
+      limit_entries = 1000,
+    },
   },
   prompt_prefix = "❯",
   pickers = {

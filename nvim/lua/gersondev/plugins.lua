@@ -275,11 +275,7 @@ local plugins = {
         },
       },
       plugins = {
-        tmux = { enabled = true },
-        alacritty = {
-          enabled = false,
-          font = "24",
-        },
+        tmux = { enabled = true }
       },
     },
     cmd = { "ZenMode" },

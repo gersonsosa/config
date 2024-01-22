@@ -7,7 +7,6 @@ n.setup {
   sources = {
     n.builtins.code_actions.gitsigns,
     n.builtins.diagnostics.fish,
-    n.builtins.diagnostics.ruff,
     n.builtins.formatting.jq,
     n.builtins.diagnostics.cfn_lint,
   }

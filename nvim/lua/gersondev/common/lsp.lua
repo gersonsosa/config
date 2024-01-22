@@ -33,7 +33,7 @@ M.setup_lsp_keymap = function(_, bufnr)
   map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",
     { desc = "Rename object", buffer = bufnr })
 
-  map("n", "<leader>fm", function() vim.lsp.buf.format() end,
+  map("n", "<leader>f", function() vim.lsp.buf.format() end,
     { desc = "Format", buffer = bufnr })
 
   -- Telescope mappings

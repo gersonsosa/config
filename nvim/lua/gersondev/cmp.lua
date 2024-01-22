@@ -62,9 +62,15 @@ cmp.setup {
   preselect = cmp.PreselectMode.None,
 }
 
-local dict = require("cmp_dictionary")
-dict.switcher({ spelllang = { en = "~/.local/share/dict/en.dict" } })
-dict.update()
+require("cmp_dictionary").setup({
+  paths = { "~/.local/share/dict/en.dict" },
+  exact_length = 2,
+  first_case_insensitive = true,
+  document = {
+    enable = true,
+    command = { "wn", "${label}", "-over" },
+  },
+})
 
 -- `/` cmdline setup.
 cmp.setup.cmdline('/', {
