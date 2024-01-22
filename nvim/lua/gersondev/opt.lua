@@ -1,31 +1,34 @@
 vim.g.mapleader = " "
 
--- opt
-vim.opt.guicursor = ""
-vim.opt.relativenumber = true
-vim.opt.number = true
-
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert" }
+-- don't use netrw, to let neo-tree as default
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.undofile = true
-vim.opt.colorcolumn = "80"
-vim.opt.linebreak = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.smartindent = true
-vim.opt.scrolloff = 8
+-- window or global options
+vim.go.guicursor = ""
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.wo.signcolumn = "auto"
+vim.wo.colorcolumn = "80"
+vim.go.scrolloff = 8
+vim.go.showmode = false
+vim.wo.cursorline = true
+vim.go.laststatus = 3
 
-vim.opt.listchars:append({ tab = "▸▸" })
-vim.opt.listchars:append({ trail = "·" })
-vim.opt.listchars:append({ lead = "·" })
-vim.opt.list = true
+-- opt local to buffer
+vim.o.undofile = true
+vim.o.linebreak = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
+vim.o.smarttab = true
+vim.o.smartindent = true
 
-vim.opt.showmode = false
-vim.opt.cursorline = true
-vim.opt.dictionary:append("/usr/share/dict/words")
-vim.opt.laststatus = 3
+vim.wo.list = true
+vim.opt_global.listchars:append { tab = "▸▸" }
+vim.opt_global.listchars:append { trail = "·" }
+vim.opt_global.listchars:append { lead = "·" }
+
+vim.opt_global.dictionary:append { "/usr/share/dict/words" }
