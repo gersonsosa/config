@@ -9,6 +9,16 @@ local compare = require("cmp.config.compare")
 local types = require "cmp.types"
 local lspkind = require("lspkind")
 
+require("cmp_dictionary").setup({
+  paths = { vim.fn.expand("~/.local/share/dict/en.dict") },
+  exact_length = 2,
+  first_case_insensitive = true,
+  document = {
+    enable = true,
+    command = { "wn", "${label}", "-over" },
+  },
+})
+
 cmp.setup {
   formatting = {
     format = lspkind.cmp_format({
@@ -61,16 +71,6 @@ cmp.setup {
   },
   preselect = cmp.PreselectMode.None,
 }
-
-require("cmp_dictionary").setup({
-  paths = { "~/.local/share/dict/en.dict" },
-  exact_length = 2,
-  first_case_insensitive = true,
-  document = {
-    enable = true,
-    command = { "wn", "${label}", "-over" },
-  },
-})
 
 -- `/` cmdline setup.
 cmp.setup.cmdline('/', {
