@@ -111,22 +111,21 @@ local config = {
     jdtls.setup_dap({ hotcodereplace = 'auto' })
     jdtls.setup.add_commands()
 
-    local map = require "gersondev.common.functions".map
     local setup_lsp_keymap = require "gersondev.common.lsp".setup_lsp_keymap
 
     -- LSP mappings
     setup_lsp_keymap(nil, bufnr)
 
     -- JDTLS specific mappings
-    map("n", "<leader>Jo", "<cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
-    map("n", "<leader>Jv", "<cmd>lua require('jdtls').extract_variable()<CR>", { desc = "Extract Variable" })
-    map("n", "<leader>Jc", "<cmd>lua require('jdtls').extract_constant()<CR>", { desc = "Extract Constant" })
-    map("n", "<leader>Jt", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", { desc = "Test Method" })
-    map("n", "<leader>JT", "<cmd>lua require'jdtls'.test_class()<CR>", { desc = "Test Class" })
-    map("n", "<leader>Ju", "<cmd>JdtUpdateConfig<CR>", { desc = "Update Config" })
-    map("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = "Extract Variable" })
-    map("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = "Extract Constant" })
-    map("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })
+    vim.keymap.set("n", "<leader>Jo", "<cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
+    vim.keymap.set("n", "<leader>Jv", "<cmd>lua require('jdtls').extract_variable()<CR>", { desc = "Extract Variable" })
+    vim.keymap.set("n", "<leader>Jc", "<cmd>lua require('jdtls').extract_constant()<CR>", { desc = "Extract Constant" })
+    vim.keymap.set("n", "<leader>Jt", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", { desc = "Test Method" })
+    vim.keymap.set("n", "<leader>JT", "<cmd>lua require'jdtls'.test_class()<CR>", { desc = "Test Class" })
+    vim.keymap.set("n", "<leader>Ju", "<cmd>JdtUpdateConfig<CR>", { desc = "Update Config" })
+    vim.keymap.set("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = "Extract Variable" })
+    vim.keymap.set("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = "Extract Constant" })
+    vim.keymap.set("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })
   end
 }
 

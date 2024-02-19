@@ -1,3 +1,3 @@
 require('gersondev.opt')
-require('gersondev.plugins')
+require('gersondev.lazy')
 

@@ -25,6 +25,7 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.smarttab = true
 vim.o.smartindent = true
+vim.o.termguicolors = true
 
 vim.wo.list = true
 vim.opt_global.listchars:append { tab = "▸▸" }

@@ -1,39 +1,37 @@
 local M = {}
 
-local map = require "gersondev.common.functions".map
-
 M.setup_lsp_keymap = function(_, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  map("n", "gD", [[<cmd>lua vim.lsp.buf.declaration()<CR>]],
+  vim.keymap.set("n", "gD", [[<cmd>lua vim.lsp.buf.declaration()<CR>]],
     { desc = "Go to declaration", buffer = bufnr, nowait = true })
-  map("n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]],
+  vim.keymap.set("n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]],
     { desc = "Go to definition", buffer = bufnr, nowait = true })
-  map("n", "gy", [[<cmd>lua vim.lsp.buf.type_definition()<CR>]],
+  vim.keymap.set("n", "gy", [[<cmd>lua vim.lsp.buf.type_definition()<CR>]],
     { desc = "Go to type definition", buffer = bufnr })
-  map("n", "gr", [[<cmd>lua vim.lsp.buf.references()<CR>]],
+  vim.keymap.set("n", "gr", [[<cmd>lua vim.lsp.buf.references()<CR>]],
     { desc = "Show references", buffer = bufnr })
-  map("n", "K", function() vim.lsp.buf.hover() end,
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
     { desc = "Hover", buffer = bufnr })
-  map("n", "gi", [[<cmd>lua vim.lsp.buf.implementation()<CR>]],
+  vim.keymap.set("n", "gi", [[<cmd>lua vim.lsp.buf.implementation()<CR>]],
     { desc = "Go to implementation", buffer = bufnr })
-  map("n", "<leader>h", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
+  vim.keymap.set("n", "<leader>h", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
     { desc = "Pop signature help", buffer = bufnr })
-  map("i", "<C-s>", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
+  vim.keymap.set("i", "<C-s>", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
     { desc = "Pop signature help", buffer = bufnr })
 
-  map("n", "<leader>wl",
+  vim.keymap.set("n", "<leader>wl",
     "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
     { desc = "List workspace folders", buffer = bufnr })
 
-  map("n", "<leader>cl", "<cmd>lua vim.lsp.codelens.run()<CR>",
+  vim.keymap.set("n", "<leader>cl", "<cmd>lua vim.lsp.codelens.run()<CR>",
     { desc = 'Run code lens', buffer = bufnr })
-  map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>",
+  vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>",
     { desc = "Execute code action", buffer = bufnr })
-  map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",
+  vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",
     { desc = "Rename object", buffer = bufnr })
 
-  map("n", "<leader>f", function() vim.lsp.buf.format() end,
+  vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end,
     { desc = "Format", buffer = bufnr })
 
   -- Telescope mappings
@@ -45,10 +43,10 @@ M.setup_lsp_keymap = function(_, bufnr)
     telescope_builtin.lsp_document_symbols()
   end
 
-  map("n", "<leader>dS", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
-  map("n", "gdS", function() vim.lsp.buf.document_symbol() end,
+  vim.keymap.set("n", "<leader>dS", telescope_lsp_doc_symbols, { desc = 'List document symbols', buffer = bufnr })
+  vim.keymap.set("n", "gdS", function() vim.lsp.buf.document_symbol() end,
     { desc = "List symbols", buffer = bufnr })
-  map("n", "gwS", function() vim.lsp.buf.workspace_symbol() end,
+  vim.keymap.set("n", "gwS", function() vim.lsp.buf.workspace_symbol() end,
     { desc = "List workspace symbols", buffer = bufnr })
 end
 
