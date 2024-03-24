@@ -15,8 +15,7 @@ return {
     t.setup {
       defaults = {
         layout_strategy = 'flex',
-        layout_config = { height = 0.95 },
-        path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
+        path_display = { shorten = { len = 2, exclude = { 2, -2, -1 } } },
         preview = {
           filesize_hook = function(filepath, bufnr, opts)
             local max_bytes = 10000
@@ -34,8 +33,7 @@ return {
         find_files = { theme = "ivy" },
         git_files = { theme = "ivy" },
         buffers = { theme = "ivy" },
-        oldfiles = { theme = "ivy" },
-        frecency = { theme = "ivy" },
+        oldfiles = { theme = "dropdown" },
         live_grep = { theme = "dropdown" },
         grep_string = { theme = "dropdown" }
       },
@@ -45,11 +43,9 @@ return {
 
     vim.keymap.set("n", "<leader>of", [[<cmd>Telescope find_files<cr>]], { desc = "Find files" })
     vim.keymap.set("n", "<leader>gg", [[<cmd>Telescope git_files<cr>]], { desc = "Find git files" })
-    vim.keymap.set("n", "<leader>rg", [[<cmd>Telescope live_grep<cr>]], { desc = "Live grep" })
     vim.keymap.set("n", "<leader>b", [[<cmd>Telescope buffers<cr>]], { desc = "Buffers" })
     vim.keymap.set("n", "<leader>rr", [[<cmd>Telescope registers<cr>]], { desc = "Registers" })
     vim.keymap.set("n", "<leader>cc", [[<cmd>Telescope commands<cr>]], { desc = "Commands" })
-    vim.keymap.set("n", "<leader>ol", [[<cmd>Telescope oldfiles only_cwd=true<cr>]], { desc = "Recently opened files" })
     vim.keymap.set("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
     vim.keymap.set("n", "<leader>tr", [[<cmd>Telescope pickers<cr>]], { desc = "Resume a telescope prompt" })
     vim.keymap.set("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
@@ -65,6 +61,46 @@ return {
       vim.notify("ERROR: couldn't load telescope themes")
       return
     end
+
+    vim.keymap.set("n", "<leader>ol", function()
+      builtin.oldfiles({
+        cwd = vim.loop.cwd(),
+        cwd_only = true,
+      })
+    end, { desc = "Recently opened files" })
+
+    vim.keymap.set("n", "<leader>rg", function()
+      builtin.live_grep({
+        cwd = vim.loop.cwd(),
+        glob_pattern = { "!*.js" },
+        attach_mappings = function(_, map)
+          map('i', '<C-f>', function()
+            vim.ui.select({ 'scala', 'markdown', 'kotlin', 'java', 'typescript', 'sql', 'js' }, {
+              prompt = 'Select type filter:',
+              format_item = function(item)
+                return item
+              end,
+            }, function(choice)
+              builtin.live_grep({
+                cwd = vim.loop.cwd(),
+                type_filter = choice,
+                glob_pattern = { "!*Code.js", "!*lib*.js" },
+              })
+            end)
+          end)
+          return true
+        end,
+      })
+    end, { desc = "Live grep" })
+
+    vim.keymap.set("n", "<leader>rf", function()
+      vim.ui.input({ prompt = 'Glob pattern: ' }, function(glob_pattern)
+        builtin.live_grep({
+          cwd = vim.loop.cwd(),
+          glob_pattern = glob_pattern,
+        })
+      end)
+    end, { desc = "Live grep with type filter" })
 
     vim.keymap.set("n", "<leader>t", function()
       builtin.builtin(themes.get_ivy({

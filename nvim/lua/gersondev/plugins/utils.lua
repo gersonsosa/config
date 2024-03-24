@@ -13,7 +13,8 @@ return {
     event = "InsertEnter",
   },
   {
-    "ojroques/nvim-osc52",  event = "VeryLazy",
+    "ojroques/nvim-osc52",
+    event = "VeryLazy",
     config = function()
       vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, { expr = true })
       vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
@@ -30,7 +31,19 @@ return {
     --event = "InsertEnter",
     lazy = true
   },
-  { "mbbill/undotree",    cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
-  { "tpope/vim-eunuch",   lazy = true },
-  { "tpope/vim-fugitive", cmd = "G" },
+  { "mbbill/undotree",      cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
+  { "tpope/vim-eunuch",     lazy = true },
+  { "tpope/vim-fugitive",   cmd = "G" },
+  {
+    "codethread/qmk.nvim",
+    ft = "dts",
+    opts = {
+      layout = {
+        "x x x x _ _ x x x x",
+        "x x x x _ _ x x x x",
+        "x x x x _ _ x x x x",
+        "_ _ _ _ x x x x _ _ _",
+      },
+    }
+  },
 }

@@ -82,7 +82,7 @@ return {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          ["<CR>"] = cmp.mapping.confirm({ select = true })
+          ["<C-y>"] = cmp.mapping.confirm({ select = true })
         }),
         window = {
           completion = cmp.config.window.bordered(),
@@ -97,7 +97,6 @@ return {
         sources = {
           {
             name = 'buffer',
-            option = { keyword_pattern = [[\k\+]] }
           }
         }
       })
@@ -111,7 +110,7 @@ return {
           {
             name = 'cmdline',
             option = {
-              ignore_cmds = { 'Man', '!' }
+              ignore_cmds = { 'Man', '!', 'DiffviewOpen', 'DiffviewFileHistory' }
             }
           }
         })

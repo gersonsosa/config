@@ -1,0 +1,28 @@
+{
+    "workspace.library": [
+        "/Users/gersonsosa/.config/nvim",
+        "/Users/gersonsosa/.local/share/nvim/site",
+        "/Users/gersonsosa/.local/share/nvim/lazy/lazy.nvim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/cmp-nvim-lsp",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-lspconfig",
+        "/Users/gersonsosa/.local/share/nvim/lazy/gitsigns.nvim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-web-devicons",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-osc52",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-treesitter-textobjects",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-treesitter-context",
+        "/Users/gersonsosa/.local/share/nvim/lazy/nvim-treesitter",
+        "/Users/gersonsosa/.local/share/nvim/lazy/heirline.nvim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/plenary.nvim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/neovim-session-manager",
+        "/Users/gersonsosa/.local/share/nvim/lazy/copilot.vim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/catppuccin",
+        "/opt/homebrew/Cellar/neovim/0.9.4/share/nvim/runtime",
+        "/opt/homebrew/Cellar/neovim/0.9.4/share/nvim/runtime/pack/dist/opt/matchit",
+        "/opt/homebrew/Cellar/neovim/0.9.4/lib/nvim",
+        "/Users/gersonsosa/.local/share/nvim/lazy/cmp-nvim-lsp/after",
+        "/Users/gersonsosa/.local/share/nvim/lazy/catppuccin/after",
+        "/Users/gersonsosa/.config/nvim/after",
+        "/Users/gersonsosa/.local/state/nvim/lazy/readme",
+        "${3rd}/luv/library"
+    ]
+}

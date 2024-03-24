@@ -1,17 +1,48 @@
 local jdtls = require('jdtls')
 
-local jdtls_home = '/usr/share/java/jdtls'
+local job_ok, job = pcall(require, "plenary.job")
+if not job_ok then
+  vim.notify("Failed to load plenary.job while starting jdtls", vim.log.levels.ERROR)
+  return
+end
+
+local jdtls_prefix = job:new({
+  command = 'brew',
+  args = { '--prefix', 'jdtls' },
+  cwd = "/opt/homebrew/bin/",
+  on_stderr = function(_, data)
+    vim.notify("Failed to get jdtls prefix:" .. data, vim.log.levels.ERROR)
+  end,
+}):sync(15000, 5000)
 
 local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
 local root_dir = require('jdtls.setup').find_root(root_markers)
 
-local jar_path = vim.fn.expand(jdtls_home .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+local jdtls_home = jdtls_prefix[1]:gsub("\n", "")
+local jar_path = vim.fn.expand(jdtls_home .. '/libexec/plugins/org.eclipse.equinox.launcher_*.jar')
 
-local Path = require('plenary.path')
-local config_dir = Path:new "/tmp/my_jdtls_config_linux"
+local path = require('plenary.path')
+local config_dir = path:new "/tmp/jdtls"
 config_dir:mkdir()
 
-local jdtls_config = Path:new(jdtls_home .. '/config_linux')
+
+local os_config_dir = function(uname)
+  if uname.sysname == "Darwin" then
+    if uname.machine == "arm64" then
+      return "config_mac_arm"
+    end
+    return "config_mac"
+  end
+  if uname.sysname == "Linux" then
+    if uname.machine == "arm64" then
+      return "config_linux_arm"
+    end
+    return "config_linux"
+  end
+  vim.notify("Unsupported system: " .. uname.sysname .. " " .. uname.machine, vim.log.levels.ERROR)
+end
+
+local jdtls_config = path:new(jdtls_home .. '/libexec/' .. os_config_dir(vim.loop.os_uname()))
 jdtls_config:copy({ destination = config_dir, recursive = true })
 
 local home = os.getenv('HOME')
@@ -107,14 +138,9 @@ local config = {
     bundles = {},
   },
 
-  on_attach = function(_, bufnr)
+  on_attach = function()
     jdtls.setup_dap({ hotcodereplace = 'auto' })
     jdtls.setup.add_commands()
-
-    local setup_lsp_keymap = require "gersondev.common.lsp".setup_lsp_keymap
-
-    -- LSP mappings
-    setup_lsp_keymap(nil, bufnr)
 
     -- JDTLS specific mappings
     vim.keymap.set("n", "<leader>Jo", "<cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
@@ -123,9 +149,12 @@ local config = {
     vim.keymap.set("n", "<leader>Jt", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", { desc = "Test Method" })
     vim.keymap.set("n", "<leader>JT", "<cmd>lua require'jdtls'.test_class()<CR>", { desc = "Test Class" })
     vim.keymap.set("n", "<leader>Ju", "<cmd>JdtUpdateConfig<CR>", { desc = "Update Config" })
-    vim.keymap.set("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", { desc = "Extract Variable" })
-    vim.keymap.set("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = "Extract Constant" })
-    vim.keymap.set("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = "Extract Method" })
+    vim.keymap.set("v", "<leader>Lv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
+      { desc = "Extract Variable" })
+    vim.keymap.set("v", "<leader>Lc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
+      { desc = "Extract Constant" })
+    vim.keymap.set("v", "<leader>Lm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
+      { desc = "Extract Method" })
   end
 }
 

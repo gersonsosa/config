@@ -38,7 +38,6 @@ return {
       dap.listeners.before.event_exited["dapui_config"] = function()
         close_ui_open_repl()
       end
-
     end,
   },
   {

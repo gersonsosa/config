@@ -7,7 +7,6 @@ return {
     -- Metals config
     -------------------------------------------------------------------------------
     local api = vim.api
-    local setup_lsp_keymap = require "gersondev.common.lsp".setup_lsp_keymap
 
     -- workaround to metals not having statandarized lsp progress reporting
     local function metals_status_handler(err, status, ctx)
@@ -117,8 +116,6 @@ return {
       ----------------------------------
       -- Mappings -----------------------
       ----------------------------------
-      setup_lsp_keymap(nil, bufnr)
-
       vim.keymap.set("n", "<leader>sp", [[<cmd>lua require("metals").super_method_hierarchy()<CR>]],
         { desc = 'Go to super method in hierarchy', buffer = bufnr })
 
