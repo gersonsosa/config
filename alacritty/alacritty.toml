@@ -1,10 +1,10 @@
 import = [
-  # "/Users/gersonsosa/.config/alacritty/colors/tokyo-night-storm.toml",
-  # "/Users/gersonsosa/.config/alacritty/colors/tokyo-night.toml",
-  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-latte.toml",
-  "/Users/gersonsosa/.config/alacritty/colors/catppuccin-mocha.toml",
-  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-frappe.toml",
-  # "/Users/gersonsosa/.config/alacritty/colors/catppuccin-machiatto.toml",
+    # "~/.config/alacritty/colors/tokyo-night-storm.toml",
+    # "~/.config/alacritty/colors/tokyo-night.toml",
+    # "~/.config/alacritty/colors/catppuccin/catppuccin-latte.toml",
+    # "~/.config/alacritty/colors/catppuccin/catppuccin-mocha.toml",
+    # "~/.config/alacritty/colors/catppuccin/catppuccin-frappe.toml",
+    "~/.config/alacritty/colors/catppuccin/catppuccin-machiatto.toml",
 ]
 
 live_config_reload = true
@@ -96,7 +96,7 @@ mods = "Command|Control|Alt"
 [window]
 decorations = "Buttonless"
 option_as_alt = "Both"
-opacity = 0.9
+opacity = 0.92
 
 [window.dimensions]
 columns = 140
