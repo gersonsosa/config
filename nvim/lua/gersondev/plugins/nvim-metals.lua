@@ -33,6 +33,7 @@ return {
     local metals_config = metals.bare_config()
 
     metals_config.settings = {
+      gradleScript = "./gradlew",
       showImplicitArguments = true,
       excludedPackages = {
         "akka.actor.typed.javadsl",
@@ -44,6 +45,8 @@ return {
     -- hide messages and display only trough vim.g['metals_status']
     metals_config.init_options.statusBarProvider = "on"
     metals_config.handlers = { ['metals/status'] = metals_status_handler }
+
+    metals_config.find_root_dir_max_project_nesting = 2
 
     -- make sure the correct capabilities for snippets are set
     local capabilities = vim.lsp.protocol.make_client_capabilities()
