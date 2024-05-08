@@ -3,8 +3,8 @@ import = [
     # "~/.config/alacritty/colors/tokyo-night.toml",
     # "~/.config/alacritty/colors/catppuccin/catppuccin-latte.toml",
     # "~/.config/alacritty/colors/catppuccin/catppuccin-mocha.toml",
-    # "~/.config/alacritty/colors/catppuccin/catppuccin-frappe.toml",
-    "~/.config/alacritty/colors/catppuccin/catppuccin-machiatto.toml",
+    "~/.config/alacritty/colors/catppuccin/catppuccin-frappe.toml",
+    # "~/.config/alacritty/colors/catppuccin/catppuccin-machiatto.toml",
 ]
 
 live_config_reload = true
@@ -19,6 +19,7 @@ duration = 300
 
 [colors]
 draw_bold_text_with_bright_colors = true
+transparent_background_colors = true
 
 [font]
 size = 18.0
@@ -96,7 +97,7 @@ mods = "Command|Control|Alt"
 [window]
 decorations = "Buttonless"
 option_as_alt = "Both"
-opacity = 0.92
+opacity = 0.93
 
 [window.dimensions]
 columns = 140
