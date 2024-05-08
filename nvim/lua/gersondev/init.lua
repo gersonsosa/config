@@ -1,5 +1,6 @@
 require('gersondev.opt')
 require('gersondev.lazy')
+require('gersondev.lsp')
 
 local augroup = vim.api.nvim_create_augroup
 local gers_auto_command = augroup('Gers', {})

@@ -49,6 +49,7 @@ return {
     vim.keymap.set("n", "<leader>hh", [[<cmd>Telescope help_tags<cr>]], { desc = "Search help tags" })
     vim.keymap.set("n", "<leader>tr", [[<cmd>Telescope pickers<cr>]], { desc = "Resume a telescope prompt" })
     vim.keymap.set("n", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
+    vim.keymap.set("x", "<leader>wg", [[<cmd>Telescope grep_string<cr>]], { desc = "Grep selected string" })
 
     local has_builtin, builtin = pcall(require, "telescope.builtin")
     if not has_builtin then
@@ -110,14 +111,8 @@ return {
       }))
     end, { desc = "Show all telescope builtin functions" })
 
-    local has_text, text = pcall(require, "gersondev.common.functions")
-    if not has_text then
-      vim.notify("ERROR: couldn't load gersondev.common.functions")
-      return
-    end
-
-    vim.keymap.set("x", "<leader>wg", function()
-        builtin.grep_string({ search = text.get_visual_text() })
+    vim.keymap.set("n", "<leader>Wg", function()
+        builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
       end,
       { desc = "Grep selected string" })
   end,

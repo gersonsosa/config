@@ -21,7 +21,7 @@ return {
         TEST = { icon = "󰙨 ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
       gui_style = {
-        fg = "bold", -- The gui style to use for the fg highlight group.
+        fg = "NONE", -- The gui style to use for the fg highlight group.
         bg = "bold", -- The gui style to use for the bg highlight group.
       },
       colors = {

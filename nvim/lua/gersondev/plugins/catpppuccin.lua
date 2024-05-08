@@ -5,7 +5,7 @@ return {
   -- lazy = true,
   config = function()
     require("catppuccin").setup {
-      flavour = "macchiato", -- mocha, macchiato, frappe, latte
+      flavour = "frappe", -- mocha, macchiato, frappe, latte
       transparent_background = true,
       integrations = {
         telescope = true,
@@ -42,6 +42,7 @@ return {
         },
         cmp = true,
         octo = true,
+        diffview = true,
       }
     }
 

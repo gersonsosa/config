@@ -10,6 +10,8 @@ return {
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       scala = { 'scalafmt' },
+      go = { 'gofmt' },
+      json = { 'jq' },
     },
   },
   event = { "BufWritePre" },

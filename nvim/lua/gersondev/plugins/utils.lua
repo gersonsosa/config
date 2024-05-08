@@ -36,14 +36,27 @@ return {
   { "tpope/vim-fugitive",   cmd = "G" },
   {
     "codethread/qmk.nvim",
-    ft = "dts",
+    lazy = true,
     opts = {
+      name = "LAYOUT_split_3x5_2",
       layout = {
         "x x x x _ _ x x x x",
         "x x x x _ _ x x x x",
         "x x x x _ _ x x x x",
-        "_ _ _ _ x x x x _ _ _",
+        "_ _ _ x x x x _ _ _",
       },
     }
   },
+  {
+    "j-hui/fidget.nvim",
+    event = "VeryLazy",
+    opts = {
+      notification = {
+        -- Options related to the notification window and buffer
+        window = {
+          winblend = 0, -- Background color opacity in the notification window
+        },
+      },
+    },
+  }
 }

@@ -21,6 +21,7 @@ local setup_lsp_keymap = function(_, bufnr)
   vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",
     { desc = "[R]e[n]ame object", buffer = bufnr })
 
+  -- removed in favor of comform
   -- vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end,
   --   { desc = "[F]ormat", buffer = bufnr })
 
@@ -30,7 +31,7 @@ local setup_lsp_keymap = function(_, bufnr)
     vim.notify("Couln't load telescope, is it installed?. Using lsp functions.", vim.log.levels.ERROR)
     vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end,
       { desc = "List symbols", buffer = bufnr })
-    vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end,
+    vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol("") end,
       { desc = "List workspace symbols", buffer = bufnr })
     vim.keymap.set("n", "gi", [[<cmd>lua vim.lsp.buf.implementation()<CR>]],
       { desc = "[G]o to [i]mplementation", buffer = bufnr })
