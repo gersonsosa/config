@@ -15,6 +15,14 @@ return {
       },
       integrations = {
         diffview = true
+      },
+      mappings = {
+        status = {
+          ["<C-k>"] = "Toggle",
+          ["<C-j>"] = "Toggle",
+          ["K"] = "GoToPreviousHunkHeader",
+          ["J"] = "GoToNextHunkHeader",
+        }
       }
     }
     vim.keymap.set("n", "<leader>gs", vim.cmd.Neogit, { desc = "Open neogit" })
