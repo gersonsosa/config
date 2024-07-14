@@ -4,11 +4,15 @@ return {
   cmd = "ToggleTerm",
   keys = { "<c-\\>" },
   config = function()
-    require("toggleterm").setup { open_mapping = [[<c-\>]] }
+    require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
     local trim_spaces = true
-    vim.keymap.set("v", "<leader>s", function()
-      require("toggleterm").send_lines_to_terminal("single_line", trim_spaces, { args = vim.v.count })
+    vim.keymap.set("v", "<leader>l", function()
+      require("toggleterm").send_lines_to_terminal(
+        "single_line",
+        trim_spaces,
+        { args = vim.v.count }
+      )
     end)
     -- Replace with these for the other two options
     -- require("toggleterm").send_lines_to_terminal("visual_line", trim_spaces, { args = vim.v.count })

@@ -2,9 +2,9 @@ vim.g.mapleader = " "
 
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert" }
--- don't use netrw, to let neo-tree as default
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
 
 -- window or global options
 vim.go.guicursor = ""
@@ -28,8 +28,8 @@ vim.o.smartindent = true
 vim.o.termguicolors = true
 
 vim.wo.list = true
-vim.opt_global.listchars:append { tab = "▸▸" }
-vim.opt_global.listchars:append { trail = "·" }
-vim.opt_global.listchars:append { lead = "·" }
+vim.opt_global.listchars:append({ tab = "▸▸" })
+vim.opt_global.listchars:append({ trail = "·" })
+vim.opt_global.listchars:append({ lead = "·" })
 
-vim.opt_global.dictionary:append { "/usr/share/dict/words" }
+vim.opt_global.dictionary:append({ "/usr/share/dict/words" })

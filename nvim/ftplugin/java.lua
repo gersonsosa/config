@@ -15,8 +15,6 @@ local jdtls_prefix = job:new({
   end,
 }):sync(15000, 5000)
 
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-local root_dir = require('jdtls.setup').find_root(root_markers)
 
 local jdtls_home = jdtls_prefix[1]:gsub("\n", "")
 local jar_path = vim.fn.expand(jdtls_home .. '/libexec/plugins/org.eclipse.equinox.launcher_*.jar')
@@ -42,7 +40,7 @@ local os_config_dir = function(uname)
   vim.notify("Unsupported system: " .. uname.sysname .. " " .. uname.machine, vim.log.levels.ERROR)
 end
 
-local jdtls_config = path:new(jdtls_home .. '/libexec/' .. os_config_dir(vim.loop.os_uname()))
+local jdtls_config = path:new(jdtls_home .. '/libexec/' .. os_config_dir(vim.uv.os_uname()))
 jdtls_config:copy({ destination = config_dir, recursive = true })
 
 local home = os.getenv('HOME')
@@ -63,7 +61,7 @@ local config = {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
-    '-Xms1g',
+    '-Xms4g',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
@@ -83,30 +81,23 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = root_dir,
+  root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle", "settings.gradle.kts" }),
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   -- for a list of options
   settings = {
     java = {
-      implementationsCodeLens = {
-        enabled = true,
-      },
-      referencesCodeLens = {
-        enabled = true,
-      },
-      references = {
-        includeDecompiledSources = true,
-      },
+      signatureHelp = { enabled = true },
+      implementationsCodeLens = { enabled = true, },
+      referencesCodeLens = { enabled = true, },
+      references = { includeDecompiledSources = true, },
       inlayHints = {
         parameterNames = {
           enabled = "all", -- literals, all, none
         },
       },
-      saveActions = {
-        organizeImports = true,
-      },
+      saveActions = { organizeImports = true, },
       contentProvider = { preferred = "fernflower" },
       sources = {
         organizeImports = {

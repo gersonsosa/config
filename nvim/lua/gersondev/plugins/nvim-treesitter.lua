@@ -1,51 +1,48 @@
+local languages = {
+  "scala",
+  "rust",
+  "java",
+  "lua",
+  "haskell",
+  "zig",
+  "cpp",
+  "c",
+  "go",
+  "cmake",
+  "kotlin",
+  "javascript",
+  "typescript",
+  "sql",
+  "fish",
+  "teal",
+  "yaml",
+  "vim",
+  "toml",
+  "terraform",
+  "nix",
+  "ledger",
+  "make",
+  "jq",
+  "awk",
+}
 return {
-  'nvim-treesitter/nvim-treesitter',
-  build = ':TSUpdate',
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-context",
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
-  event = "BufRead",
+  ft = languages,
   config = function()
-    local languages = {
-      "scala",
-      "rust",
-      "java",
-      "lua",
-      "haskell",
-      "zig",
-      "cpp",
-      "c",
-      "go",
-      "cmake",
-      "kotlin",
-      "javascript",
-      "typescript",
-      "python",
-      "sql",
-      "fish",
-      "teal",
-      "bash",
-      "yaml",
-      "vim",
-      "toml",
-      "terraform",
-      "nix",
-      "ledger",
-      "make",
-      "jq",
-      "awk"
-    }
-
-    require 'nvim-treesitter.configs'.setup {
+    require("nvim-treesitter.configs").setup({
       -- one of "all", "maintained" (parsers with maintainers), or a list of languages
       ensure_installed = languages,
       sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
       auto_install = false, -- install missing parsers automatically
-      ignore_install = {},  -- List of parsers to ignore installing
+      ignore_install = {}, -- List of parsers to ignore installing
       highlight = {
-        enable = true,      -- false will disable the whole extension
-        disable = {},       -- list of language that will be disabled
+        enable = true, -- false will disable the whole extension
+        disable = {}, -- list of language that will be disabled
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -94,10 +91,10 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ["<leader>s"] = "@parameter.inner",
+            ["<leader>w"] = "@parameter.inner",
           },
           swap_previous = {
-            ["<leader>S"] = "@parameter.inner",
+            ["<leader>W"] = "@parameter.inner",
           },
         },
         select = {
@@ -113,15 +110,15 @@ return {
           -- * query_string: eg '@function.inner'
           -- * selection_mode: eg 'v'
           -- and should return true of false
-          include_surrounding_whitespace = true,
+          include_surrounding_whitespace = false,
         },
-      }
-    }
+      },
+    })
 
     local treesitter_context = require("treesitter-context")
-    treesitter_context.setup {
-      multiline_threshold = 10
-    }
+    treesitter_context.setup({
+      multiline_threshold = 10,
+    })
 
     vim.keymap.set("n", "[C", function()
       treesitter_context.go_to_context(vim.v.count1)

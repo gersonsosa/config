@@ -1,9 +1,10 @@
 return {
-  'folke/todo-comments.nvim',
-  event = 'VeryLazy',
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  "folke/todo-comments.nvim",
+  event = "VeryLazy",
+  dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
-    local macchiato = require("catppuccin.palettes").get_palette "macchiato"
+    -- local colors = require("catppuccin.palettes").get_palette "macchiato"
+    local colors = require("tokyonight.colors").setup()
     require("todo-comments").setup({
       signs = true,
       keywords = {
@@ -25,13 +26,13 @@ return {
         bg = "bold", -- The gui style to use for the bg highlight group.
       },
       colors = {
-        error = { macchiato.red, "DiagnosticError", "ErrorMsg" },
-        warning = { macchiato.yellow, "DiagnosticWarn", "WarningMsg" },
-        info = { macchiato.sapphire, "DiagnosticInfo" },
-        hint = { macchiato.green, "DiagnosticHint" },
-        default = { macchiato.sapphire, "Identifier" },
-        test = { macchiato.maroon, "Identifier" },
+        error = { colors.red, "DiagnosticError", "ErrorMsg" },
+        warning = { colors.yellow, "DiagnosticWarn", "WarningMsg" },
+        info = { colors.sapphire, "DiagnosticInfo" },
+        hint = { colors.green, "DiagnosticHint" },
+        default = { colors.sapphire, "Identifier" },
+        test = { colors.maroon, "Identifier" },
       },
     })
-  end
+  end,
 }

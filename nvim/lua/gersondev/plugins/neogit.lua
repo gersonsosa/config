@@ -20,6 +20,7 @@ return {
         status = {
           ["<C-k>"] = "Toggle",
           ["<C-j>"] = "Toggle",
+          ["T"] = "Untrack",
           ["K"] = "GoToPreviousHunkHeader",
           ["J"] = "GoToNextHunkHeader",
         }

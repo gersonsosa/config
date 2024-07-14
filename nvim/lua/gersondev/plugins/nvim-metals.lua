@@ -12,7 +12,7 @@ return {
     local function metals_status_handler(err, status, ctx)
       local val = {}
       -- trim and remove spinner
-      local text = status.text:gsub('[⠇⠋⠙⠸⠴⠦]', ''):gsub("^%s*(.-)%s*$", "%1")
+      local text = status.text:gsub("[⠇⠋⠙⠸⠴⠦]", ""):gsub("^%s*(.-)%s*$", "%1")
       if status.hide then
         val = { kind = "end" }
       elseif status.show then
@@ -29,22 +29,21 @@ return {
     ----------------------------------
     -- LSP Setup ---------------------
     ----------------------------------
-    local metals = require "metals"
+    local metals = require("metals")
     local metals_config = metals.bare_config()
 
     metals_config.settings = {
-      gradleScript = "./gradlew",
       showImplicitArguments = true,
       excludedPackages = {
         "akka.actor.typed.javadsl",
-        "com.github.swagger.akka.javadsl"
+        "com.github.swagger.akka.javadsl",
       },
       testUserInterface = "Test Explorer",
     }
 
     -- hide messages and display only trough vim.g['metals_status']
     metals_config.init_options.statusBarProvider = "on"
-    metals_config.handlers = { ['metals/status'] = metals_status_handler }
+    metals_config.handlers = { ["metals/status"] = metals_status_handler }
 
     metals_config.find_root_dir_max_project_nesting = 2
 
@@ -62,7 +61,7 @@ return {
         name = "Run",
         metals = {
           runType = "run",
-        }
+        },
       },
       {
         type = "scala",
@@ -95,50 +94,86 @@ return {
         telescope.extensions.metals.commands()
       end
 
-      vim.keymap.set("n", "<leader>mc", metals_commands, { desc = 'Show metals commands', buffer = bufnr })
+      vim.keymap.set(
+        "n",
+        "<leader>mc",
+        metals_commands,
+        { desc = "Show metals commands", buffer = bufnr }
+      )
 
-      vim.keymap.set('n', '<leader>ws', '<cmd>lua require"metals".hover_worksheet()<CR>',
-        { desc = 'Hover worksheet', buffer = bufnr })
+      vim.keymap.set(
+        "n",
+        "<leader>ws",
+        '<cmd>lua require"metals".hover_worksheet()<CR>',
+        { desc = "Hover worksheet", buffer = bufnr }
+      )
 
       -- DAP mappings
-      vim.keymap.set("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]],
-        { desc = "Debug - Continue", buffer = bufnr })
-      vim.keymap.set("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]],
-        { desc = 'DAP - Toogle REPL', buffer = bufnr })
-      vim.keymap.set("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]],
-        { desc = 'Debug - Hover', buffer = bufnr })
-      vim.keymap.set("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
-        { desc = 'Toogle Breakpoint', buffer = bufnr })
-      vim.keymap.set("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]],
-        { desc = 'Debug - Step Over', buffer = bufnr })
-      vim.keymap.set("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]],
-        { desc = 'Debug - Step into', buffer = bufnr })
-      vim.keymap.set("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]],
-        { desc = 'Debug - Run last', buffer = bufnr })
+      vim.keymap.set(
+        "n",
+        "<leader>dc",
+        [[<cmd>lua require"dap".continue()<CR>]],
+        { desc = "Debug - Continue", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dr",
+        [[<cmd>lua require"dap".repl.toggle()<CR>]],
+        { desc = "DAP - Toogle REPL", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dK",
+        [[<cmd>lua require"dap.ui.widgets".hover()<CR>]],
+        { desc = "Debug - Hover", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dt",
+        [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
+        { desc = "Toogle Breakpoint", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dso",
+        [[<cmd>lua require"dap".step_over()<CR>]],
+        { desc = "Debug - Step Over", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dsi",
+        [[<cmd>lua require"dap".step_into()<CR>]],
+        { desc = "Debug - Step into", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>dl",
+        [[<cmd>lua require"dap".run_last()<CR>]],
+        { desc = "Debug - Run last", buffer = bufnr }
+      )
 
       ----------------------------------
       -- Mappings -----------------------
       ----------------------------------
-      vim.keymap.set("n", "<leader>sp", [[<cmd>lua require("metals").super_method_hierarchy()<CR>]],
-        { desc = 'Go to super method in hierarchy', buffer = bufnr })
+      vim.keymap.set(
+        "n",
+        "<leader>gS",
+        [[<cmd>lua require("metals").super_method_hierarchy()<CR>]],
+        { desc = "Go to super method in hierarchy", buffer = bufnr }
+      )
 
-      vim.keymap.set("n", "<leader>tt", [[<cmd>lua require("metals.tvp").toggle_tree_view()<CR>]],
-        { desc = 'Toggle tree view', buffer = bufnr })
-      vim.keymap.set("n", "<leader>ttr", [[<cmd>lua require("metals.tvp").reveal_in_tree()<CR>]],
-        { desc = 'Reveal in tree', buffer = bufnr })
-
-      -- all workspace diagnostics
-      vim.keymap.set('n', '<leader>wd', '<cmd>lua vim.diagnostic.setqflist()<CR>',
-        { desc = 'Workspace diagnostics', buffer = bufnr })
-      -- all workspace errors
-      vim.keymap.set('n', '<leader>we', '<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>',
-        { desc = 'Workspace errors', buffer = bufnr })
-      -- all workspace warnings
-      vim.keymap.set('n', '<leader>ww', '<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>',
-        { desc = 'Workspace warnings', buffer = bufnr })
-      -- buffer diagnostics only
-      vim.keymap.set('n', '<leader>dil', '<cmd>lua vim.diagnostic.setloclist()<CR>',
-        { desc = 'Current buffer diagnostics', buffer = bufnr })
+      vim.keymap.set(
+        "n",
+        "<leader>tt",
+        [[<cmd>lua require("metals.tvp").toggle_tree_view()<CR>]],
+        { desc = "Toggle tree view", buffer = bufnr }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>ttr",
+        [[<cmd>lua require("metals.tvp").reveal_in_tree()<CR>]],
+        { desc = "Reveal in tree", buffer = bufnr }
+      )
     end
 
     -- Autocmd that will actually be in charging of starting the whole thing
@@ -150,5 +185,5 @@ return {
       end,
       group = nvim_metals_group,
     })
-  end
+  end,
 }

@@ -1,10 +1,17 @@
+local ft = { "rust", "lua", "fish" }
+
 return {
   "github/copilot.vim",
+  cmd = "Copilot",
+  ft = ft,
   config = function()
+    -- use ft to get file_types for copilot
+    local file_types = {}
+    for _, v in ipairs(ft) do
+      file_types[v] = true
+    end
     -- Disable copilot by default, invoke with M+\
-    local file_types = { rust = true, lua = true, fish = true }
     file_types["*"] = false
-    vim.inspect(file_types)
     vim.g.copilot_filetypes = file_types
   end
 }

@@ -1,10 +1,10 @@
 return {
   "catppuccin/nvim",
   name = "catppuccin",
-  lazy = false,
-  -- lazy = true,
+  -- lazy = false,
+  lazy = true,
   config = function()
-    require("catppuccin").setup {
+    require("catppuccin").setup({
       flavour = "frappe", -- mocha, macchiato, frappe, latte
       transparent_background = true,
       integrations = {
@@ -38,14 +38,13 @@ return {
           inlay_hints = {
             background = true,
           },
-
         },
         cmp = true,
         octo = true,
         diffview = true,
-      }
-    }
+      },
+    })
 
     vim.cmd([[colorscheme catppuccin]])
-  end
+  end,
 }
