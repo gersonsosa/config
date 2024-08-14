@@ -113,52 +113,9 @@ return {
           if dap_go_ok then
             dap_go.setup()
 
-            -- TODO: Move to an autocommand
             vim.keymap.set("n", "<leader>dg", function()
               dap_go.debug_test()
             end, { buffer = bufnr, desc = "Debug Go Test" })
-            vim.keymap.set(
-              "n",
-              "<leader>dc",
-              [[<cmd>lua require"dap".continue()<CR>]],
-              { desc = "Debug - Continue", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dr",
-              [[<cmd>lua require"dap".repl.toggle()<CR>]],
-              { desc = "DAP - Toogle REPL", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dK",
-              [[<cmd>lua require"dap.ui.widgets".hover()<CR>]],
-              { desc = "Debug - Hover", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dt",
-              [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
-              { desc = "Toogle Breakpoint", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dso",
-              [[<cmd>lua require"dap".step_over()<CR>]],
-              { desc = "Debug - Step Over", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dsi",
-              [[<cmd>lua require"dap".step_into()<CR>]],
-              { desc = "Debug - Step into", buffer = bufnr }
-            )
-            vim.keymap.set(
-              "n",
-              "<leader>dl",
-              [[<cmd>lua require"dap".run_last()<CR>]],
-              { desc = "Debug - Run last", buffer = bufnr }
-            )
           end
         end,
         capabilities = capabilities,

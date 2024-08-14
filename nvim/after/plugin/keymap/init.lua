@@ -23,9 +23,17 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader><leader>", function()
-  vim.cmd("so")
-end)
+vim.api.nvim_create_augroup("FileTypeKeymaps", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "*.lua" },
+  callback = function()
+    vim.keymap.set("n", "<leader><leader>", function()
+      vim.cmd("so")
+    end, { desc = "Source current file", buffer = true })
+  end,
+  group = "FileTypeKeymaps",
+})
 
 vim.keymap.set(
   "n",

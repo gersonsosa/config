@@ -32,11 +32,7 @@ return {
           path_display = { truncate = 3, filename_first = true },
           -- path_display = { shorten = { len = 2, exclude = { 2, -2, -1 } } },
           preview = {
-            filesize_hook = function(filepath, bufnr, opts)
-              local max_bytes = 10000
-              local cmd = { "head-rs", "-c", max_bytes, filepath }
-              require("telescope.previewers.utils").job_maker(cmd, bufnr, opts)
-            end,
+            filesize_limit = 0.8, -- MB
           },
           cache_picker = {
             num_pickers = 5,

@@ -117,7 +117,8 @@ return {
 
     local treesitter_context = require("treesitter-context")
     treesitter_context.setup({
-      multiline_threshold = 10,
+      max_lines = 15,
+      multiline_threshold = 15,
     })
 
     vim.keymap.set("n", "[C", function()

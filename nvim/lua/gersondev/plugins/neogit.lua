@@ -1,20 +1,19 @@
 return {
-  'NeogitOrg/neogit',
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  cmd = 'Neogit',
-  keys = '<leader>gs',
+  "NeogitOrg/neogit",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  cmd = "Neogit",
   config = function()
     local status_ok, neogit = pcall(require, "neogit")
     if not status_ok then
       return
     end
 
-    neogit.setup {
+    neogit.setup({
       status = {
         recent_commit_count = 10,
       },
       integrations = {
-        diffview = true
+        diffview = true,
       },
       mappings = {
         status = {
@@ -23,9 +22,8 @@ return {
           ["T"] = "Untrack",
           ["K"] = "GoToPreviousHunkHeader",
           ["J"] = "GoToNextHunkHeader",
-        }
-      }
-    }
-    vim.keymap.set("n", "<leader>gs", vim.cmd.Neogit, { desc = "Open neogit" })
+        },
+      },
+    })
   end,
 }

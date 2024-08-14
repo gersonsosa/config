@@ -18,8 +18,18 @@ return {
   },
   { "ojroques/nvim-bufdel", event = "VeryLazy" },
   { "mbbill/undotree", cmd = { "UndotreeFocus", "UndotreeShow", "UndotreeToggle" } },
-  { "tpope/vim-eunuch", lazy = true },
-  { "tpope/vim-fugitive", cmd = "G" },
+  {
+    "tpope/vim-eunuch",
+    cmd = { "Remove", "Delete", "Copy", "Duplicate", "Mkdir", "Cfind", "Lfind" },
+  },
+  {
+    "tpope/vim-fugitive",
+    cmd = "G",
+    keys = "<leader>gs",
+    config = function()
+      vim.keymap.set("n", "<leader>gs", vim.cmd.G, { desc = "Open fugitive" })
+    end,
+  },
   {
     "codethread/qmk.nvim",
     lazy = true,

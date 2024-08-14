@@ -8,24 +8,6 @@ return {
     -------------------------------------------------------------------------------
     local api = vim.api
 
-    -- workaround to metals not having statandarized lsp progress reporting
-    local function metals_status_handler(err, status, ctx)
-      local val = {}
-      -- trim and remove spinner
-      local text = status.text:gsub("[⠇⠋⠙⠸⠴⠦]", ""):gsub("^%s*(.-)%s*$", "%1")
-      if status.hide then
-        val = { kind = "end" }
-      elseif status.show then
-        val = { kind = "begin", title = text }
-      elseif status.text then
-        val = { kind = "report", message = text }
-      else
-        return
-      end
-      local msg = { token = "metals", value = val }
-      vim.lsp.handlers["$/progress"](err, msg, ctx)
-    end
-
     ----------------------------------
     -- LSP Setup ---------------------
     ----------------------------------
@@ -41,9 +23,7 @@ return {
       testUserInterface = "Test Explorer",
     }
 
-    -- hide messages and display only trough vim.g['metals_status']
-    metals_config.init_options.statusBarProvider = "on"
-    metals_config.handlers = { ["metals/status"] = metals_status_handler }
+    metals_config.init_options.statusBarProvider = "off"
 
     metals_config.find_root_dir_max_project_nesting = 2
 
@@ -101,79 +81,23 @@ return {
         { desc = "Show metals commands", buffer = bufnr }
       )
 
-      vim.keymap.set(
-        "n",
-        "<leader>ws",
-        '<cmd>lua require"metals".hover_worksheet()<CR>',
-        { desc = "Hover worksheet", buffer = bufnr }
-      )
-
-      -- DAP mappings
-      vim.keymap.set(
-        "n",
-        "<leader>dc",
-        [[<cmd>lua require"dap".continue()<CR>]],
-        { desc = "Debug - Continue", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dr",
-        [[<cmd>lua require"dap".repl.toggle()<CR>]],
-        { desc = "DAP - Toogle REPL", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dK",
-        [[<cmd>lua require"dap.ui.widgets".hover()<CR>]],
-        { desc = "Debug - Hover", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dt",
-        [[<cmd>lua require"dap".toggle_breakpoint()<CR>]],
-        { desc = "Toogle Breakpoint", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dso",
-        [[<cmd>lua require"dap".step_over()<CR>]],
-        { desc = "Debug - Step Over", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dsi",
-        [[<cmd>lua require"dap".step_into()<CR>]],
-        { desc = "Debug - Step into", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>dl",
-        [[<cmd>lua require"dap".run_last()<CR>]],
-        { desc = "Debug - Run last", buffer = bufnr }
-      )
+      vim.keymap.set("n", "<leader>ws", function()
+        metals.hover_worksheet()
+      end, { desc = "Hover worksheet", buffer = bufnr })
 
       ----------------------------------
       -- Mappings -----------------------
       ----------------------------------
-      vim.keymap.set(
-        "n",
-        "<leader>gS",
-        [[<cmd>lua require("metals").super_method_hierarchy()<CR>]],
-        { desc = "Go to super method in hierarchy", buffer = bufnr }
-      )
+      vim.keymap.set("n", "gs", function()
+        metals.super_method_hierarchy()
+      end, { desc = "Go to super method in hierarchy", buffer = bufnr })
 
-      vim.keymap.set(
-        "n",
-        "<leader>tt",
-        [[<cmd>lua require("metals.tvp").toggle_tree_view()<CR>]],
-        { desc = "Toggle tree view", buffer = bufnr }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>ttr",
-        [[<cmd>lua require("metals.tvp").reveal_in_tree()<CR>]],
-        { desc = "Reveal in tree", buffer = bufnr }
-      )
+      vim.keymap.set("n", "<leader>tt", function()
+        require("metals.tvp").toggle_tree_view()
+      end, { desc = "Toggle tree view", buffer = bufnr })
+      vim.keymap.set("n", "<leader>ttr", function()
+        require("metals.tvp").reveal_in_tree()
+      end, { desc = "Reveal in tree", buffer = bufnr })
     end
 
     -- Autocmd that will actually be in charging of starting the whole thing

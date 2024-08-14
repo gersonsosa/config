@@ -26,58 +26,71 @@ return {
       }
     end
 
-    require('heirline').load_colors(setup_colors())
+    require("heirline").load_colors(setup_colors())
 
     local resources = {}
 
     resources.icons = {
-      powerline    = {
+      powerline = {
         -- 
-        vertical_bar_thin = '│',
-        vertical_bar = '┃',
-        block = '█',
+        vertical_bar_thin = "│",
+        vertical_bar = "┃",
+        block = "█",
         ----------------------------------------------
-        left = '',
-        left_filled = '',
-        right = '',
-        right_filled = '',
+        left = "",
+        left_filled = "",
+        right = "",
+        right_filled = "",
         ----------------------------------------------
-        slant_left = '',
-        slant_left_thin = '',
-        slant_right = '',
-        slant_right_thin = '',
+        slant_left = "",
+        slant_left_thin = "",
+        slant_right = "",
+        slant_right_thin = "",
         ----------------------------------------------
-        slant_left_2 = '',
-        slant_left_2_thin = '',
-        slant_right_2 = '',
-        slant_right_2_thin = '',
+        slant_left_2 = "",
+        slant_left_2_thin = "",
+        slant_right_2 = "",
+        slant_right_2_thin = "",
         ----------------------------------------------
-        left_rounded = '',
-        left_rounded_thin = '',
-        right_rounded = '',
-        right_rounded_thin = '',
+        left_rounded = "",
+        left_rounded_thin = "",
+        right_rounded = "",
+        right_rounded_thin = "",
         ----------------------------------------------
-        trapezoid_left = '',
-        trapezoid_right = '',
+        trapezoid_left = "",
+        trapezoid_right = "",
         ----------------------------------------------
-        line_number = '',
-        column_number = '',
+        line_number = "",
+        column_number = "",
       },
-      padlock      = '',
-      circle_small = '●', -- ●
-      circle       = '', -- 
-      circle_plus  = '', -- 
-      dot_circle_o = '', -- 
-      circle_o     = '⭘', -- ⭘
-      lsp          = {
-        default = "󱐋",
+      padlock = "",
+      circle_small = "●", -- ●
+      circle = "", -- 
+      circle_plus = "", -- 
+      dot_circle_o = "", -- 
+      circle_o = "⭘", -- ⭘
+      diagnostic = {
+        good = "",
+        error = "",
+        warn = "",
+        info = "",
+        hint = "",
+      },
+      lsp = {
+        default = "㊙️",
         copilot = "",
         metals = "",
         pyright = "",
         tsserver = "󰛦",
         lua_ls = "",
         rust_analyzer = "",
-      }
+        jdtls = "",
+        gopls = "",
+        ruff_lsp = "rff",
+        yaml_ls = "",
+        ccls = "󰙱",
+        gradle_ls = "",
+      },
     }
 
     local mode = {
@@ -87,7 +100,7 @@ return {
         if not self.once then
           vim.api.nvim_create_autocmd("ModeChanged", {
             pattern = "*:*o",
-            command = 'redrawstatus'
+            command = "redrawstatus",
           })
           self.once = true
         end
@@ -143,7 +156,7 @@ return {
           r = "orange",
           ["!"] = "red",
           t = "red",
-        }
+        },
       },
       fallthrough = false,
     }
@@ -153,10 +166,10 @@ return {
         return self.mode_names[self.mode]
       end,
       hl = function()
-        return { fg = "bright_bg", bold = true, }
+        return { fg = "bright_bg", bold = true }
       end,
       condition = function(self)
-        return self.mode ~= 'n' and vim.bo.buftype == ''
+        return self.mode ~= "n" and vim.bo.buftype == ""
       end,
     }
 
@@ -165,21 +178,19 @@ return {
       function(self)
         local mode_first_letter = self.mode:sub(1, 1) -- get only the first mode character
         return self.mode_colors[mode_first_letter]
-      end, active_mode)
+      end,
+      active_mode
+    )
 
     local normal_mode = {
       provider = "%2(" .. resources.icons.circle .. "%)",
       hl = { fg = "orange", bold = true },
       condition = function(self)
-        return self.mode == 'n' and vim.bo.buftype == ''
+        return self.mode == "n" and vim.bo.buftype == ""
       end,
     }
 
-    mode = utils.insert(
-      mode,
-      normal_mode,
-      active_mode_surrounded
-    )
+    mode = utils.insert(mode, normal_mode, active_mode_surrounded)
 
     local file_name_block = {
       init = function(self)
@@ -192,20 +203,23 @@ return {
       init = function(self)
         local filename = self.filename
         local extension = vim.fn.fnamemodify(filename, ":e")
-        self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+        self.icon, self.icon_color =
+          require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
       end,
       provider = function(self)
         return self.icon and (self.icon .. " ")
       end,
       hl = function(self)
         return { fg = self.icon_color }
-      end
+      end,
     }
 
     local file_name = {
       provider = function(self)
         self.long_filename = vim.fn.fnamemodify(self.filename, ":.")
-        if self.long_filename == "" then return "[No Name]" end
+        if self.long_filename == "" then
+          return "[No Name]"
+        end
       end,
 
       hl = { fg = utils.get_highlight("Directory").fg },
@@ -261,7 +275,7 @@ return {
       file_icon,
       utils.insert(filename_modifier, file_name), -- a new table where FileName is a child of FileNameModifier
       file_flags,
-      { provider = '%<' }                         -- this means that the statusline is cut here when there's not enough space
+      { provider = "%<" } -- this means that the statusline is cut here when there's not enough space
     )
 
     local file_type = {
@@ -284,7 +298,7 @@ return {
     -- I take no credits for this! :lion:
     local scroll_bar = {
       static = {
-        sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+        sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
       },
       provider = function(self)
         local curr_line = vim.api.nvim_win_get_cursor(0)[1]
@@ -295,19 +309,74 @@ return {
       hl = { fg = "blue", bg = "bright_bg" },
     }
 
+    local diagnostics = {
+      condition = function()
+        return vim.iter(vim.diagnostic.count(nil)):any(function(count)
+          return count > 0
+        end)
+      end,
+      update = { "DiagnosticChanged", "BufEnter" },
+
+      hl = { fg = "red", bold = true },
+      static = {
+        error_icon = resources.icons.diagnostic.error,
+        warn_icon = resources.icons.diagnostic.warn,
+        success_icon = resources.icons.diagnostic.good,
+      },
+
+      init = function(self)
+        local bufnr = self and self.bufnr or 0
+        if vim.diagnostic.count then
+          self.errors = vim.diagnostic.count(nil)[vim.diagnostic.severity.ERROR] or 0
+          self.warnings = vim.diagnostic.count(nil)[vim.diagnostic.severity.WARN] or 0
+          self.buf_errors = vim.diagnostic.count(bufnr)[vim.diagnostic.severity.ERROR] or 0
+          self.buf_warnings = vim.diagnostic.count(bufnr)[vim.diagnostic.severity.WARN] or 0
+        end
+      end,
+
+      {
+        provider = function(self)
+          return self.errors > 0 and (self.error_icon .. self.errors .. " ")
+        end,
+        hl = { fg = "diag_error" },
+      },
+      {
+        provider = function(self)
+          return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
+        end,
+        hl = { fg = "diag_warn" },
+      },
+      {
+        provider = resources.icons.powerline.vertical_bar,
+      },
+      {
+        provider = function(self)
+          return self.buf_errors > 0 and (self.error_icon .. self.buf_errors .. " ")
+        end,
+        hl = { fg = "diag_error" },
+      },
+      {
+        provider = function(self)
+          return self.buf_warnings > 0 and (self.warn_icon .. self.buf_warnings)
+        end,
+        hl = { fg = "diag_warn" },
+      },
+    }
+
     local lsp_server_list = {
       condition = conditions.lsp_attached,
-      update    = { 'LspAttach', 'LspDetach' },
+      update = { "LspAttach", "LspDetach" },
 
-      provider  = function()
+      provider = function()
         local names = {}
         for _, server in pairs(vim.lsp.buf_get_clients(0)) do
-          local icon = resources.icons.lsp[server.name] or server.name:sub(1, 1) .. resources.icons.lsp.default
+          local icon = resources.icons.lsp[server.name]
+            or server.name:sub(1, 1) .. resources.icons.lsp.default
           table.insert(names, icon)
         end
-        return " [ " .. table.concat(names, " ") .. " ]"
+        return "🈸[ " .. table.concat(names, " ") .. " ]"
       end,
-      hl        = { fg = "orange", bold = true },
+      hl = { fg = "purple", bold = true },
     }
 
     local help_filename = {
@@ -321,25 +390,26 @@ return {
       hl = { fg = "blue" },
     }
 
-    local metals_status = {
-      condition = function()
-        return (vim.bo.filetype == 'scala'
-              or vim.bo.filetype == 'sbt' or vim.bo.filetype == 'java')
-            and vim.g['metals_status'] ~= nil
-            and vim.g['metals_status'] ~= ''
-      end,
-      provider = function() return ' ' .. vim.g['metals_status'] end,
-      hl = { fg = "blue" },
-    }
-
     -- Put it all together
 
     local align = { provider = "%=" }
     local space = { provider = " " }
 
     local default_status_line = {
-      mode, space, file_name_block, space, align,
-      metals_status, space, lsp_server_list, space, file_type, space, ruler, space, scroll_bar
+      mode,
+      space,
+      file_name_block,
+      space,
+      diagnostics,
+      space,
+      align,
+      lsp_server_list,
+      space,
+      file_type,
+      space,
+      ruler,
+      space,
+      scroll_bar,
     }
 
     local inactive_status_line = {
@@ -361,7 +431,7 @@ return {
       file_type,
       space,
       help_filename,
-      align
+      align,
     }
 
     local status_lines = {
@@ -391,6 +461,6 @@ return {
       group = "Heirline",
     })
 
-    require 'heirline'.setup({ statusline = status_lines })
-  end
+    require("heirline").setup({ statusline = status_lines })
+  end,
 }

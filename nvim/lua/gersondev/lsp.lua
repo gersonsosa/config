@@ -143,6 +143,8 @@ autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    setup_lsp_keymap(client, bufnr)
+    if client and client.server_capabilities then
+      setup_lsp_keymap(client, bufnr)
+    end
   end,
 })
