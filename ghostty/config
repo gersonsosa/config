@@ -1,0 +1,15 @@
+theme = dark:Kanagawa Dragon,light:tokyonight-storm
+
+font-family = Maple Mono NF Medium
+font-size = 16
+
+background-opacity = 0.95
+background-blur-radius = 20
+
+auto-update-channel = tip
+
+shell-integration-features = no-cursor
+
+cursor-color = #ff9e64
+
+keybind = super+ctrl+t=toggle_quick_terminal
