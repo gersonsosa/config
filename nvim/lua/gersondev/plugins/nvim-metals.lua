@@ -21,6 +21,7 @@ return {
         "com.github.swagger.akka.javadsl",
       },
       testUserInterface = "Test Explorer",
+      serverVersion = "latest.snapshot",
     }
 
     metals_config.init_options.statusBarProvider = "off"
@@ -29,7 +30,7 @@ return {
 
     -- make sure the correct capabilities for snippets are set
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+    metals_config.capabilities = capabilities
 
     -- Debug settings if you're using nvim-dap
     local dap = require("dap")

@@ -6,8 +6,8 @@ return {
   config = function()
     require("tokyonight").setup({
       style = "storm",
-      transparent = true,
-      dim_inactive = true, -- dims inactive windows
+      transparent = false,
+      dim_inactive = true,
     })
     vim.cmd([[colorscheme tokyonight]])
   end,

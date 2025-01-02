@@ -39,7 +39,6 @@ return {
             background = true,
           },
         },
-        cmp = true,
         octo = true,
         diffview = true,
       },

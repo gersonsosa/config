@@ -17,8 +17,8 @@ return {
       },
       mappings = {
         status = {
-          ["<C-k>"] = "Toggle",
-          ["<C-j>"] = "Toggle",
+          [">"] = "Toggle",
+          ["<"] = "Toggle",
           ["T"] = "Untrack",
           ["K"] = "GoToPreviousHunkHeader",
           ["J"] = "GoToNextHunkHeader",

@@ -1,4 +1,4 @@
-local ft = { "rust", "lua", "fish" }
+local ft = { "bash", "lua" }
 
 return {
   "github/copilot.vim",
@@ -13,5 +13,5 @@ return {
     -- Disable copilot by default, invoke with M+\
     file_types["*"] = false
     vim.g.copilot_filetypes = file_types
-  end
+  end,
 }

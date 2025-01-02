@@ -1,24 +1,25 @@
-require('gersondev.opt')
-require('gersondev.lazy')
-require('gersondev.lsp')
+require("gersondev.opt")
+require("gersondev.lazy")
+require("gersondev.lsp")
 
 local augroup = vim.api.nvim_create_augroup
-local gers_auto_command = augroup('Gers', {})
+local gers_auto_command = augroup("Gers", {})
 
 local autocmd = vim.api.nvim_create_autocmd
-local yank_group = augroup('HighlightYank', {})
+local yank_group = augroup("HighlightYank", {})
 
 -- Highlight on yank
-autocmd('TextYankPost', {
+autocmd("TextYankPost", {
   group = yank_group,
-  pattern = '*',
+  pattern = "*",
   callback = function()
     vim.highlight.on_yank({
-      higroup = 'IncSearch',
+      higroup = "IncSearch",
       timeout = 120,
     })
   end,
 })
+
 -- remove whitespace when writing
 autocmd({ "BufWritePre" }, {
   group = gers_auto_command,
@@ -27,4 +28,6 @@ autocmd({ "BufWritePre" }, {
 })
 
 -- leave paste mode when leaving insert mode (if it was on)
-autocmd('InsertLeave', { pattern = '*', command = 'set nopaste' })
+autocmd("InsertLeave", { pattern = "*", command = "set nopaste" })
+
+vim.api.nvim_create_user_command("Chx", "!chmod +x %", {})

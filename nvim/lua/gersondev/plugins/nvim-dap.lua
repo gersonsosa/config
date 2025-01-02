@@ -97,16 +97,28 @@ return {
         close_ui_open_repl()
       end
 
-      vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", linehl = "", numhl = "" })
-      vim.fn.sign_define(
-        "DapBreakpointConditional",
-        { text = "🔶", texthl = "", linehl = "", numhl = "" }
-      )
-      vim.fn.sign_define(
-        "DapBreakpointRejected",
-        { text = "🚫", texthl = "", linehl = "", numhl = "" }
-      )
-      vim.fn.sign_define("DapLogPoint", { text = "⭕", texthl = "", linehl = "", numhl = "" })
+      vim.diagnostic.config({
+        signs = {
+          "DapBreakpoint",
+          { text = "🔴", texthl = "", linehl = "", numhl = "" },
+          "DapBreakpointConditional",
+          { text = "🔶", texthl = "", linehl = "", numhl = "" },
+          "DapBreakpointRejected",
+          { text = "🚫", texthl = "", linehl = "", numhl = "" },
+          "DapLogPoint",
+          { text = "⭕", texthl = "", linehl = "", numhl = "" },
+        },
+      })
+      -- vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", linehl = "", numhl = "" })
+      -- vim.fn.sign_define(
+      --   "DapBreakpointConditional",
+      --   { text = "🔶", texthl = "", linehl = "", numhl = "" }
+      -- )
+      -- vim.fn.sign_define(
+      --   "DapBreakpointRejected",
+      --   { text = "🚫", texthl = "", linehl = "", numhl = "" }
+      -- )
+      -- vim.fn.sign_define("DapLogPoint", { text = "⭕", texthl = "", linehl = "", numhl = "" })
 
       vim.keymap.set("n", "<leader>dq", function()
         require("dap").repl.close()
@@ -154,5 +166,17 @@ return {
   {
     "leoluz/nvim-dap-go",
     ft = "go",
+    config = function()
+      require("dap-go").setup({
+        dap_configurations = {
+          {
+            type = "go",
+            name = "Dap Go Attach remote",
+            mode = "remote",
+            request = "attach",
+          },
+        },
+      })
+    end,
   },
 }

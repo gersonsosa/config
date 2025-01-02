@@ -81,7 +81,7 @@ return {
         copilot = "",
         metals = "",
         pyright = "",
-        tsserver = "󰛦",
+        ts_ls = "󰛦",
         lua_ls = "",
         rust_analyzer = "",
         jdtls = "",
@@ -369,7 +369,7 @@ return {
 
       provider = function()
         local names = {}
-        for _, server in pairs(vim.lsp.buf_get_clients(0)) do
+        for _, server in pairs(vim.lsp.get_clients()) do
           local icon = resources.icons.lsp[server.name]
             or server.name:sub(1, 1) .. resources.icons.lsp.default
           table.insert(names, icon)

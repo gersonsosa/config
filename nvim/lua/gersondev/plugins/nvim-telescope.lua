@@ -140,23 +140,29 @@ return {
           glob_pattern = { "!*.js" },
           attach_mappings = function(_, map)
             map({ "i", "n" }, "<C-f>", function()
-              -- TODO: get all file types from the current list?
-              vim.ui.select(
-                { "scala", "rust", "markdown", "kotlin", "java", "typescript", "sql", "js" },
-                {
-                  prompt = "Select type filter:",
-                  format_item = function(item)
-                    return item
-                  end,
-                },
-                function(choice)
-                  builtin.live_grep({
-                    cwd = vim.loop.cwd(),
-                    type_filter = choice,
-                    glob_pattern = { "!*Code.js", "!*lib*.js" }, -- exclude large files
-                  })
+              local results = builtin.live_grep.get_results()
+              local file_types = {}
+
+              -- Iterate over the results and extract unique file extensions
+              for _, entry in ipairs(results) do
+                local file_extension = entry.value:match("%.(%w+)$")
+                if file_extension and not vim.tbl_contains(file_types, file_extension) then
+                  table.insert(file_types, file_extension)
                 end
-              )
+              end
+
+              vim.ui.select(file_types, {
+                prompt = "Select type filter:",
+                format_item = function(item)
+                  return item
+                end,
+              }, function(choice)
+                builtin.live_grep({
+                  cwd = vim.loop.cwd(),
+                  type_filter = choice,
+                  glob_pattern = { "!*Code.js", "!*lib*.js" }, -- exclude large files
+                })
+              end)
             end)
             return true
           end,

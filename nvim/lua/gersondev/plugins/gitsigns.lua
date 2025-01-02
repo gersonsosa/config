@@ -24,14 +24,14 @@ return {
           if vim.wo.diff then
             vim.cmd.normal({ "[c", bang = true })
           else
-            gitsigns.nav_hunk("next")
+            gitsigns.nav_hunk("prev")
           end
         end, { desc = "Go to next git hunk", buffer = bufnr })
         vim.keymap.set("n", "]c", function()
           if vim.wo.diff then
             vim.cmd.normal({ "]c", bang = true })
           else
-            gitsigns.nav_hunk("prev")
+            gitsigns.nav_hunk("next")
           end
         end, { desc = "Go to previous git hunk", buffer = bufnr })
         vim.keymap.set(

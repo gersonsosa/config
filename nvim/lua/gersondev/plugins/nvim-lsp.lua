@@ -3,30 +3,55 @@ return {
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
-      -- library = { plugins = { "nvim-dap-ui" }, types = true },
+      library = { "nvim-dap-ui", { path = "wezterm-types", mods = { "wezterm" } } },
     },
   },
   {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup({
+        log_level = vim.log.levels.DEBUG,
+      })
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    depenedencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-lspconfig").setup({
+        log_level = vim.log.levels.DEBUG,
+        ensure_installed = {
+          "lua_ls",
+        },
+        autamatic_installation = { exclude = { "rust_analyzer" } },
+      })
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
+    dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
     config = function()
       local nvim_lsp = require("lspconfig")
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local capabilities =
-        cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+      -- local capabilities =
+      --   cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-      local signs = { Error = "", Warn = "", Hint = "󰛩", Info = "" }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = " " .. icon, texthl = hl, numhl = hl })
-      end
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+      local signs = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN] = "",
+        [vim.diagnostic.severity.HINT] = "󰛩",
+        [vim.diagnostic.severity.INFO] = "",
+      }
+      vim.diagnostic.config({
+        signs = { text = signs },
+      })
 
       -- Language specific configurations, move to a specific file?
 
-      nvim_lsp.tsserver.setup({
+      nvim_lsp.ts_ls.setup({
         root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json"),
-        init_options = {
-          lint = true,
-        },
         capabilities = capabilities,
       })
 
@@ -35,7 +60,8 @@ return {
         settings = {
           Lua = {
             runtime = {
-              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
               version = "LuaJIT",
             },
             diagnostics = {
@@ -50,7 +76,6 @@ return {
               },
               checkThirdParty = false,
             },
-            -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {
               enable = false,
             },
@@ -68,10 +93,10 @@ return {
         end,
       })
 
-      nvim_lsp.ruff_lsp.setup({
-        on_attach = function(client)
-          client.server_capabilities.hoverProvider = false
-        end,
+      nvim_lsp.ruff.setup({
+        init_options = {
+          settings = {},
+        },
       })
 
       nvim_lsp.yamlls.setup({

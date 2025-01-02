@@ -12,7 +12,7 @@ return {
         width = 120,
         height = 0.80,
         options = {
-          number = true,       -- disable number column
+          number = true, -- disable number column
           relativenumber = true, -- disable relative numbers
           -- signcolumn = "no", -- disable signcolumn
           -- cursorline = false, -- disable cursorline
@@ -22,7 +22,7 @@ return {
         },
       },
       plugins = {
-        tmux = { enabled = true }
+        tmux = { enabled = true },
       },
     })
 
