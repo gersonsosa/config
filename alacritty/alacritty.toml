@@ -1,7 +1,7 @@
-import = [
-    # "~/.config/alacritty/colors/tokyonight/tokyonight_storm.toml",
+general.import = [
+    "~/.config/alacritty/colors/tokyonight/tokyonight_storm.toml",
     # "~/.config/alacritty/colors/tokyonight/tokyonight_night.toml",
-    "~/.config/alacritty/colors/tokyonight/tokyonight_moon.toml",
+    # "~/.config/alacritty/colors/tokyonight/tokyonight_moon.toml",
     # "~/.config/alacritty/colors/tokyonight/tokyonight_day.toml",
     # "~/.config/alacritty/colors/catppuccin/catppuccin-latte.toml",
     # "~/.config/alacritty/colors/catppuccin/catppuccin-mocha.toml",
@@ -9,13 +9,14 @@ import = [
     # "~/.config/alacritty/colors/catppuccin/catppuccin-machiatto.toml",
 ]
 
-live_config_reload = true
+general.live_config_reload = true
 
-#[shell]
-#program = "/bin/zsh"
+[terminal.shell]
+program = "/opt/homebrew/bin/bash"
+args = ["-l"]
 
 [bell]
-animation = "EaseOutQuad"
+animation = "EaseOutCirc"
 color = "0xf7768e"
 duration = 300
 
@@ -23,7 +24,7 @@ duration = 300
 draw_bold_text_with_bright_colors = true
 
 [font]
-size = 18.0
+size = 16.5
 
 [font.normal]
 family = "Maple Mono NF"
@@ -32,13 +33,26 @@ family = "Maple Mono NF"
 alphabet = "jfkdls;ahgurieowpq"
 
 [[hints.enabled]]
-command = "open"
+action = "Copy"
 hyperlinks = true
 post_processing = true
-regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+# markdown_url -> \[[^]]*\]\(([^)]+)\)
+# url -> (?:https?://|git@|git://|ssh://|ftp://|file://)\S+
+# diff_a -> --- a/(\S+)
+# diff_b -> \+\+\+ b/(\S+)
+# docker -> sha256:([0-9a-f]{64})
+# path -> (?:[.\w\-@~]+)?(?:/+[.\w\-@]+)+
+# uuid -> [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+# sha -> [0-9a-f]{7,40}
+# ip -> \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
+# ipv6 -> [A-f0-9:]+:+[A-f0-9:]+[%\w\d]+
+# address -> 0x[0-9a-fA-F]+
+# ess container name -> fac-[0-9a-f]{7,40}-[0-9]+
+regex = '(?m)(https?://|git@|git://|ssh://|ftp://|file://)\S+|(?:[.\w\-@~]+)?(?:/+[.\w\-@]+)+|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{7,40}|[0-9a-f]{7,40}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[A-f0-9:]+:+[A-f0-9:]+[%\w\d]+|fac-[0-9a-f]{7,40}-[0-9]+'
 
 [hints.enabled.binding]
-key = "U"
+key = "Space"
 mods = "Control|Shift"
 
 [hints.enabled.mouse]
@@ -95,10 +109,20 @@ action = "ToggleSimpleFullscreen"
 key = "F"
 mods = "Command|Control|Alt"
 
+[[keyboard.bindings]]
+action = "ReceiveChar"
+key = "Space"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "X"
+mods = "Control|Shift"
+
 [window]
 decorations = "Buttonless"
 option_as_alt = "Both"
-opacity = 0.95
+opacity = 0.92
 blur = true
 
 [window.dimensions]
