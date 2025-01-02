@@ -1,0 +1,28 @@
+[tools]
+go = "1.21"
+node = "23"
+python = "latest"
+uv = "latest"
+aws-cli = "latest"
+# rust tools
+cargo-binstall = "latest"
+dust = "latest"
+yazi = "latest"
+bat = "latest"
+zoxide = "latest"
+bottom = "latest"
+ripgrep = "latest"
+fd = "latest"
+usage = "latest"
+"aqua:dalance/procs" = "latest"
+"aqua:dandavison/delta" = "latest"
+"aqua:cantino/mcfly" = "latest"
+"aqua:JohnnyMorganz/StyLua" = "latest"
+
+[tasks.cargo_up]
+run = 'cargo binstall cargo-udeps eza ouch rewrk hx tmux-sessionizer mise tidy-viewer'
+
+[settings]
+
+[settings.pipx]
+uvx = true
