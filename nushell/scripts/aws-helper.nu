@@ -1,0 +1,1 @@
+/Users/gersonsosa/code/elastic/platform-cli-auth/aws-config/shell-helper.nu

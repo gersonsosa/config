@@ -1,15 +1,27 @@
-theme = dark:Kanagawa Dragon,light:tokyonight-storm
+theme = Tokyonight Night
 
-font-family = Maple Mono NF Medium
+command = env XDG_CONFIG_HOME=/Users/gersonsosa/dev/config XDG_DATA_HOME=/Users/gersonsosa/dev/config /Users/gersonsosa/.cargo/bin/nu -l
+
+font-family = Maple Mono NF
 font-size = 16
 
-background-opacity = 0.95
+window-theme = auto
+window-save-state = always
+undo-timeout = 30s
+
+shell-integration-features = ssh-env
+
+background-opacity = 0.94
 background-blur-radius = 20
 
 auto-update-channel = tip
 
-shell-integration-features = no-cursor
-
-cursor-color = #ff9e64
+link-previews = true
 
 keybind = super+ctrl+t=toggle_quick_terminal
+keybind = super+g>f=write_screen_file:paste
+keybind = ctrl+shift+h=scroll_to_top
+keybind = ctrl+shift+d=scroll_page_down
+keybind = ctrl+shift+u=scroll_page_up
+keybind = ctrl+shift+l=scroll_to_bottom
+keybind = shift+enter=text:\n

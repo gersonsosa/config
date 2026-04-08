@@ -1,4 +1,4 @@
-# Config
+# dotfiles
 
 Some of my personal config files linux/mac
 

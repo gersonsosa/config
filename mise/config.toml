@@ -1,28 +1,17 @@
 [tools]
-go = "1.21"
-node = "23"
-python = "latest"
+go = "latest"
+node = "latest"
 uv = "latest"
-aws-cli = "latest"
-# rust tools
 cargo-binstall = "latest"
-dust = "latest"
-yazi = "latest"
-bat = "latest"
-zoxide = "latest"
-bottom = "latest"
-ripgrep = "latest"
-fd = "latest"
 usage = "latest"
-"aqua:dalance/procs" = "latest"
-"aqua:dandavison/delta" = "latest"
-"aqua:cantino/mcfly" = "latest"
-"aqua:JohnnyMorganz/StyLua" = "latest"
+python = "3.13.2"
+teleport-ent = "latest"
 
-[tasks.cargo_up]
-run = 'cargo binstall cargo-udeps eza ouch rewrk hx tmux-sessionizer mise tidy-viewer'
+[tasks.rustme]
+run = 'cargo binstall mise du-dust eza bat zoxide bottom ripgrep fd-find cargo-udeps fd-find ouch rewrk hx git-delta stylua tidy-viewer nu'
 
 [settings]
+idiomatic_version_file_enable_tools = ["terraform"]
 
 [settings.pipx]
 uvx = true

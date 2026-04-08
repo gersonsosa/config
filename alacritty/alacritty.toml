@@ -18,7 +18,7 @@ args = ["-l"]
 [bell]
 animation = "EaseOutCirc"
 color = "0xf7768e"
-duration = 300
+duration = 150
 
 [colors]
 draw_bold_text_with_bright_colors = true

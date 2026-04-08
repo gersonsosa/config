@@ -1,2 +1,8 @@
+.DS_Store
 tags
 nvim/plugin/
+
+# Nushell runtime files (never commit these)
+nushell/history.*
+nushell/*.msgpackz
+nushell/registry.msgpackz
