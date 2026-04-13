@@ -81,8 +81,8 @@ alias gp = git push
 alias gpf = git push --force-with-lease 
 alias gp! = git push --force-with-lease 
 
-source ~/code/sh/nu_scripts/custom-completions/git/git-completions.nu
-source ($nu.default-config-dir | path join "scripts" "aws-helper.nu")
+if ($nu.home-dir | path join ".config" "nu_scripts" | path exists) { source ($nu.home-dir | path join ".config" "nu_scripts" "custom-completions" "git" "git-completions.nu") }
+# source ($nu.default-config-dir | path join "scripts" "aws-helper.nu")
 
 alias mx = mise exec 
 alias mr = mise run 

@@ -7,8 +7,10 @@
 setup() {
   git clone https://github.com/gersondev/config ~/.dotfiles
   ln -s ~/.dotfiles/.bashrc ~/.bashrc
-  ln -s ~/.dotfiles/.bash_profile ~/.bash_profile
-  # TODO: setup nu
+  ln -s ~/.dotfiles/.profile ~/.profile
+  ln -s ~/.dotfiles/nushell ~/.config/nushell
+  ln -s ~/.dotfiles/ ~/.config/nushell
+  git clone git@github.com:nushell/nu_scripts.git .config/nu_scripts
 }
 
 tools() {
@@ -29,3 +31,4 @@ setup_langs() {
 }
 
 setup()
+tools()

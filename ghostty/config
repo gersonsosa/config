@@ -1,6 +1,6 @@
 theme = Tokyonight Night
 
-command = env XDG_CONFIG_HOME=/Users/gersonsosa/dev/config XDG_DATA_HOME=/Users/gersonsosa/dev/config /Users/gersonsosa/.cargo/bin/nu -l
+command = env XDG_CONFIG_HOME=/Users/gersonsosa/.dotfiles XDG_DATA_HOME=/Users/gersonsosa/.dotfiles /Users/gersonsosa/.cargo/bin/nu -l
 
 font-family = Maple Mono NF
 font-size = 16
