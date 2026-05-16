@@ -27,6 +27,8 @@ setup() {
 link_configs() {
   mkdir -p "$HOME/.config"
 
+  link "$DOTFILES/.profile" "$HOME/.profile"
+  link "$DOTFILES/.bashrc" "$HOME/.bashrc"
   link "$DOTFILES/nvim" "$HOME/.config/nvim"
 
   case "$(uname -s)" in

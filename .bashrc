@@ -2,6 +2,14 @@
 # set -x
 # PS4='+ $(date "+%s.%N")\011 '
 
+[[ $- != *i* ]] && return
+
+export BASHRC_SOURCED=1
+
+if [ -z "$PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
+
 shopt -s histappend
 shopt -s cmdhist
 PROMPT_COMMAND='history -a'
@@ -11,33 +19,35 @@ export HISTSIZE=500000
 export HISTFILESIZE=100000
 export HISTIGNORE='history:?:??:cd ..'
 
-! type -f __fzfcmd &> /dev/null && eval "$(fzf --bash)"
-eval "$(zoxide init bash)"
-eval "$(mise activate bash)"
+command -v fzf >/dev/null && eval "$(fzf --bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
+command -v mise >/dev/null && eval "$(mise activate bash)"
 
-if [[ $- == *i* ]]; then
-  # If there are multiple matches for completion, Tab should cycle through them
-  bind 'TAB:menu-complete'
-  # And Shift-Tab should cycle backwards
-  bind '"\e[Z": menu-complete-backward'
+# If there are multiple matches for completion, Tab should cycle through them
+bind 'TAB:menu-complete'
+# And Shift-Tab should cycle backwards
+bind '"\e[Z": menu-complete-backward'
 
-  # Display a list of the matching files
-  bind 'set show-all-if-ambiguous on'
+# Display a list of the matching files
+bind 'set show-all-if-ambiguous on'
 
-  # Perform partial (common) completion on the first Tab press, only start
-  # cycling full results on the second Tab press (from bash version 5)
-  bind 'set menu-complete-display-prefix on'
+# Perform partial (common) completion on the first Tab press, only start
+# cycling full results on the second Tab press (from bash version 5)
+bind 'set menu-complete-display-prefix on'
 
-  # Cycle through history based on characters already typed on the line
-  bind '"\e[A":history-search-backward'
-  bind '"\e[B":history-search-forward'
+# Cycle through history based on characters already typed on the line
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
 
-  # Keep Ctrl-Left and Ctrl-Right working when the above are used
-  bind '"\e[1;5C":forward-word'
-  bind '"\e[1;5D":backward-word'
+# Keep Ctrl-Left and Ctrl-Right working when the above are used
+bind '"\e[1;5C":forward-word'
+bind '"\e[1;5D":backward-word'
+
+if [[ -n "$HOMEBREW_PREFIX" && -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
+  . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+elif [[ -r /usr/share/bash-completion/bash_completion ]]; then
+  . /usr/share/bash-completion/bash_completion
 fi
-
-[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
 alias l='eza -la'
 alias la='eza -la'
@@ -70,11 +80,20 @@ alias tf='terraform'
 
 # NOTE: slow load ble [[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
 
-source "${XDG_DATA_HOME:-$HOME/.local/share}/platform-cli-auth/aws-config/shell-helper.sh"
-
 GIT_PS1_SHOWCOLORHINTS=true
 GIT_PS1_SHOWDIRTYSTATE=true
-source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
+for git_prompt in \
+  ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/etc/bash_completion.d/git-prompt.sh"} \
+  /usr/share/git/completion/git-prompt.sh
+do
+  if [[ -r "$git_prompt" ]]; then
+    . "$git_prompt"
+    break
+  fi
+done
+if ! type -t __git_ps1 >/dev/null; then
+  __git_ps1() { :; }
+fi
 
 # Colors from Tokyo Night Moon
 PROMPT_BLUE='38;2;130;170;255'    # #82aaff
@@ -158,6 +177,12 @@ colorized_path() {
   printf "%b" "$colored_path"
 }
 
+case "$(uname -s)" in
+  Darwin) PROMPT_OS_ICON='' ;;
+  Linux)  PROMPT_OS_ICON='' ;;
+  *)      PROMPT_OS_ICON='$' ;;
+esac
+
 PS1='$(__git_ps1 "\001\033[${PROMPT_YELLOW}m\002  %s \001\033[0m\002")'
 PS1+='$(prompt_status) $(colorized_path)\n'
-PS1+='\001\033[${PROMPT_GREEN}m\002 \001\033[${PROMPT_MAGENTA}m\002\001\033[0m\002 '
+PS1+='\001\033[${PROMPT_GREEN}m\002${PROMPT_OS_ICON} \001\033[${PROMPT_MAGENTA}m\002\001\033[0m\002 '

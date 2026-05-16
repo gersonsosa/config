@@ -80,6 +80,8 @@ alias gp! = git push --force-with-lease
 alias gl = git log
 alias tf = terraform 
 
+alias k = kubectl
+alias kdr = kubectl --dry-run
 def from-ms [] {
   $in * 1_000_000 | into datetime
 }

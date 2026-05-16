@@ -5,7 +5,7 @@ def "parse vars" [] {
 def --env "update-env" [] {
   for $var in $in {
     if $var.op == "set" {
-      if ($var.name | str upcase) == 'PATH' {
+      if ($var.name =~ '(?i)^path$') {
         $env.PATH = ($var.value | split row (char esep))
       } else {
         load-env {($var.name): $var.value}
@@ -38,20 +38,20 @@ export def --env --wrapped main [command?: string, --help, ...rest: string] {
   let commands = ["deactivate", "shell", "sh"]
 
   if ($command == null) {
-    ^"/Users/gersonsosa/.cargo/bin/mise"
+    ^"/Users/gs/.cargo/bin/mise"
   } else if ($command == "activate") {
     $env.MISE_SHELL = "nu"
   } else if ($command in $commands) {
-    ^"/Users/gersonsosa/.cargo/bin/mise" $command ...$rest
+    ^"/Users/gs/.cargo/bin/mise" $command ...$rest
     | parse vars
     | update-env
   } else {
-    ^"/Users/gersonsosa/.cargo/bin/mise" $command ...$rest
+    ^"/Users/gs/.cargo/bin/mise" $command ...$rest
   }
 }
 
 def --env mise_hook [] {
-  ^"/Users/gersonsosa/.cargo/bin/mise" hook-env -s nu
+  ^"/Users/gs/.cargo/bin/mise" hook-env -s nu
     | parse vars
     | update-env
 }
