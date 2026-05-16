@@ -55,6 +55,7 @@ alias vim = nvim
 alias l = eza -la
 alias la = eza -la
 def ll [] { ls | sort-by type name -i | grid -c | str trim }
+def l* [path: string] { ls -a path/**/* }
 def uuidgen [] { ^uuidgen | tr A-F a-f }
 
 def et [ --level: int, ...args ] {
@@ -80,17 +81,9 @@ alias gb = git branch -v
 alias gp = git push 
 alias gpf = git push --force-with-lease 
 alias gp! = git push --force-with-lease 
-
-if ($nu.home-dir | path join ".config" "nu_scripts" | path exists) { source ($nu.home-dir | path join ".config" "nu_scripts" "custom-completions" "git" "git-completions.nu") }
-# source ($nu.default-config-dir | path join "scripts" "aws-helper.nu")
-
-alias mx = mise exec 
-alias mr = mise run 
 alias tf = terraform 
 
-# in config.nu
-let vendor_dir = $nu.vendor-autoload-dirs | last
-let mise_path = $vendor_dir | path join mise.nu
-
-mkdir $vendor_dir
-^mise activate nu | save $mise_path --force
+const nu_scripts_path = $nu.home-dir | path join ".config" "nu_scripts"
+source ($nu_scripts_path | path join "custom-completions" "git" "git-completions.nu")
+source ($nu_scripts_path | path join "custom-completions" "gh" "gh-completions.nu")
+source ($nu_scripts_path | path join "custom-completions" "uv" "uv-completions.nu")

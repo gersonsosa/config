@@ -26,47 +26,27 @@ require('mini.pick').setup({
 
 vim.ui.select = MiniPick.ui_select
 
-vim.keymap.set("n", "<leader>gg", function() MiniPick.builtin.files({ tool = "git" }) end)
-vim.keymap.set("n", "<leader>f", function() MiniPick.builtin.files({ tool = "fd" }) end)
-vim.keymap.set("n", "<leader>/", function() MiniPick.builtin.grep_live() end)
-vim.keymap.set("n", "<leader>gp",
-  function()
-    local dir = vim.fn.expand("%:p:h")
-    vim.notify(dir, vim.log.levels.INFO)
-    MiniPick.builtin.grep_live({ source = { cwd = dir } })
-  end)
 vim.keymap.set("n", "<leader>h", function() MiniPick.builtin.help() end)
 vim.keymap.set("n", "<leader>b", function() MiniPick.builtin.buffers() end)
-vim.keymap.set("n", "<leader>*", [[:Pick grep pattern='<cword>'<cr>]])
 vim.keymap.set("n", "<leader>ma", function() MiniPick.start({ source = { items = vim.fn.argv, name = "argv" } }) end)
-vim.keymap.set("n", "<leader>mo",
-  function()
-    local root_dir = git_root_or_cwd() or "/"
-    local oldfiles = vim.tbl_filter(function(file)
-      return vim.startswith(vim.fs.normalize(file), root_dir)
-    end, vim.v.oldfiles)
-    MiniPick.start({
-      source = {
-        items = oldfiles,
-        name = "OldFiles @ " .. root_dir,
-        show = function(buf_id, items, query)
-          MiniPick.default_show(buf_id, items, query, { show_icons = true })
-        end
-      },
-    })
-  end)
 vim.keymap.set("n", "<leader><leader>", function() MiniPick.builtin.resume() end)
 
 vim.api.nvim_create_autocmd('PackChanged', {
-  callback = function(event)
-    if event.data.updated then
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
+      if not ev.data.active then
+        vim.cmd.packadd('fff.nvim')
+      end
       require('fff.download').download_or_build_binary()
     end
   end,
 })
+    
 
 vim.g.fff = {
-  prompt = "> ",
+  lazy_sync = true,
+  prompt = "-> ",
   keymaps = {
     close = "<C-c>",
     select = "<CR>",
@@ -81,8 +61,11 @@ vim.g.fff = {
   },
 }
 
-vim.keymap.set("n", "ff", function() require("fff").find_files() end, { desc = "FFFind files" })
+vim.keymap.set("n", "<leader>f", function() require("fff").find_files() end, { desc = "FFFind files" })
+vim.keymap.set("n", "<leader>/", function() require("fff").live_grep() end, { desc = "Live grep with FFF" })
 vim.keymap.set("n", "<leader>gf", function() require("fff").find_files() end, { desc = "FFFind files" })
+vim.keymap.set("n", "<leader>z", function() require('fff').live_grep({ grep = { modes = { 'fuzzy', 'plain' } } }) end, { desc = "Live fffuzy grep" })
+vim.keymap.set("n", "<leader>*", function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end, { desc = "Grep currrent word" })
 
 require("oil").setup({
   keymaps = {

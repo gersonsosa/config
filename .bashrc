@@ -70,7 +70,7 @@ alias tf='terraform'
 
 # NOTE: slow load ble [[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
 
-source ~/code/elastic/platform-cli-auth/aws-config/shell-helper.sh
+source "${XDG_DATA_HOME:-$HOME/.local/share}/platform-cli-auth/aws-config/shell-helper.sh"
 
 GIT_PS1_SHOWCOLORHINTS=true
 GIT_PS1_SHOWDIRTYSTATE=true
