@@ -8,14 +8,8 @@ export LC_MESSAGES='en_US.UTF-8'
 export PATH="$PATH:/usr/local/bin"
 export PATH="$PATH:$HOME/.local/bin"
 
-# optionals
-export PATH="$PATH:/Users/gersonsosa/Library/Application Support/JetBrains/Toolbox/scripts"
-export PATH=/Users/gersonsosa/.opencode/bin:$PATH
-
 . "$HOME/.cargo/env"
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-test -f "/Library/Scripts/elastic-env.sh" && . "/Library/Scripts/elastic-env.sh"
 
 if [[ "$SHELL" =~ "bash" ]]; then
   [ -f ~/.bashrc ] && source ~/.bashrc

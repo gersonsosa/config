@@ -29,7 +29,6 @@ vim.ui.select = MiniPick.ui_select
 vim.keymap.set("n", "<leader>h", function() MiniPick.builtin.help() end)
 vim.keymap.set("n", "<leader>b", function() MiniPick.builtin.buffers() end)
 vim.keymap.set("n", "<leader>ma", function() MiniPick.start({ source = { items = vim.fn.argv, name = "argv" } }) end)
-vim.keymap.set("n", "<leader><leader>", function() MiniPick.builtin.resume() end)
 
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)

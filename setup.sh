@@ -1,34 +1,42 @@
 #!/bin/bash
+set -e
 
-# clone config repo
-# link bash
-# install tools
-# install setup_langs
-setup() {
-  git clone https://github.com/gersondev/config ~/.dotfiles
-  ln -s ~/.dotfiles/.bashrc ~/.bashrc
-  ln -s ~/.dotfiles/.profile ~/.profile
-  ln -s ~/.dotfiles/nushell ~/.config/nushell
-  ln -s ~/.dotfiles/ ~/.config/nushell
-  git clone git@github.com:nushell/nu_scripts.git .config/nu_scripts
+DOTFILES="$HOME/.dotfiles"
+
+link() {
+  local src="$1" dst="$2"
+  if [ -L "$dst" ]; then
+    rm "$dst"
+  elif [ -e "$dst" ]; then
+    echo "Backing up existing $dst -> ${dst}.bak"
+    mv "$dst" "${dst}.bak"
+  fi
+  ln -s "$src" "$dst"
+  echo "Linked $src -> $dst"
 }
 
-tools() {
-  if [ -d "~/.config/nvim" ]
-  then
-    echo "Couldn't link neovim config files, ~/.config/nvim already exists"
+setup() {
+  if [ -d "$DOTFILES" ]; then
+    echo "Dotfiles already cloned, pulling latest"
+    git -C "$DOTFILES" pull
   else
-    pushd ~/.config/
-    ln -s ~/.dotfiles/nvim/
+    git clone https://github.com/gersondev/config "$DOTFILES"
   fi
+}
 
-  ln -s .tmux.conf ~/
+link_configs() {
+  mkdir -p "$HOME/.config"
+
+  link "$DOTFILES/nvim"    "$HOME/.config/nvim"
+  link "$DOTFILES/nushell" "$HOME/Library/Application Support/nushell"
+
+  git clone git@github.com:nushell/nu_scripts.git "$HOME/.config/nu_scripts"
 }
 
 setup_langs() {
-  # setup coursier bloop etc.
-  curl -fL https://github.com/VirtusLab/coursier-m1/releases/latest/download/cs-aarch64-apple-darwin.gz | gzip -d > cs
+  curl -fL https://github.com/VirtusLab/coursier-m1/releases/latest/download/cs-aarch64-apple-darwin.gz \
+    | gzip -d > cs && chmod +x cs
 }
 
-setup()
-tools()
+setup
+link_configs

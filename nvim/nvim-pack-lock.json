@@ -1,12 +1,20 @@
 {
   "plugins": {
+    "diffs.nvim": {
+      "rev": "7ab445c39224160203ae692d3c883e2f51f2d442",
+      "src": "https://github.com/barrettruth/diffs.nvim"
+    },
     "fff.nvim": {
-      "rev": "6645a68ebc1f1a0dc98c1669a7e3f6d91625f79f",
+      "rev": "e7b7fe2707ed2349b077846fb5da7102145ef5a0",
       "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
+      "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "guh.nvim": {
+      "rev": "0923b79c203481387a8a7a4510d1e28d4c5847c3",
+      "src": "https://github.com/justinmk/guh.nvim"
     },
     "harpoon": {
       "rev": "87b1a35",
@@ -18,19 +26,19 @@
       "src": "https://github.com/folke/lazydev.nvim"
     },
     "mason.nvim": {
-      "rev": "8e921c2b68571e978db5d4d3fef9c9a7f8755473",
+      "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.icons": {
-      "rev": "9c7b1b90b15bdd69c52f6e31889dbc9987c30ec4",
+      "rev": "ac38c983aed0a2bd32a65ca3e2348e12e58ca292",
       "src": "https://github.com/echasnovski/mini.icons"
     },
     "mini.pick": {
-      "rev": "975e398570dd15696575c5374f94e78fd29a7a69",
+      "rev": "0b3599e6df730f3ced3359d33c674288de0d186d",
       "src": "https://github.com/echasnovski/mini.pick"
     },
     "nvim-lspconfig": {
-      "rev": "f9349d4d99e7d66403ae8bf4fbd357b154dca7a7",
+      "rev": "a683e0ddf0cf64c6cd689e18ffb480ade3c162b7",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-metals": {
@@ -42,7 +50,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
-      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "plenary.nvim": {

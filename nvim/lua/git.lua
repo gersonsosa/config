@@ -1,6 +1,8 @@
 vim.pack.add({
   { src = "https://github.com/tpope/vim-fugitive" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
+  { src = "https://github.com/justinmk/guh.nvim" },
+  { src = "https://github.com/barrettruth/diffs.nvim" },
 })
 
 vim.keymap.set("n", "<leader>gs", function() vim.cmd([[G]]) end)
@@ -36,5 +38,21 @@ require("gitsigns").setup({
         gitsigns.nav_hunk("next")
       end
     end, { desc = "Go to previous git hunk", buffer = bufnr })
+    vim.keymap.set("n", "<leader>gd", function()
+      gitsigns.diffthis()
+    end, { desc = "Go to previous git hunk", buffer = bufnr })
+    vim.keymap.set("n", "<leader>gp", function()
+      gitsigns.preview_hunk_inline()
+    end, { desc = "Go to previous git hunk", buffer = bufnr })
+
   end,
 })
+
+vim.g.diffs = {
+  integrations = {
+    fugitive = true,
+    neogit = true,
+    neojj = true,
+    gitsigns = true,
+  }
+}

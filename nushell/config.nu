@@ -17,10 +17,6 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-# Only for Nu itself
-hide-env XDG_CONFIG_HOME
-hide-env XDG_DATA_HOME
-
 use std/util "path add"
 $env.CARGO_HOME = ($env.HOME | path join ".cargo")
 $env.config.buffer_editor = "nvim"
@@ -81,7 +77,12 @@ alias gb = git branch -v
 alias gp = git push 
 alias gpf = git push --force-with-lease 
 alias gp! = git push --force-with-lease 
+alias gl = git log
 alias tf = terraform 
+
+def from-ms [] {
+  $in * 1_000_000 | into datetime
+}
 
 const nu_scripts_path = $nu.home-dir | path join ".config" "nu_scripts"
 source ($nu_scripts_path | path join "custom-completions" "git" "git-completions.nu")
