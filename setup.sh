@@ -20,15 +20,29 @@ setup() {
     echo "Dotfiles already cloned, pulling latest"
     git -C "$DOTFILES" pull
   else
-    git clone https://github.com/gersondev/config "$DOTFILES"
+    git clone https://github.com/gersonsosa/config.git "$DOTFILES"
   fi
 }
 
 link_configs() {
   mkdir -p "$HOME/.config"
 
-  link "$DOTFILES/nvim"    "$HOME/.config/nvim"
-  link "$DOTFILES/nushell" "$HOME/Library/Application Support/nushell"
+  link "$DOTFILES/nvim" "$HOME/.config/nvim"
+
+  case "$(uname -s)" in
+    Darwin)
+      NU_CONFIG="$HOME/Library/Application Support/nushell"
+      ;;
+    Linux)
+      NU_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/nushell"
+      ;;
+    *)
+      echo "Unsupported OS: $(uname -s)" >&2
+      exit 1
+      ;;
+  esac
+  mkdir -p "$(dirname "$NU_CONFIG")"
+  link "$DOTFILES/nushell" "$NU_CONFIG"
 
   git clone git@github.com:nushell/nu_scripts.git "$HOME/.config/nu_scripts"
 }
